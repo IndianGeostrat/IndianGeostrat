@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Geostrat | Premium Newspaper Access</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --dark-bg: #050510;
+            --glass-bg: rgba(10, 15, 30, 0.6);
+            --glass-border: rgba(212, 175, 55, 0.2);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* 3D Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .gold-text {
+            background: linear-gradient(to right, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border {
+            border-color: var(--gold);
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #F3E5AB 100%);
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        .gold-btn:hover {
+            box-shadow: 0 0 15px var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* Hide sections by default */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--gold);
+            border-bottom-color: var(--gold);
+            animation: spin 2s linear infinite;
+            position: relative;
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-left-color: #ffffff;
+            border-right-color: #ffffff;
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(0.9); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+
+        /* Floating AI Chatbot */
+        #ai-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-window {
+            height: 400px;
+            width: 320px;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .chat-window.open {
+            display: flex;
+        }
+        
+        .chat-message { margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; }
+        .chat-message.bot { background: rgba(255,255,255,0.1); align-self: flex-start; border-bottom-left-radius: 0; }
+        .chat-message.user { background: var(--gold); color: #000; align-self: flex-end; border-bottom-right-radius: 0; }
+
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: black;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            z-index: 10000;
+            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .toast.show { bottom: 30px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-ring"></div>
+        <h2 class="mt-6 text-2xl brand-font gold-text tracking-widest text-center">INDIAN GEOSTRAT</h2>
+        <p class="mt-2 text-sm text-gray-400">Initializing Space Protocol...</p>
+    </div>
+
+    <!-- 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 glass top-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center cursor-pointer" onclick="navigate('home')">
+                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-12 w-12 rounded-full border-2 gold-border shadow-[0_0_10px_rgba(212,175,55,0.5)]">
+                    <span class="ml-3 text-xl font-bold brand-font gold-text hidden sm:block">INDIAN GEOSTRAT</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" onclick="navigate('home')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Home</a>
+                    <a href="#" onclick="navigate('about')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">About Us</a>
+                    <a href="#" onclick="navigate('dashboard')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Newspapers</a>
+                    <a href="#" onclick="navigate('contact')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Contact Us</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="auth-btn" onclick="navigate('auth')" class="glass px-6 py-2 rounded-full font-semibold hover:bg-white/10 transition-all text-[#D4AF37] border border-[#D4AF37]">Login / Sign Up</button>
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden text-gray-300 hover:text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-[#D4AF37]/30">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" onclick="navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Home</a>
+                <a href="#" onclick="navigate('about'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">About Us</a>
+                <a href="#" onclick="navigate('dashboard'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Newspapers</a>
+                <a href="#" onclick="navigate('contact'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="pt-24 pb-16 min-h-screen flex flex-col justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow">
+            
+            <!-- HOME SECTION -->
+            <section id="home-section" class="page-section active pt-10">
+                <div class="text-center max-w-4xl mx-auto mt-10 lg:mt-20">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 brand-font leading-tight">
+                        Explore the World with <br><span class="gold-text">Indian Geostrat</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                        Premium access to popular Indian and International newspapers in English, Bengali, and Hindi. Uploaded date-wise directly from Google Drive.
+                    </p>
+                    <div class="glass p-8 rounded-3xl inline-block border-2 gold-border shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+                        <h2 class="text-3xl font-bold mb-2">Just <span class="gold-text">₹10</span> / Month</h2>
+                        <p class="text-gray-400 mb-6">Unlimited PDF Access to Global Geopolitics & News</p>
+                        <button onclick="handleAccessClick()" class="gold-btn px-10 py-4 rounded-full text-lg font-bold shadow-lg w-full sm:w-auto">
+                            <i class="fas fa-book-open mr-2"></i> Access Newspapers Now
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABOUT US SECTION -->
+            <section id="about-section" class="page-section pt-10">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center brand-font gold-text">About Us</h2>
+                    
+                    <div class="glass rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10">
+                        <div class="w-full md:w-1/3 flex justify-center">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] rounded-2xl transform rotate-6 opacity-50 blur-lg"></div>
+                                <img src="Gemini_Generated_Image_45zuxk45zuxk45zu-no-watermark-Picsart-AiImageEnhancer.jpg" alt="Srimon Banik" class="relative z-10 w-64 h-auto rounded-2xl border-4 gold-border object-cover shadow-2xl">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h3 class="text-3xl font-bold mb-2">Srimon Banik</h3>
+                            <p class="text-[#D4AF37] font-semibold mb-6 tracking-wider uppercase">Founder & Creator</p>
+                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                                Welcome to Indian Geostrat. I created this platform with a singular vision: to democratize access to premium geopolitical and global news. By curating top-tier Indian and International newspapers across English, Bengali, and Hindi, we ensure that staying informed doesn't come with exorbitant costs.
+                            </p>
+                            <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                                For just ₹10 a month, dive deep into daily insights beautifully organized and delivered right to your fingertips via seamless Google Drive integration.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-youtube"></i></a>
+                                <a href="https://x.com/IndianGeostrat" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-twitter"></i></a>
+                                <a href="www.linkedin.com/in/srimon-banik-সৃমন-বণিক-4b8989221" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT US SECTION -->
+            <section id="contact-section" class="page-section pt-10">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 brand-font gold-text">Contact Us</h2>
+                    <p class="text-gray-300 mb-12">Have questions? Send us a message directly to srimonbanik2007@gmail.com</p>
+                    
+                    <div class="glass rounded-3xl p-8 md:p-12 text-left">
+                        <form action="https://formsubmit.co/srimonbanik2007@gmail.com" method="POST" onsubmit="showToast('Message sent successfully via FormSubmit!'); return true;">
+                            <!-- FormSubmit Configuration -->
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_subject" value="New Contact from Indian Geostrat Website">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                    <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="John Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                                    <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                                <textarea name="message" rows="5" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="How can we help you?"></textarea>
+                            </div>
+                            <button type="submit" class="gold-btn w-full py-4 rounded-xl font-bold text-lg shadow-lg">Send Message</button>
+                            <p class="text-xs text-gray-500 mt-4 text-center"><i>Note: Connected to Google Forms / Email backend via secure submission.</i></p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AUTH SECTION (Login/Signup) -->
+            <section id="auth-section" class="page-section pt-10">
+                <div class="max-w-md mx-auto">
+                    <div class="glass rounded-3xl p-8 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                        <div class="text-center mb-8">
+                            <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full border-2 gold-border mb-4">
+                            <h2 class="text-3xl font-bold brand-font gold-text" id="auth-title">Welcome Back</h2>
+                            <p class="text-sm text-gray-400 mt-2">Sign in to access premium newspapers</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <button onclick="simulateLogin('Google')" class="w-full bg-white text-gray-800 font-bold py-3 px-4 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors">
+                                <i class="fab fa-google text-red-500 mr-3"></i> Continue with Google
+                            </button>
+                            
+                            <div class="flex items-center my-6">
+                                <div class="flex-grow border-t border-gray-600"></div>
+                                <span class="px-4 text-gray-500 text-sm">OR</span>
+                                <div class="flex-grow border-t border-gray-600"></div>
+                            </div>
+
+                            <div>
+                                <input type="email" id="auth-email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-4 focus:outline-none focus:border-[#D4AF37]" placeholder="Email Address">
+                                <input type="password" id="auth-pass" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-6 focus:outline-none focus:border-[#D4AF37]" placeholder="Password">
+                                <button onclick="simulateLogin('Email')" class="gold-btn w-full py-3 rounded-xl font-bold shadow-lg">Sign In / Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DASHBOARD SECTION (Protected) -->
+            <section id="dashboard-section" class="page-section pt-10">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-4xl font-bold brand-font gold-text mb-2">Newspaper Archive</h2>
+                        <p class="text-gray-300">Access daily editions from Google Drive.</p>
+                    </div>
+                    <div id="subscription-status" class="glass px-4 py-2 rounded-full text-sm font-semibold border-red-500/50 text-red-400">
+                        <i class="fas fa-lock mr-2"></i> Subscription Required
+                    </div>
+                </div>
+
+                <!-- Grid of fake folders simulating Google Drive dates -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Javascript will populate this -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Payment Modal (Hidden by default) -->
+    <div id="payment-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+        <div class="glass rounded-3xl p-8 max-w-md w-full relative border-2 gold-border shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+            <button onclick="closeModal('payment-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold brand-font gold-text mb-2">Unlock Premium Access</h3>
+                <p class="text-gray-300">Pay <b class="text-white text-lg">₹10/month</b> to access all newspapers.</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl mb-6 flex justify-center">
+                <img src="image_ca9d6d.jpg" alt="Google Pay QR Code" class="w-48 h-48 object-contain">
+            </div>
+            
+            <div class="bg-black/40 rounded-xl p-4 text-center mb-6 border border-white/10">
+                <p class="text-sm text-gray-400 mb-1">UPI ID</p>
+                <div class="flex items-center justify-center">
+                    <p class="font-mono text-lg font-bold text-[#D4AF37]" id="upi-id">srimonbanik2007@okicici</p>
+                    <button onclick="copyUPI()" class="ml-3 text-gray-400 hover:text-white"><i class="far fa-copy"></i></button>
+                </div>
+            </div>
+
+            <button onclick="confirmPayment()" class="gold-btn w-full py-4 rounded-xl font-bold text-lg shadow-lg">I Have Paid ₹10</button>
+        </div>
+    </div>
+
+    <!-- Common Footer -->
+    <footer class="glass border-t border-[#D4AF37]/30 mt-auto relative z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Branding & Info -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-[#D4AF37]">
+                        <span class="ml-3 text-xl font-bold brand-font gold-text">INDIAN GEOSTRAT</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Your premium portal to the world's most vital geopolitical news and regional daily newspapers. Read English, Bengali, and Hindi papers conveniently.</p>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li><i class="fas fa-map-marker-alt text-[#D4AF37] w-5"></i> Steet no. 18, DN Block, Sector V, Salt Lake City, Calcutta, West Bengal, 700091</li>
+                        <li><i class="fas fa-envelope text-[#D4AF37] w-5"></i> srimonbanik2007@gmail.com</li>
+                        <li><i class="fas fa-phone text-[#D4AF37] w-5"></i> +91 87877 85791</li>
+                    </ul>
+                </div>
+
+                <!-- Location Map -->
+                <div class="h-64 rounded-2xl overflow-hidden border border-white/10 relative">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+
+                <!-- Social Links (Ordered as requested) -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white border-b border-[#D4AF37]/30 pb-2 inline-block">Connect With Us</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube text-[#ff0000] w-6"></i> YouTube</a>
+                        <!-- Updated X link to have consistent branding style with the others -->
+                        <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-[#1DA1F2] w-6"></i> Twitter (X)</a>
+                        <a href="https://www.reddit.com/user/Both_Put6158/" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-reddit-alien text-[#FF5700] w-6"></i> Reddit</a>
+                        <a href="https://web.telegram.org/@SrimonBanik" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-telegram text-[#0088cc] w-6"></i> Telegram</a>
+                        <a href="https://www.snapchat.com/@srimonbanik" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-snapchat-ghost text-[#FFFC00] w-6"></i> Snapchat</a>
+                        <a href="https://www.instagram.com/srimonbanik/" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-[#E1306C] w-6"></i> Instagram</a>
+                        <a href="https://wa.me/message/VJW2JNMURWFDN1" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-whatsapp text-[#25D366] w-6"></i> WhatsApp</a>
+                        <a href="https://www.linkedin.com/in/srimon-banik-সৃমন-বণিক-4b8989221" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin text-[#0077b5] w-6"></i> LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-6 border-t border-white/5 text-center text-gray-500 text-sm">
+                &copy; 2026 Indian Geostrat. Created by Srimon Banik. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating AI Chatbot -->
+    <div id="ai-chatbot">
+        <!-- Chat Window -->
+        <div id="chat-window" class="chat-window glass rounded-2xl mb-4 overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+            <div class="bg-gradient-to-r from-[#1a1a2e] to-[#0f0f1a] p-4 border-b border-[#D4AF37]/30 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-[#D4AF37] flex items-center justify-center mr-2">
+                        <i class="fas fa-robot text-black"></i>
+                    </div>
+                    <span class="font-bold text-white">Geostrat AI</span>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chat-messages" class="flex-grow p-4 overflow-y-auto flex flex-col">
+                <div class="chat-message bot">
+                    Hello! I'm the Geostrat AI. Ask me about our newspaper subscriptions, world news topics, or navigating this site.
+                </div>
+            </div>
+            <div class="p-3 border-t border-white/10 bg-black/40 flex">
+                <input type="text" id="chat-input" class="flex-grow bg-white/5 border border-white/10 rounded-l-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()" class="gold-btn px-4 py-2 rounded-r-lg"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <!-- Chat Toggle Button -->
+        <button id="chat-toggle" onclick="toggleChat()" class="gold-btn w-14 h-14 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center justify-center text-2xl float-right">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="toast">Message here</div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // State Management
+        let currentUser = null;
+        let isSubscribed = false;
+
+        // --- 1. Three.js Space Background ---
+        function initSpaceBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 400;
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Particles (Stars)
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 1.5,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const starVertices = [];
+            for (let i = 0; i < 6000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starVertices.push(x, y, z);
+            }
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+
+            // Nebula-like subtle lights
+            const light1 = new THREE.PointLight(0xD4AF37, 2, 1000);
+            light1.position.set(200, 300, 100);
+            scene.add(light1);
+
+            const light2 = new THREE.PointLight(0x0f0f4a, 3, 1000);
+            light2.position.set(-200, -300, 100);
+            scene.add(light2);
+
+            // Animation Loop
+            let frame = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                stars.rotation.x += 0.0002;
+                stars.rotation.y += 0.0003;
+                
+                // Pulsate stars
+                frame += 0.01;
+                starMaterial.size = 1.5 + Math.sin(frame) * 0.5;
+
+                renderer.render(scene, camera);
+            }
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
+        }
+
+        // --- 2. Application Logic & Navigation ---
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        function navigate(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Show target section
+            document.getElementById(pageId + '-section').classList.add('active');
+            window.scrollTo(0, 0);
+
+            // Special logic for dashboard
+            if (pageId === 'dashboard') {
+                renderDashboard();
+            }
+        }
+
+        function handleAccessClick() {
+            if (!currentUser) {
+                showToast("Please login first to access newspapers.");
+                navigate('auth');
+            } else if (!isSubscribed) {
+                document.getElementById('payment-modal').classList.remove('hidden');
+            } else {
+                navigate('dashboard');
+            }
+        }
+
+        function simulateLogin(provider) {
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+            
+            setTimeout(() => {
+                currentUser = { name: "User", email: document.getElementById('auth-email').value || "user@example.com" };
+                btn.innerHTML = originalText;
+                showToast(`Successfully logged in via ${provider}!`);
+                
+                // Update UI
+                document.getElementById('auth-btn').innerText = 'Dashboard';
+                document.getElementById('auth-btn').onclick = () => navigate('dashboard');
+                
+                navigate('dashboard');
+            }, 1500);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function copyUPI() {
+            const upi = "srimonbanik2007@okicici";
+            navigator.clipboard.writeText(upi).then(() => {
+                showToast("UPI ID Copied!");
+            }).catch(err => {
+                // Fallback for iframe environments
+                const textArea = document.createElement("textarea");
+                textArea.value = upi;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast("UPI ID Copied!");
+                } catch (e) {}
+                document.body.removeChild(textArea);
+            });
+        }
+
+        function confirmPayment() {
+            const btn = event.currentTarget;
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+            
+            setTimeout(() => {
+                btn.innerHTML = orig;
+                closeModal('payment-modal');
+                isSubscribed = true;
+                showToast("Payment verification pending. Temporary access granted.");
+                renderDashboard();
+            }, 2000);
+        }
+
+        function renderDashboard() {
+            const container = document.querySelector('#dashboard-section .grid');
+            const statusBadge = document.getElementById('subscription-status');
+
+            if (!currentUser) {
+                container.innerHTML = `<div class="col-span-full text-center py-20 text-gray-400">Please login to view available newspapers.</div>`;
+                return;
+            }
+
+            // Calculate dates to show (Fixed range: Aug 26, 2026 to Dec 31, 2026)
+            let datesToShow = [];
+            let startDate = new Date('2026-08-26T00:00:00');
+            let endDate = new Date('2026-12-31T00:00:00');
+            
+            // Loop from endDate down to startDate (Newest first)
+            let currentDateIter = new Date(endDate);
+            while (currentDateIter >= startDate) {
+                datesToShow.push(new Date(currentDateIter));
+                currentDateIter.setDate(currentDateIter.getDate() - 1);
+            }
+
+            if (!isSubscribed) {
+                statusBadge.className = "glass px-4 py-2 rounded-full text-sm font-semibold border-red-500/50 text-red-400";
+                statusBadge.innerHTML = '<i class="fas fa-lock mr-2"></i> Subscription Required';
+                
+                // Show locked preview
+                let html = '';
+                for(let d of datesToShow) {
+                    let dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    html += `
+                        <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center text-center opacity-70 border-white/5 relative overflow-hidden group cursor-pointer" onclick="document.getElementById('payment-modal').classList.remove('hidden')">
+                            <div class="absolute inset-0 bg-black/50 z-10 flex items-center justify-center backdrop-blur-[2px] transition-all group-hover:bg-black/40">
+                                <i class="fas fa-lock text-3xl text-[#D4AF37]"></i>
+                            </div>
+                            <i class="fas fa-folder text-5xl text-blue-400 mb-4 opacity-50"></i>
+                            <h4 class="font-bold text-lg">${dateStr}</h4>
+                            <p class="text-xs text-gray-500 mt-2">English, Bengali, Hindi</p>
+                        </div>
+                    `;
+                }
+                if(datesToShow.length === 0) {
+                    html = `<div class="col-span-full text-center py-10 text-gray-400">Newspapers will be available starting 26 Aug 2026.</div>`;
+                }
+                container.innerHTML = html;
+            } else {
+                statusBadge.className = "glass px-4 py-2 rounded-full text-sm font-semibold border-green-500/50 text-green-400";
+                statusBadge.innerHTML = '<i class="fas fa-unlock mr-2"></i> Premium Active';
+                
+                // Show unlocked folders with real Google Drive links
+                let html = '';
+                const driveLink = "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link";
+                for(let d of datesToShow) {
+                    let dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    
+                    html += `
+                        <a href="${driveLink}" target="_blank" onclick="showToast('Opening Google Drive folder for ${dateStr}...');" class="glass p-6 rounded-2xl flex flex-col items-center justify-center text-center border-white/10 hover:border-[#D4AF37] transition-all group transform hover:-translate-y-1">
+                            <i class="fas fa-folder-open text-5xl text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="font-bold text-lg">${dateStr}</h4>
+                            <p class="text-xs text-gray-400 mt-2">View PDFs <i class="fas fa-external-link-alt ml-1"></i></p>
+                        </a>
+                    `;
+                }
+                if(datesToShow.length === 0) {
+                    html = `<div class="col-span-full text-center py-10 text-gray-400">Newspapers will be available starting 26 Aug 2026.</div>`;
+                }
+                container.innerHTML = html;
+            }
+        }
+
+        // --- 3. Gemini AI Chatbot ---
+        function toggleChat() {
+            document.getElementById('chat-window').classList.toggle('open');
+        }
+
+        async function sendChatMessage() {
+            const inputEl = document.getElementById('chat-input');
+            const message = inputEl.value.trim();
+            if (!message) return;
+
+            appendMessage('user', message);
+            inputEl.value = '';
+            
+            // Show typing indicator
+            const typingId = 'typing-' + Date.now();
+            appendMessage('bot', '<i class="fas fa-ellipsis-h fa-fade"></i>', typingId);
+
+            try {
+                // Prepare API request
+                const apiKey = ""; // Canvas environment handles this empty string
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const systemPrompt = "You are a helpful customer support bot for 'Indian Geostrat', a website offering premium PDF uploads of popular Indian and international English, Bengali, and Hindi newspapers. The subscription cost is just ₹10 per month paid via UPI to srimonbanik2007@okicici. The creator is Srimon Banik. Keep answers concise, polite, and helpful.";
+                
+                const payload = {
+                    contents: [{ parts: [{ text: message }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                // Remove typing indicator
+                document.getElementById(typingId).remove();
+
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    appendMessage('bot', result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>'));
+                } else {
+                    appendMessage('bot', "I'm sorry, I couldn't process that right now. Please email us at srimonbanik2007@gmail.com.");
+                }
+
+            } catch (error) {
+                console.error("Chat API Error:", error);
+                document.getElementById(typingId).remove();
+                appendMessage('bot', "Connection error. Please try again later.");
+            }
+        }
+
+        function appendMessage(role, text, id = null) {
+            const chatBox = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-message ${role}`;
+            if (id) msgDiv.id = id;
+            msgDiv.innerHTML = text;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // --- 4. Initialization ---
+        window.onload = function() {
+            initSpaceBackground();
+            
+            // Remove loading screen after 1.5 seconds minimum for visual effect
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 1000);
+            }, 1500);
+        };
+    </script>
+</body>
+</html>
