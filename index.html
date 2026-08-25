@@ -110,6 +110,17 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        .auth-tab-active {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 8px 18px -12px rgba(15, 23, 42, 0.8);
+        }
+
+        .dark .auth-tab-active {
+            background: #ffffff;
+            color: #0f172a;
+        }
     </style>
 </head>
 <body class="bg-brand-50 dark:bg-brand-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col">
@@ -122,6 +133,9 @@
         </h2>
         <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-sans tracking-wide">Loading Premium Experience...</p>
     </div>
+
+    <!-- AI Bot Embed -->
+    <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
 
     <!-- Navigation -->
     <header class="fixed w-full top-0 z-50 glass-nav transition-colors duration-300">
@@ -146,8 +160,8 @@
                         <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block text-slate-300"></i>
                     </button>
                     
-                    <button id="auth-btn" onclick="openAuthModal()" class="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md">
-                        Sign In / Subscribe
+                    <button id="auth-btn" onclick="openAuthModal('signup')" class="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md">
+                        Subscribe ₹10/mo
                     </button>
                 </nav>
 
@@ -170,7 +184,7 @@
                 <button onclick="navigate('home')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Home</button>
                 <button onclick="navigate('about')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">About Us</button>
                 <button onclick="navigate('contact')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Contact Us</button>
-                <button onclick="openAuthModal()" class="block w-full text-center mt-4 bg-saffron hover:bg-orange-500 text-white px-3 py-3 rounded-md font-bold transition-colors">Sign In / Subscribe</button>
+                <button onclick="openAuthModal('signup')" class="block w-full text-center mt-4 bg-saffron hover:bg-orange-500 text-white px-3 py-3 rounded-md font-bold transition-colors">Subscribe ₹10/mo</button>
             </div>
         </div>
     </header>
@@ -187,14 +201,19 @@
                     <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 bg-white dark:bg-brand-900 pt-10 sm:pt-16 lg:pt-20 px-4 sm:px-6 lg:px-8">
                         <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
                             <div class="sm:text-center lg:text-left">
-                                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider mb-4 border border-orange-200 dark:border-orange-800/50">PREMIUM EDITORIAL</span>
+                                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider mb-4 border border-orange-200 dark:border-orange-800/50">LIMITED OFFER: ₹10/MONTH</span>
                                 <h1 class="text-4xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-5xl md:text-6xl font-serif leading-tight">
                                     <span class="block xl:inline">Regional & Global</span>
                                     <span class="block text-saffron">Perspectives.</span>
                                 </h1>
                                 <p class="mt-3 text-base text-slate-500 dark:text-slate-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-sans leading-relaxed">
-                                    Access exclusive regional, national, and international newspapers in English, Bengali, and Hindi. Subscribe for unparalleled geopolitical insights for just ₹10/month.
+                                    Access exclusive regional, national, and international newspapers in English, Bengali, and Hindi. Subscribe for unparalleled geopolitical insights at the limited-offer price of ₹10/month, down from the ₹30/month MRP.
                                 </p>
+                                <div class="mt-5 inline-flex flex-wrap items-center justify-center lg:justify-start gap-3 rounded-lg border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-900/20 px-4 py-3 text-sm">
+                                    <span class="font-semibold text-slate-700 dark:text-slate-200">Monthly plan</span>
+                                    <span class="text-slate-500 dark:text-slate-400 line-through">MRP ₹30/month</span>
+                                    <span class="font-bold text-orange-600 dark:text-orange-300">Limited offer ₹10/month</span>
+                                </div>
                                 <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
                                     <div class="rounded-md shadow">
                                         <button onclick="handleReadToday()" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:py-4 md:text-lg md:px-10 transition-colors">
@@ -294,9 +313,9 @@
                                             <i data-lucide="credit-card" class="fa-solid fa-credit-card h-6 w-6 text-white flex items-center justify-center"></i>
                                         </span>
                                     </div>
-                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Incredible Value</h3>
+                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Limited-Offer Price</h3>
                                     <p class="mt-5 text-base text-slate-400">
-                                        Just ₹10 per month via convenient Google Pay UPI. Premium geopolitical insights accessible to everyone.
+                                        MRP ₹30/month, now ₹10/month via convenient Google Pay UPI. Premium geopolitical insights stay accessible while subscriptions support daily operations.
                                     </p>
                                 </div>
                             </div>
@@ -341,7 +360,7 @@
                 <div class="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 mt-12">
                     <h3 class="text-xl font-bold font-serif text-slate-900 dark:text-white mb-4">The Subscription Model</h3>
                     <p class="mb-0">
-                        At a highly subsidized rate of <strong>₹10/month</strong>, we rely on the support of our dedicated readership. This minimal barrier to entry ensures our operational sustainability while keeping vital information accessible to students, researchers, and professionals alike.
+                        Our monthly MRP is <strong>₹30/month</strong>, but the current limited-offer price is <strong>₹10/month</strong>. This minimal barrier to entry supports our operational sustainability while keeping vital information accessible to students, researchers, and professionals alike.
                     </p>
                 </div>
             </div>
@@ -464,7 +483,12 @@
                         <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-10 w-10 rounded-full mr-3 border border-slate-700">
                         <span class="font-serif font-black text-xl tracking-tight text-white">INDIAN GEOSTRAT</span>
                     </div>
-                    <p class="text-slate-400 text-sm mb-6">Regional, national, and international newspapers delivered daily. Premium insights, accessible to all.</p>
+                    <p class="text-slate-400 text-sm mb-4">Regional, national, and international newspapers delivered daily. Premium insights, accessible to all.</p>
+                    <div class="mb-6 rounded-lg border border-slate-700 bg-slate-800/70 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Limited monthly offer</p>
+                        <p class="mt-2 text-sm text-slate-300"><span class="line-through text-slate-500">MRP ₹30/month</span> <span class="font-bold text-white">Now ₹10/month</span></p>
+                        <button onclick="openAuthModal('signup')" class="mt-3 w-full rounded-md bg-saffron px-3 py-2 text-sm font-bold text-white hover:bg-orange-500 transition-colors">Subscribe Now</button>
+                    </div>
                     
                     <!-- Small Social Media Links with Icons -->
                     <div class="flex items-center space-x-2">
@@ -527,38 +551,107 @@
     <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
         
         <!-- Auth Modal -->
-        <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+        <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-4xl w-full transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative overflow-hidden max-h-[92vh] overflow-y-auto">
+            <button onclick="closeModals()" class="absolute top-4 right-4 z-10 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                 <i data-lucide="x" class="fa-solid fa-xmark w-5 h-5"></i>
             </button>
-            <div class="text-center mb-8">
-                <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 mx-auto rounded-full mb-4 border border-slate-200 dark:border-slate-700">
-                <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Welcome Back</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to access your subscriptions.</p>
-            </div>
-            
-            <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors mb-4 font-medium">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                <span>Continue with Google</span>
-            </button>
-            
-            <div class="relative flex items-center py-2">
-                <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
-                <span class="flex-shrink-0 px-4 text-xs text-slate-400 uppercase tracking-wide">or</span>
-                <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
-            </div>
+            <div class="grid md:grid-cols-[0.92fr_1.08fr]">
+                <div class="bg-slate-950 text-white p-8 sm:p-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-8">
+                            <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-full border border-white/20 object-cover">
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Indian Geostrat</p>
+                                <p class="font-serif text-xl font-bold">Premium Access</p>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold leading-tight">Unlock today's edition and every archived PDF.</h3>
+                        <p class="mt-4 text-sm leading-6 text-slate-300">Create an account to keep your subscription, payments, and archive access organized in one place.</p>
+                    </div>
+                    <div class="mt-8 space-y-4">
+                        <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Limited monthly offer</p>
+                            <p class="mt-2 text-sm text-slate-300"><span class="line-through text-slate-500">MRP ₹30/month</span> <span class="font-bold text-white">Now ₹10/month</span></p>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div class="rounded-lg bg-white/5 p-3">
+                                <p class="text-lg font-bold">3</p>
+                                <p class="text-[11px] uppercase tracking-wide text-slate-400">Languages</p>
+                            </div>
+                            <div class="rounded-lg bg-white/5 p-3">
+                                <p class="text-lg font-bold">24/7</p>
+                                <p class="text-[11px] uppercase tracking-wide text-slate-400">Access</p>
+                            </div>
+                            <div class="rounded-lg bg-white/5 p-3">
+                                <p class="text-lg font-bold">PDF</p>
+                                <p class="text-[11px] uppercase tracking-wide text-slate-400">Archive</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <form onsubmit="event.preventDefault(); mockLogin('email');" class="mt-4 space-y-4">
-                <div>
-                    <input type="email" placeholder="Email address" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                <div class="p-8 sm:p-10">
+                    <div class="mb-6">
+                        <p id="auth-eyebrow" class="text-xs font-bold uppercase tracking-wide text-saffron">Subscriber login</p>
+                        <h3 id="auth-title" class="mt-2 text-2xl font-serif font-bold text-slate-900 dark:text-white">Welcome back</h3>
+                        <p id="auth-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-2">Sign in to continue to your newspaper subscription.</p>
+                    </div>
+
+                    <div class="mb-6 grid grid-cols-2 rounded-lg bg-slate-100 dark:bg-slate-800 p-1 text-sm font-semibold">
+                        <button id="auth-tab-login" type="button" onclick="setAuthMode('login')" class="auth-tab-active rounded-md py-2.5 transition-all">Log in</button>
+                        <button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')" class="rounded-md py-2.5 text-slate-600 dark:text-slate-300 transition-all">Sign up</button>
+                    </div>
+
+                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors mb-5 font-semibold shadow-sm">
+                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        <span id="google-auth-label">Continue with Google</span>
+                    </button>
+
+                    <div class="relative flex items-center py-2">
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                        <span class="flex-shrink-0 px-4 text-xs text-slate-400 uppercase tracking-wide">or use email</span>
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                    </div>
+
+                    <form onsubmit="event.preventDefault(); mockLogin('email');" class="mt-5 space-y-4">
+                        <div id="signup-name-field" class="hidden">
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2" for="auth-name">Full name</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-name" type="text" autocomplete="name" placeholder="Your full name" class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2" for="auth-email">Email address</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-2 flex items-center justify-between">
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200" for="auth-password">Password</label>
+                                <button id="forgot-password-link" type="button" class="text-sm font-semibold text-saffron hover:text-orange-500 transition-colors">Forgot password?</button>
+                            </div>
+                            <div class="relative">
+                                <i data-lucide="lock" class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-password" type="password" autocomplete="current-password" placeholder="Enter your password" required class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 text-sm text-slate-500 dark:text-slate-400">
+                            <input id="auth-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-saffron focus:ring-saffron">
+                            <label id="auth-consent-label" for="auth-consent">Keep me signed in on this device.</label>
+                        </div>
+                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 rounded-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-md">
+                            Log in
+                        </button>
+                        <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+                            <span id="auth-switch-copy">New to Indian Geostrat?</span>
+                            <button id="auth-switch-button" type="button" onclick="setAuthMode('signup')" class="font-bold text-saffron hover:text-orange-500 transition-colors">Create an account</button>
+                        </p>
+                    </form>
                 </div>
-                <div>
-                    <input type="password" placeholder="Password" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
-                </div>
-                <button type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 rounded-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors">
-                    Sign In / Register
-                </button>
-            </form>
+            </div>
         </div>
 
         <!-- Payment Modal -->
@@ -572,7 +665,16 @@
                     <i data-lucide="lock" class="fa-solid fa-lock w-6 h-6"></i>
                 </div>
                 <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Premium Access</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Subscribe to view PDF editions. Just ₹10/month.</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Subscribe to view PDF editions. Limited offer: ₹10/month instead of the ₹30/month MRP.</p>
+            </div>
+
+            <div class="mb-5 rounded-xl border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-900/20 p-4 text-center">
+                <p class="text-xs font-bold uppercase tracking-wide text-orange-600 dark:text-orange-300">Monthly subscription</p>
+                <div class="mt-2 flex flex-wrap items-baseline justify-center gap-2">
+                    <span class="text-sm text-slate-500 dark:text-slate-400 line-through">MRP ₹30/month</span>
+                    <span class="text-2xl font-black text-slate-900 dark:text-white">₹10/month</span>
+                </div>
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Limited-offer price for fast access to the current edition and archive.</p>
             </div>
 
             <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 text-center flex flex-col items-center">
@@ -606,6 +708,7 @@
         // ==========================================
         const CONFIG = {
             TODAYS_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
+            MONTHLY_MRP: "₹30/month",
             SUBSCRIPTION_PRICE: "₹10/month",
             UPI_ID: "indiangeostrat@okicici",
             CONTACT_EMAIL: "indiangeostrat@gmail.com"
@@ -616,7 +719,8 @@
             user: null,
             hasSubscription: false,
             currentMonth: 'August',
-            pendingLink: null
+            pendingLink: null,
+            authMode: 'login'
         };
 
         // Helper function to safely render/refresh Lucide icons across the document
@@ -628,6 +732,38 @@
             } catch (err) {
                 console.warn('Lucide icon initialization skipped/failed:', err);
             }
+        }
+
+        function setAuthMode(mode) {
+            state.authMode = mode === 'signup' ? 'signup' : 'login';
+            const isSignup = state.authMode === 'signup';
+            const loginTab = document.getElementById('auth-tab-login');
+            const signupTab = document.getElementById('auth-tab-signup');
+            const nameField = document.getElementById('signup-name-field');
+            const passwordField = document.getElementById('auth-password');
+            const forgotLink = document.getElementById('forgot-password-link');
+
+            document.getElementById('auth-eyebrow').innerText = isSignup ? 'New subscription' : 'Subscriber login';
+            document.getElementById('auth-title').innerText = isSignup ? 'Create your account' : 'Welcome back';
+            document.getElementById('auth-subtitle').innerText = isSignup ? 'Start your subscription and continue to the limited ₹10/month offer.' : 'Sign in to continue to your newspaper subscription.';
+            document.getElementById('google-auth-label').innerText = isSignup ? 'Sign up with Google' : 'Continue with Google';
+            document.getElementById('auth-submit-label').innerText = isSignup ? 'Sign up' : 'Log in';
+            document.getElementById('auth-switch-copy').innerText = isSignup ? 'Already have an account?' : 'New to Indian Geostrat?';
+            document.getElementById('auth-switch-button').innerText = isSignup ? 'Log in' : 'Create an account';
+            document.getElementById('auth-switch-button').setAttribute('onclick', `setAuthMode('${isSignup ? 'login' : 'signup'}')`);
+            document.getElementById('auth-consent-label').innerText = isSignup ? 'I agree to create my subscriber account.' : 'Keep me signed in on this device.';
+
+            nameField.classList.toggle('hidden', !isSignup);
+            forgotLink.classList.toggle('hidden', isSignup);
+            passwordField.setAttribute('autocomplete', isSignup ? 'new-password' : 'current-password');
+            passwordField.setAttribute('placeholder', isSignup ? 'Create a password' : 'Enter your password');
+
+            loginTab.classList.toggle('auth-tab-active', !isSignup);
+            loginTab.classList.toggle('text-slate-600', isSignup);
+            loginTab.classList.toggle('dark:text-slate-300', isSignup);
+            signupTab.classList.toggle('auth-tab-active', isSignup);
+            signupTab.classList.toggle('text-slate-600', !isSignup);
+            signupTab.classList.toggle('dark:text-slate-300', !isSignup);
         }
 
         // Initialize icons on DOM content ready
@@ -816,9 +952,10 @@
         // AUTH & PAYMENT FLOW
         // ==========================================
         
-        function openAuthModal() {
+        function openAuthModal(mode = 'login') {
             const overlay = document.getElementById('modal-overlay');
             const authModal = document.getElementById('modal-auth');
+            setAuthMode(mode);
             
             overlay.classList.remove('hidden');
             authModal.classList.remove('hidden');
@@ -857,14 +994,16 @@
         }
 
         function mockLogin(provider) {
+            const wasSignup = state.authMode === 'signup';
             state.user = { name: 'Geostrat Reader' };
             document.getElementById('auth-btn').innerHTML = `
                 <i data-lucide="user" class="fa-solid fa-user w-4 h-4 mr-2 inline"></i> Profile
             `;
             refreshIcons();
             
-            if (state.pendingLink) {
+            if (wasSignup || state.pendingLink) {
                 openPaymentModal();
+                showToast(`${wasSignup ? 'Account created' : 'Signed in'} via ${provider === 'google' ? 'Google' : 'Email'}. Complete your subscription to continue.`);
             } else {
                 closeModals();
                 showToast(`Successfully logged in via ${provider === 'google' ? 'Google' : 'Email'}`);
