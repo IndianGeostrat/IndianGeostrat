@@ -1,784 +1,952 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Geostrat | Premium Newspaper Access</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Indian Geostrat | Regional & International News</title>
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Dual Loading: FontAwesome 6 + Lucide for 100% Reliability) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        saffron: '#FF9933',
+                        indiaGreen: '#138808',
+                        brand: {
+                            50: '#f4f6f8',
+                            100: '#e3e9f0',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
     <style>
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F3E5AB;
-            --dark-bg: #050510;
-            --glass-bg: rgba(10, 15, 30, 0.6);
-            --glass-border: rgba(212, 175, 55, 0.2);
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: white;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, .brand-font {
-            font-family: 'Cinzel', serif;
-        }
-
-        /* 3D Background Canvas */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Glassmorphism utility */
-        .glass {
-            background: var(--glass-bg);
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .gold-text {
-            background: linear-gradient(to right, var(--gold-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .gold-border {
-            border-color: var(--gold);
-        }
-
-        .gold-btn {
-            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #F3E5AB 100%);
-            color: #000;
-            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
-        .gold-btn:hover {
-            box-shadow: 0 0 15px var(--gold);
-            transform: translateY(-2px);
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Hide sections by default */
-        .page-section {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        
-        .page-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 4px;
-        }
-
-        /* Loading Screen */
-        #loading-screen {
+        #loader-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #ffffff;
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: opacity 1s ease-out;
+            justify-content: center;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
+        
+        .dark #loader-container {
+            background-color: #020617;
         }
 
-        .loader-ring {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: var(--gold);
-            border-bottom-color: var(--gold);
-            animation: spin 2s linear infinite;
-            position: relative;
+        #canvas-container {
+            width: 200px;
+            height: 200px;
         }
 
-        .loader-ring::before {
-            content: '';
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            border-left-color: #ffffff;
-            border-right-color: #ffffff;
-            animation: spin 1.5s linear infinite reverse;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(0.9); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
-
-        /* Floating AI Chatbot */
-        #ai-chatbot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 50;
+        .newspaper-card {
             transition: all 0.3s ease;
         }
-        
-        .chat-window {
-            height: 400px;
-            width: 320px;
-            display: none;
-            flex-direction: column;
+        .newspaper-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
         }
-        
-        .chat-window.open {
-            display: flex;
-        }
-        
-        .chat-message { margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; }
-        .chat-message.bot { background: rgba(255,255,255,0.1); align-self: flex-start; border-bottom-left-radius: 0; }
-        .chat-message.user { background: var(--gold); color: #000; align-self: flex-end; border-bottom-right-radius: 0; }
 
-        .toast {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold);
-            color: black;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 600;
-            z-index: 10000;
-            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        /* Hide scrollbar for horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        .toast.show { bottom: 30px; }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-brand-50 dark:bg-brand-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col">
 
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loader-ring"></div>
-        <h2 class="mt-6 text-2xl brand-font gold-text tracking-widest text-center">INDIAN GEOSTRAT</h2>
-        <p class="mt-2 text-sm text-gray-400">Initializing Space Protocol...</p>
+    <!-- 3D Loader Screen -->
+    <div id="loader-container">
+        <div id="canvas-container"></div>
+        <h2 class="mt-6 font-serif text-2xl font-bold tracking-widest text-slate-800 dark:text-white uppercase">
+            Indian Geostrat
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-sans tracking-wide">Loading Premium Experience...</p>
     </div>
 
-    <!-- 3D Background -->
-    <canvas id="bg-canvas"></canvas>
-
     <!-- Navigation -->
-    <nav class="fixed w-full z-40 glass top-0 transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 glass-nav transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center cursor-pointer" onclick="navigate('home')">
-                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-12 w-12 rounded-full border-2 gold-border shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                    <span class="ml-3 text-xl font-bold brand-font gold-text hidden sm:block">INDIAN GEOSTRAT</span>
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="navigate('home')">
+                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-12 w-12 rounded-full object-cover shadow-sm mr-3 border-2 border-slate-200 dark:border-slate-700">
+                    <span class="font-serif font-black text-2xl tracking-tight text-slate-900 dark:text-white">INDIAN GEOSTRAT</span>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#" onclick="navigate('home')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Home</a>
-                    <a href="#" onclick="navigate('about')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">About Us</a>
-                    <a href="#" onclick="navigate('dashboard')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Newspapers</a>
-                    <a href="#" onclick="navigate('contact')" class="text-gray-300 hover:text-[#D4AF37] transition-colors font-semibold">Contact Us</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="auth-btn" onclick="navigate('auth')" class="glass px-6 py-2 rounded-full font-semibold hover:bg-white/10 transition-all text-[#D4AF37] border border-[#D4AF37]">Login / Sign Up</button>
-                    <!-- Mobile menu button -->
-                    <button class="md:hidden text-gray-300 hover:text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                        <i class="fas fa-bars text-2xl"></i>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <button onclick="navigate('home')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron font-medium transition-colors">Home</button>
+                    <button onclick="navigate('about')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron font-medium transition-colors">About Us</button>
+                    <button onclick="navigate('contact')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron font-medium transition-colors">Contact Us</button>
+                    
+                    <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
+                    
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center">
+                        <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden text-slate-600"></i>
+                        <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block text-slate-300"></i>
+                    </button>
+                    
+                    <button id="auth-btn" onclick="openAuthModal()" class="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md">
+                        Sign In / Subscribe
+                    </button>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center gap-4">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center">
+                        <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden text-slate-600"></i>
+                        <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block text-slate-300"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-slate-600 dark:text-slate-300">
+                        <i data-lucide="menu" class="fa-solid fa-bars w-6 h-6"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass border-t border-[#D4AF37]/30">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#" onclick="navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Home</a>
-                <a href="#" onclick="navigate('about'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">About Us</a>
-                <a href="#" onclick="navigate('dashboard'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Newspapers</a>
-                <a href="#" onclick="navigate('contact'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-[#D4AF37]">Contact Us</a>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <button onclick="navigate('home')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Home</button>
+                <button onclick="navigate('about')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">About Us</button>
+                <button onclick="navigate('contact')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Contact Us</button>
+                <button onclick="openAuthModal()" class="block w-full text-center mt-4 bg-saffron hover:bg-orange-500 text-white px-3 py-3 rounded-md font-bold transition-colors">Sign In / Subscribe</button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Container -->
-    <main class="pt-24 pb-16 min-h-screen flex flex-col justify-between">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow">
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pt-20">
+        
+        <!-- === HOME PAGE === -->
+        <section id="page-home" class="page-section animate-fade-in block">
             
-            <!-- HOME SECTION -->
-            <section id="home-section" class="page-section active pt-10">
-                <div class="text-center max-w-4xl mx-auto mt-10 lg:mt-20">
-                    <h1 class="text-5xl md:text-7xl font-bold mb-6 brand-font leading-tight">
-                        Explore the World with <br><span class="gold-text">Indian Geostrat</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                        Premium access to popular Indian and International newspapers in English, Bengali, and Hindi. Uploaded date-wise directly from Google Drive.
+            <!-- Hero Section -->
+            <div class="relative bg-white dark:bg-brand-900 overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <div class="max-w-7xl mx-auto">
+                    <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 bg-white dark:bg-brand-900 pt-10 sm:pt-16 lg:pt-20 px-4 sm:px-6 lg:px-8">
+                        <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
+                            <div class="sm:text-center lg:text-left">
+                                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider mb-4 border border-orange-200 dark:border-orange-800/50">PREMIUM EDITORIAL</span>
+                                <h1 class="text-4xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-5xl md:text-6xl font-serif leading-tight">
+                                    <span class="block xl:inline">Regional & Global</span>
+                                    <span class="block text-saffron">Perspectives.</span>
+                                </h1>
+                                <p class="mt-3 text-base text-slate-500 dark:text-slate-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-sans leading-relaxed">
+                                    Access exclusive regional, national, and international newspapers in English, Bengali, and Hindi. Subscribe for unparalleled geopolitical insights for just ₹10/month.
+                                </p>
+                                <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
+                                    <div class="rounded-md shadow">
+                                        <button onclick="handleReadToday()" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:py-4 md:text-lg md:px-10 transition-colors">
+                                            Read Today's Edition
+                                        </button>
+                                    </div>
+                                    <div class="mt-3 sm:mt-0">
+                                        <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="w-full flex items-center justify-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-base font-medium rounded-md text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 md:py-4 md:text-lg md:px-10 transition-colors">
+                                            Explore Archive
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+                    <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 shadow-2xl rounded-l-3xl my-8 lg:my-0 object-center" src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Global Vision">
+                    <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-brand-900 dark:via-brand-900/80 lg:block hidden"></div>
+                </div>
+            </div>
+
+            <!-- Newspaper Archive Explorer -->
+            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-base text-saffron font-semibold tracking-wide uppercase">The Archives</h2>
+                    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl font-serif">
+                        Explore Past Editions
                     </p>
-                    <div class="glass p-8 rounded-3xl inline-block border-2 gold-border shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-                        <h2 class="text-3xl font-bold mb-2">Just <span class="gold-text">₹10</span> / Month</h2>
-                        <p class="text-gray-400 mb-6">Unlimited PDF Access to Global Geopolitics & News</p>
-                        <button onclick="handleAccessClick()" class="gold-btn px-10 py-4 rounded-full text-lg font-bold shadow-lg w-full sm:w-auto">
-                            <i class="fas fa-book-open mr-2"></i> Access Newspapers Now
-                        </button>
-                    </div>
+                    <p class="mt-4 max-w-2xl text-xl text-slate-500 dark:text-slate-400 mx-auto">
+                        Access our comprehensive catalog dating from August 2026 to December 2026.
+                    </p>
                 </div>
-            </section>
 
-            <!-- ABOUT US SECTION -->
-            <section id="about-section" class="page-section pt-10">
-                <div class="max-w-5xl mx-auto">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center brand-font gold-text">About Us</h2>
-                    
-                    <div class="glass rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10">
-                        <div class="w-full md:w-1/3 flex justify-center">
-                            <div class="relative">
-                                <div class="absolute inset-0 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] rounded-2xl transform rotate-6 opacity-50 blur-lg"></div>
-                                <img src="Gemini_Generated_Image_45zuxk45zuxk45zu-no-watermark-Picsart-AiImageEnhancer.jpg" alt="Srimon Banik" class="relative z-10 w-64 h-auto rounded-2xl border-4 gold-border object-cover shadow-2xl">
-                            </div>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <!-- Year / Month Tabs -->
+                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <span class="font-bold text-slate-700 dark:text-slate-300">Year:</span>
+                            <button class="px-4 py-1.5 rounded-full bg-slate-800 text-white text-sm font-medium">2026</button>
                         </div>
-                        <div class="w-full md:w-2/3">
-                            <h3 class="text-3xl font-bold mb-2">Srimon Banik</h3>
-                            <p class="text-[#D4AF37] font-semibold mb-6 tracking-wider uppercase">Founder & Creator</p>
-                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                Welcome to Indian Geostrat. I created this platform with a singular vision: to democratize access to premium geopolitical and global news. By curating top-tier Indian and International newspapers across English, Bengali, and Hindi, we ensure that staying informed doesn't come with exorbitant costs.
-                            </p>
-                            <p class="text-gray-300 text-lg leading-relaxed mb-8">
-                                For just ₹10 a month, dive deep into daily insights beautifully organized and delivered right to your fingertips via seamless Google Drive integration.
-                            </p>
-                            <div class="flex flex-wrap gap-4">
-                                <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-youtube"></i></a>
-                                <a href="https://x.com/IndianGeostrat" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-twitter"></i></a>
-                                <a href="www.linkedin.com/in/srimon-banik-সৃমন-বণিক-4b8989221" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-[#D4AF37] hover:text-black transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
+                        <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-2" id="month-tabs">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Dates Grid -->
+                    <div class="p-6 sm:p-8 bg-slate-50 dark:bg-brand-950/50 min-h-[400px]">
+                        <h3 id="current-month-title" class="text-xl font-serif font-bold text-slate-800 dark:text-slate-200 mb-6 border-b border-slate-200 dark:border-slate-700 pb-2">August 2026</h3>
+                        <div id="dates-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                            <!-- Populated via JS -->
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- CONTACT US SECTION -->
-            <section id="contact-section" class="page-section pt-10">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6 brand-font gold-text">Contact Us</h2>
-                    <p class="text-gray-300 mb-12">Have questions? Send us a message directly to srimonbanik2007@gmail.com</p>
-                    
-                    <div class="glass rounded-3xl p-8 md:p-12 text-left">
-                        <form action="https://formsubmit.co/srimonbanik2007@gmail.com" method="POST" onsubmit="showToast('Message sent successfully via FormSubmit!'); return true;">
-                            <!-- FormSubmit Configuration -->
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_subject" value="New Contact from Indian Geostrat Website">
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
-                                    <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="John Doe">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                                    <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="john@example.com">
+            </div>
+            
+            <!-- Features/Value prop -->
+            <div class="bg-slate-900 py-16 dark:bg-black">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 class="text-3xl font-extrabold text-white font-serif">Why Subscribe to Indian Geostrat?</h2>
+                    <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="pt-6">
+                            <div class="flow-root bg-slate-800 rounded-lg px-6 pb-8 h-full">
+                                <div class="-mt-6">
+                                    <div>
+                                        <span class="inline-flex items-center justify-center p-3 bg-saffron rounded-md shadow-lg">
+                                            <i data-lucide="globe" class="fa-solid fa-globe h-6 w-6 text-white flex items-center justify-center"></i>
+                                        </span>
+                                    </div>
+                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Trilingual Coverage</h3>
+                                    <p class="mt-5 text-base text-slate-400">
+                                        Extensive reporting in English, Bengali, and Hindi ensuring you receive nuanced regional and international perspectives.
+                                    </p>
                                 </div>
                             </div>
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                                <textarea name="message" rows="5" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors" placeholder="How can we help you?"></textarea>
-                            </div>
-                            <button type="submit" class="gold-btn w-full py-4 rounded-xl font-bold text-lg shadow-lg">Send Message</button>
-                            <p class="text-xs text-gray-500 mt-4 text-center"><i>Note: Connected to Google Forms / Email backend via secure submission.</i></p>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AUTH SECTION (Login/Signup) -->
-            <section id="auth-section" class="page-section pt-10">
-                <div class="max-w-md mx-auto">
-                    <div class="glass rounded-3xl p-8 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
-                        <div class="text-center mb-8">
-                            <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full border-2 gold-border mb-4">
-                            <h2 class="text-3xl font-bold brand-font gold-text" id="auth-title">Welcome Back</h2>
-                            <p class="text-sm text-gray-400 mt-2">Sign in to access premium newspapers</p>
                         </div>
-
-                        <div class="space-y-4">
-                            <button onclick="simulateLogin('Google')" class="w-full bg-white text-gray-800 font-bold py-3 px-4 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors">
-                                <i class="fab fa-google text-red-500 mr-3"></i> Continue with Google
-                            </button>
-                            
-                            <div class="flex items-center my-6">
-                                <div class="flex-grow border-t border-gray-600"></div>
-                                <span class="px-4 text-gray-500 text-sm">OR</span>
-                                <div class="flex-grow border-t border-gray-600"></div>
+                        <div class="pt-6">
+                            <div class="flow-root bg-slate-800 rounded-lg px-6 pb-8 h-full">
+                                <div class="-mt-6">
+                                    <div>
+                                        <span class="inline-flex items-center justify-center p-3 bg-indiaGreen rounded-md shadow-lg">
+                                            <i data-lucide="book-open" class="fa-solid fa-book-open h-6 w-6 text-white flex items-center justify-center"></i>
+                                        </span>
+                                    </div>
+                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">High-Quality PDFs</h3>
+                                    <p class="mt-5 text-base text-slate-400">
+                                        Crisp, high-resolution digital copies of daily newspapers delivered securely via Google Drive infrastructure.
+                                    </p>
+                                </div>
                             </div>
-
-                            <div>
-                                <input type="email" id="auth-email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-4 focus:outline-none focus:border-[#D4AF37]" placeholder="Email Address">
-                                <input type="password" id="auth-pass" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-6 focus:outline-none focus:border-[#D4AF37]" placeholder="Password">
-                                <button onclick="simulateLogin('Email')" class="gold-btn w-full py-3 rounded-xl font-bold shadow-lg">Sign In / Sign Up</button>
+                        </div>
+                        <div class="pt-6">
+                            <div class="flow-root bg-slate-800 rounded-lg px-6 pb-8 h-full">
+                                <div class="-mt-6">
+                                    <div>
+                                        <span class="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
+                                            <i data-lucide="credit-card" class="fa-solid fa-credit-card h-6 w-6 text-white flex items-center justify-center"></i>
+                                        </span>
+                                    </div>
+                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Incredible Value</h3>
+                                    <p class="mt-5 text-base text-slate-400">
+                                        Just ₹10 per month via convenient Google Pay UPI. Premium geopolitical insights accessible to everyone.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- DASHBOARD SECTION (Protected) -->
-            <section id="dashboard-section" class="page-section pt-10">
-                <div class="flex justify-between items-end mb-8">
+        <!-- === ABOUT US PAGE === -->
+        <section id="page-about" class="page-section hidden py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">About Indian Geostrat</h1>
+                <div class="mt-4 w-24 h-1 bg-saffron mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="prose prose-lg dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300">
+                <p class="lead text-2xl font-serif text-slate-800 dark:text-slate-200 mb-8 text-center italic">
+                    "Bridging the gap between regional developments and global geopolitical shifts."
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center my-12">
                     <div>
-                        <h2 class="text-4xl font-bold brand-font gold-text mb-2">Newspaper Archive</h2>
-                        <p class="text-gray-300">Access daily editions from Google Drive.</p>
+                        <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Compass" class="rounded-2xl shadow-xl w-full border border-slate-200 dark:border-slate-700">
                     </div>
-                    <div id="subscription-status" class="glass px-4 py-2 rounded-full text-sm font-semibold border-red-500/50 text-red-400">
-                        <i class="fas fa-lock mr-2"></i> Subscription Required
+                    <div>
+                        <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-4">Our Mission</h3>
+                        <p class="mb-4">
+                            Indian Geostrat was founded with a singular vision: to democratize access to high-quality, comprehensive news coverage across linguistic boundaries. We recognize that true geopolitical understanding requires diverse perspectives.
+                        </p>
+                        <p>
+                            By curating premium daily newspapers in English, Bengali, and Hindi, we provide our readers with a holistic view of regional, national, and international affairs.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Grid of fake folders simulating Google Drive dates -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <!-- Javascript will populate this -->
+                <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mt-12 mb-6">Editorial Standards</h3>
+                <p class="mb-6">
+                    Our platform ensures that you receive uncompromised, high-fidelity digital replicas of daily editions. We maintain a strict focus on providing organized, easily accessible archives without the clutter of traditional news aggregators.
+                </p>
+                
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 mt-12">
+                    <h3 class="text-xl font-bold font-serif text-slate-900 dark:text-white mb-4">The Subscription Model</h3>
+                    <p class="mb-0">
+                        At a highly subsidized rate of <strong>₹10/month</strong>, we rely on the support of our dedicated readership. This minimal barrier to entry ensures our operational sustainability while keeping vital information accessible to students, researchers, and professionals alike.
+                    </p>
                 </div>
-            </section>
+            </div>
+        </section>
 
-        </div>
+        <!-- === CONTACT US PAGE === -->
+        <section id="page-contact" class="page-section hidden py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
+                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400">We'd love to hear from you. Reach out with inquiries, feedback, or support requests.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <!-- Contact Info -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-8 border border-slate-200 dark:border-slate-800">
+                    <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-6">Headquarters</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="fa-solid fa-location-dot w-6 h-6 text-saffron mt-1 mr-4 flex-shrink-0"></i>
+                            <span class="text-slate-600 dark:text-slate-300">
+                                Street No. 18, DN Block, Sector V,<br>
+                                Salt Lake City, Calcutta,<br>
+                                West Bengal, 700091
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="fa-solid fa-envelope w-6 h-6 text-saffron mr-4 flex-shrink-0"></i>
+                            <a href="mailto:indiangeostrat@gmail.com" class="text-slate-600 dark:text-slate-300 hover:text-saffron transition-colors">
+                                indiangeostrat@gmail.com
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-10">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">Connect With Us</h4>
+                        <div class="flex space-x-3">
+                            <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" title="YouTube" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-slate-700/80 transition-all flex items-center justify-center">
+                                <i data-lucide="youtube" class="fa-brands fa-youtube w-4 h-4"></i>
+                            </a>
+                            <a href="https://x.com/IndianGeostrat" target="_blank" title="X (Twitter)" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-all flex items-center justify-center">
+                                <i data-lucide="twitter" class="fa-brands fa-x-twitter w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.instagram.com/indiangeostrat" target="_blank" title="Instagram" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700/80 transition-all flex items-center justify-center">
+                                <i data-lucide="instagram" class="fa-brands fa-instagram w-4 h-4"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" title="LinkedIn" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700/80 transition-all flex items-center justify-center">
+                                <i data-lucide="linkedin" class="fa-brands fa-linkedin-in w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Form Simulation -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-8 border border-slate-200 dark:border-slate-800">
+                    <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-6">Send a Message</h3>
+                    <!-- Note: This form visually simulates Google Form behavior to direct to email -->
+                    <form id="contact-form" class="space-y-4" onsubmit="handleContactSubmit(event)">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+                            <input type="text" required class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                            <input type="email" required class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Subject</label>
+                            <input type="text" required class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Message</label>
+                            <textarea rows="4" required class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3 px-4 rounded-md transition-colors mt-4">
+                            Send
+                        </button>
+                    </form>
+                    <div id="contact-success" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-md border border-green-200 dark:border-green-800 flex items-center">
+                        <i data-lucide="check-circle" class="fa-solid fa-circle-check w-5 h-5 mr-2"></i>
+                        Message recorded. We will reply to your email shortly.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Small Social Media Bar at bottom of Contact Us page -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
+                <div class="flex items-center space-x-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <i data-lucide="share-2" class="fa-solid fa-share-nodes w-4 h-4 text-saffron"></i>
+                    <span>Follow Indian Geostrat on official social platforms:</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" title="YouTube" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <i data-lucide="youtube" class="fa-brands fa-youtube w-3.5 h-3.5 text-red-500"></i>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="https://x.com/IndianGeostrat" target="_blank" title="X (Twitter)" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <i data-lucide="twitter" class="fa-brands fa-x-twitter w-3.5 h-3.5 text-slate-800 dark:text-slate-200"></i>
+                        <span>X</span>
+                    </a>
+                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" title="Instagram" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <i data-lucide="instagram" class="fa-brands fa-instagram w-3.5 h-3.5 text-pink-500"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" title="LinkedIn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <i data-lucide="linkedin" class="fa-brands fa-linkedin-in w-3.5 h-3.5 text-blue-500"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Payment Modal (Hidden by default) -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
-        <div class="glass rounded-3xl p-8 max-w-md w-full relative border-2 gold-border shadow-[0_0_50px_rgba(212,175,55,0.2)]">
-            <button onclick="closeModal('payment-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
-            
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-bold brand-font gold-text mb-2">Unlock Premium Access</h3>
-                <p class="text-gray-300">Pay <b class="text-white text-lg">₹10/month</b> to access all newspapers.</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl mb-6 flex justify-center">
-                <img src="image_ca9d6d.jpg" alt="Google Pay QR Code" class="w-48 h-48 object-contain">
-            </div>
-            
-            <div class="bg-black/40 rounded-xl p-4 text-center mb-6 border border-white/10">
-                <p class="text-sm text-gray-400 mb-1">UPI ID</p>
-                <div class="flex items-center justify-center">
-                    <p class="font-mono text-lg font-bold text-[#D4AF37]" id="upi-id">srimonbanik2007@okicici</p>
-                    <button onclick="copyUPI()" class="ml-3 text-gray-400 hover:text-white"><i class="far fa-copy"></i></button>
-                </div>
-            </div>
-
-            <button onclick="confirmPayment()" class="gold-btn w-full py-4 rounded-xl font-bold text-lg shadow-lg">I Have Paid ₹10</button>
-        </div>
-    </div>
-
-    <!-- Common Footer -->
-    <footer class="glass border-t border-[#D4AF37]/30 mt-auto relative z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <!-- Branding & Info -->
+    <!-- Footer -->
+    <footer class="bg-slate-900 dark:bg-black border-t border-slate-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Branding & Socials -->
                 <div>
                     <div class="flex items-center mb-6">
-                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-[#D4AF37]">
-                        <span class="ml-3 text-xl font-bold brand-font gold-text">INDIAN GEOSTRAT</span>
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-10 w-10 rounded-full mr-3 border border-slate-700">
+                        <span class="font-serif font-black text-xl tracking-tight text-white">INDIAN GEOSTRAT</span>
                     </div>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Your premium portal to the world's most vital geopolitical news and regional daily newspapers. Read English, Bengali, and Hindi papers conveniently.</p>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><i class="fas fa-map-marker-alt text-[#D4AF37] w-5"></i> Steet no. 18, DN Block, Sector V, Salt Lake City, Calcutta, West Bengal, 700091</li>
-                        <li><i class="fas fa-envelope text-[#D4AF37] w-5"></i> srimonbanik2007@gmail.com</li>
-                        <li><i class="fas fa-phone text-[#D4AF37] w-5"></i> +91 87877 85791</li>
+                    <p class="text-slate-400 text-sm mb-6">Regional, national, and international newspapers delivered daily. Premium insights, accessible to all.</p>
+                    
+                    <!-- Small Social Media Links with Icons -->
+                    <div class="flex items-center space-x-2">
+                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" title="YouTube" class="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-red-400 transition-all border border-slate-700/60 flex items-center justify-center">
+                            <span class="sr-only">YouTube</span>
+                            <i data-lucide="youtube" class="fa-brands fa-youtube w-4 h-4"></i>
+                        </a>
+                        <a href="https://x.com/IndianGeostrat" target="_blank" title="X (Twitter)" class="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 flex items-center justify-center">
+                            <span class="sr-only">X</span>
+                            <i data-lucide="twitter" class="fa-brands fa-x-twitter w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" title="Instagram" class="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-pink-400 transition-all border border-slate-700/60 flex items-center justify-center">
+                            <span class="sr-only">Instagram</span>
+                            <i data-lucide="instagram" class="fa-brands fa-instagram w-4 h-4"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" title="LinkedIn" class="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-blue-400 transition-all border border-slate-700/60 flex items-center justify-center">
+                            <span class="sr-only">LinkedIn</span>
+                            <i data-lucide="linkedin" class="fa-brands fa-linkedin-in w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-sm font-semibold text-white tracking-wider uppercase mb-4">Contact Information</h3>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="fa-solid fa-location-dot w-4 h-4 mr-2 mt-0.5 text-slate-500"></i>
+                            <span>Street No. 18, DN Block, Sector V,<br>Salt Lake City, Calcutta,<br>West Bengal, 700091</span>
+                        </li>
+                        <li class="flex items-center mt-4">
+                            <i data-lucide="mail" class="fa-solid fa-envelope w-4 h-4 mr-2 text-slate-500"></i>
+                            <a href="mailto:indiangeostrat@gmail.com" class="hover:text-white transition-colors">indiangeostrat@gmail.com</a>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Location Map -->
-                <div class="h-64 rounded-2xl overflow-hidden border border-white/10 relative">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-
-                <!-- Social Links (Ordered as requested) -->
-                <div>
-                    <h3 class="text-lg font-bold mb-6 text-white border-b border-[#D4AF37]/30 pb-2 inline-block">Connect With Us</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube text-[#ff0000] w-6"></i> YouTube</a>
-                        <!-- Updated X link to have consistent branding style with the others -->
-                        <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-[#1DA1F2] w-6"></i> Twitter (X)</a>
-                        <a href="https://www.reddit.com/user/Both_Put6158/" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-reddit-alien text-[#FF5700] w-6"></i> Reddit</a>
-                        <a href="https://web.telegram.org/@SrimonBanik" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-telegram text-[#0088cc] w-6"></i> Telegram</a>
-                        <a href="https://www.snapchat.com/@srimonbanik" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-snapchat-ghost text-[#FFFC00] w-6"></i> Snapchat</a>
-                        <a href="https://www.instagram.com/srimonbanik/" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-[#E1306C] w-6"></i> Instagram</a>
-                        <a href="https://wa.me/message/VJW2JNMURWFDN1" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-whatsapp text-[#25D366] w-6"></i> WhatsApp</a>
-                        <a href="https://www.linkedin.com/in/srimon-banik-সৃমন-বণিক-4b8989221" target="_blank" class="flex items-center text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin text-[#0077b5] w-6"></i> LinkedIn</a>
-                    </div>
+                <!-- Map -->
+                <div class="rounded-lg overflow-hidden border border-slate-700 bg-slate-800 h-48">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                 </div>
             </div>
-            <div class="mt-12 pt-6 border-t border-white/5 text-center text-gray-500 text-sm">
-                &copy; 2026 Indian Geostrat. Created by Srimon Banik. All rights reserved.
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <p>&copy; 2026 Indian Geostrat. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 space-x-4">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Floating AI Chatbot -->
-    <div id="ai-chatbot">
-        <!-- Chat Window -->
-        <div id="chat-window" class="chat-window glass rounded-2xl mb-4 overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-            <div class="bg-gradient-to-r from-[#1a1a2e] to-[#0f0f1a] p-4 border-b border-[#D4AF37]/30 flex justify-between items-center">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-[#D4AF37] flex items-center justify-center mr-2">
-                        <i class="fas fa-robot text-black"></i>
-                    </div>
-                    <span class="font-bold text-white">Geostrat AI</span>
-                </div>
-                <button onclick="toggleChat()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
-            </div>
-            <div id="chat-messages" class="flex-grow p-4 overflow-y-auto flex flex-col">
-                <div class="chat-message bot">
-                    Hello! I'm the Geostrat AI. Ask me about our newspaper subscriptions, world news topics, or navigating this site.
-                </div>
-            </div>
-            <div class="p-3 border-t border-white/10 bg-black/40 flex">
-                <input type="text" id="chat-input" class="flex-grow bg-white/5 border border-white/10 rounded-l-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-                <button onclick="sendChatMessage()" class="gold-btn px-4 py-2 rounded-r-lg"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-        <!-- Chat Toggle Button -->
-        <button id="chat-toggle" onclick="toggleChat()" class="gold-btn w-14 h-14 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center justify-center text-2xl float-right">
-            <i class="fas fa-comment-dots"></i>
-        </button>
+    <!-- Custom Message Box (Replaces Alert) -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-lg shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-[100] flex items-center max-w-sm">
+        <i data-lucide="info" class="fa-solid fa-circle-info w-5 h-5 mr-3 text-saffron"></i>
+        <span id="toast-message" class="font-medium text-sm"></span>
     </div>
 
-    <!-- Custom Toast Notification -->
-    <div id="toast" class="toast">Message here</div>
+    <!-- Modals Overlay -->
+    <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        
+        <!-- Auth Modal -->
+        <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i data-lucide="x" class="fa-solid fa-xmark w-5 h-5"></i>
+            </button>
+            <div class="text-center mb-8">
+                <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 mx-auto rounded-full mb-4 border border-slate-200 dark:border-slate-700">
+                <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Welcome Back</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to access your subscriptions.</p>
+            </div>
+            
+            <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors mb-4 font-medium">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                <span>Continue with Google</span>
+            </button>
+            
+            <div class="relative flex items-center py-2">
+                <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                <span class="flex-shrink-0 px-4 text-xs text-slate-400 uppercase tracking-wide">or</span>
+                <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); mockLogin('email');" class="mt-4 space-y-4">
+                <div>
+                    <input type="email" placeholder="Email address" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-white outline-none dark:text-white transition-all">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 rounded-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors">
+                    Sign In / Register
+                </button>
+            </form>
+        </div>
+
+        <!-- Payment Modal -->
+        <div id="modal-payment" class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i data-lucide="x" class="fa-solid fa-xmark w-5 h-5"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 text-saffron mb-4">
+                    <i data-lucide="lock" class="fa-solid fa-lock w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Premium Access</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Subscribe to view PDF editions. Just ₹10/month.</p>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 text-center flex flex-col items-center">
+                <img src="image_ca9d6d.jpg" alt="UPI QR Code" class="w-48 h-48 rounded-lg shadow-sm mb-4 border-2 border-white dark:border-slate-700">
+                <p class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Scan to pay with Google Pay</p>
+                <div class="flex items-center bg-white dark:bg-slate-900 px-3 py-1.5 rounded border border-slate-200 dark:border-slate-700 cursor-pointer" onclick="copyUPI()">
+                    <span id="upi-id" class="text-xs font-mono text-slate-800 dark:text-slate-200 font-bold mr-2">indiangeostrat@okicici</span>
+                    <i data-lucide="copy" class="fa-solid fa-copy w-4 h-4 text-slate-400 hover:text-saffron"></i>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="simulatePaymentVerification()" class="w-full bg-saffron hover:bg-orange-500 text-white font-bold py-3 rounded-lg transition-colors flex justify-center items-center">
+                    <span id="btn-text">I have Paid ₹10</span>
+                    <i id="btn-spinner" data-lucide="loader-2" class="fa-solid fa-spinner animate-spin w-5 h-5 hidden ml-2"></i>
+                </button>
+                <p class="text-xs text-center text-slate-500 dark:text-slate-400">
+                    Payment verification may take a few moments. Contact support if issues persist.
+                </p>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
+    <!-- Three.js for 3D Loader -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <script>
-        // State Management
-        let currentUser = null;
-        let isSubscribed = false;
+        // ==========================================
+        // CONFIGURATION (Easily Updatable Variables)
+        // ==========================================
+        const CONFIG = {
+            TODAYS_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
+            SUBSCRIPTION_PRICE: "₹10/month",
+            UPI_ID: "indiangeostrat@okicici",
+            CONTACT_EMAIL: "indiangeostrat@gmail.com"
+        };
 
-        // --- 1. Three.js Space Background ---
-        function initSpaceBackground() {
-            const canvas = document.getElementById('bg-canvas');
+        // State Management
+        const state = {
+            user: null,
+            hasSubscription: false,
+            currentMonth: 'August',
+            pendingLink: null
+        };
+
+        // Helper function to safely render/refresh Lucide icons across the document
+        function refreshIcons() {
+            try {
+                if (typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
+            } catch (err) {
+                console.warn('Lucide icon initialization skipped/failed:', err);
+            }
+        }
+
+        // Initialize icons on DOM content ready
+        document.addEventListener('DOMContentLoaded', refreshIcons);
+
+        // ==========================================
+        // 3D LOADER (Three.js Tricolor Animation)
+        // ==========================================
+        function init3DLoader() {
+            const container = document.getElementById('canvas-container');
             const scene = new THREE.Scene();
             
-            // Camera
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 400;
+            // Transparent background
+            const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+            camera.position.z = 5;
 
-            // Renderer
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(200, 200);
+            container.appendChild(renderer.domElement);
 
-            // Particles (Stars)
-            const starGeometry = new THREE.BufferGeometry();
-            const starMaterial = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 1.5,
-                transparent: true,
-                opacity: 0.8
-            });
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
 
-            const starVertices = [];
-            for (let i = 0; i < 6000; i++) {
-                const x = (Math.random() - 0.5) * 2000;
-                const y = (Math.random() - 0.5) * 2000;
-                const z = (Math.random() - 0.5) * 2000;
-                starVertices.push(x, y, z);
-            }
-            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            // Create Tricolor Rings (Saffron, White, Green)
+            const geometry = new THREE.TorusGeometry(1, 0.15, 16, 100);
             
-            const stars = new THREE.Points(starGeometry, starMaterial);
-            scene.add(stars);
+            const matSaffron = new THREE.MeshPhongMaterial({ color: 0xFF9933, shininess: 100 });
+            const matWhite = new THREE.MeshPhongMaterial({ color: 0xFFFFFF, shininess: 100 });
+            const matGreen = new THREE.MeshPhongMaterial({ color: 0x138808, shininess: 100 });
 
-            // Nebula-like subtle lights
-            const light1 = new THREE.PointLight(0xD4AF37, 2, 1000);
-            light1.position.set(200, 300, 100);
-            scene.add(light1);
+            const ring1 = new THREE.Mesh(geometry, matSaffron);
+            const ring2 = new THREE.Mesh(geometry, matWhite);
+            const ring3 = new THREE.Mesh(geometry, matGreen);
 
-            const light2 = new THREE.PointLight(0x0f0f4a, 3, 1000);
-            light2.position.set(-200, -300, 100);
-            scene.add(light2);
+            // Position and rotate slightly to interlock visually
+            ring1.rotation.x = Math.PI / 2;
+            ring2.rotation.y = Math.PI / 3;
+            ring3.rotation.y = -Math.PI / 3;
+
+            // Group them
+            const group = new THREE.Group();
+            group.add(ring1);
+            group.add(ring2);
+            group.add(ring3);
+            scene.add(group);
 
             // Animation Loop
-            let frame = 0;
             function animate() {
                 requestAnimationFrame(animate);
-                stars.rotation.x += 0.0002;
-                stars.rotation.y += 0.0003;
-                
-                // Pulsate stars
-                frame += 0.01;
-                starMaterial.size = 1.5 + Math.sin(frame) * 0.5;
-
+                group.rotation.x += 0.01;
+                group.rotation.y += 0.02;
                 renderer.render(scene, camera);
             }
-
-            // Handle Resize
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
             animate();
-        }
 
-        // --- 2. Application Logic & Navigation ---
-        
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.innerText = message;
-            toast.classList.add('show');
+            // Fade out loader after 2.5 seconds
             setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+                const loader = document.getElementById('loader-container');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.visibility = 'hidden';
+                }, 800);
+            }, 2500);
         }
 
+        // ==========================================
+        // UI & NAVIGATION LOGIC
+        // ==========================================
+        
         function navigate(pageId) {
-            // Hide all sections
+            // Hide all pages
             document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
+                el.classList.add('hidden');
+                el.classList.remove('block');
             });
-            // Show target section
-            document.getElementById(pageId + '-section').classList.add('active');
+            // Show target page
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0, 0);
-
-            // Special logic for dashboard
-            if (pageId === 'dashboard') {
-                renderDashboard();
-            }
         }
 
-        function handleAccessClick() {
-            if (!currentUser) {
-                showToast("Please login first to access newspapers.");
-                navigate('auth');
-            } else if (!isSubscribed) {
-                document.getElementById('payment-modal').classList.remove('hidden');
-            } else {
-                navigate('dashboard');
-            }
+        // Theme Toggling
+        const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+        
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
-        function simulateLogin(provider) {
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+        themeToggles.forEach(btn => btn.addEventListener('click', toggleTheme));
+
+        // Set initial theme based on preference or local storage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Custom Toast Notification (replaces alert)
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
             
             setTimeout(() => {
-                currentUser = { name: "User", email: document.getElementById('auth-email').value || "user@example.com" };
-                btn.innerHTML = originalText;
-                showToast(`Successfully logged in via ${provider}!`);
-                
-                // Update UI
-                document.getElementById('auth-btn').innerText = 'Dashboard';
-                document.getElementById('auth-btn').onclick = () => navigate('dashboard');
-                
-                navigate('dashboard');
-            }, 1500);
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, duration);
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
+        // ==========================================
+        // DATE ARCHIVE GENERATION (Aug 2026 - Dec 2026)
+        // ==========================================
+        const archiveData = {
+            'August': { days: 31, startDay: 26 }, // Only 26-31 for Aug 2026
+            'September': { days: 30, startDay: 1 },
+            'October': { days: 31, startDay: 1 },
+            'November': { days: 30, startDay: 1 },
+            'December': { days: 31, startDay: 1 }
+        };
+
+        function renderArchive() {
+            const tabsContainer = document.getElementById('month-tabs');
+            const gridContainer = document.getElementById('dates-grid');
+            
+            // Render Tabs
+            tabsContainer.innerHTML = '';
+            Object.keys(archiveData).forEach(month => {
+                const isActive = month === state.currentMonth;
+                const btn = document.createElement('button');
+                btn.className = `px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${isActive ? 'bg-saffron text-white shadow-md' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'}`;
+                btn.innerText = month;
+                btn.onclick = () => {
+                    state.currentMonth = month;
+                    renderArchive();
+                };
+                tabsContainer.appendChild(btn);
+            });
+
+            // Render Grid
+            document.getElementById('current-month-title').innerText = `${state.currentMonth} 2026`;
+            gridContainer.innerHTML = '';
+            
+            const monthInfo = archiveData[state.currentMonth];
+            for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
+                const card = document.createElement('div');
+                card.className = 'newspaper-card bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden cursor-pointer flex flex-col group';
+                card.onclick = () => attemptAccess(CONFIG.TODAYS_NEWSPAPER_LINK);
+                
+                card.innerHTML = `
+                    <div class="h-24 bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center relative overflow-hidden group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
+                        <i data-lucide="file-text" class="fa-solid fa-file-lines w-8 h-8 text-slate-400 dark:text-slate-500 group-hover:text-saffron transition-colors"></i>
+                        <div class="absolute top-2 right-2 flex space-x-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                        </div>
+                    </div>
+                    <div class="p-3 text-center border-t border-slate-100 dark:border-slate-700">
+                        <span class="block text-lg font-bold font-serif text-slate-800 dark:text-slate-100">${i}</span>
+                        <span class="block text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">${state.currentMonth.substring(0,3)}</span>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            }
+            refreshIcons();
+        }
+
+        // ==========================================
+        // AUTH & PAYMENT FLOW
+        // ==========================================
+        
+        function openAuthModal() {
+            const overlay = document.getElementById('modal-overlay');
+            const authModal = document.getElementById('modal-auth');
+            
+            overlay.classList.remove('hidden');
+            authModal.classList.remove('hidden');
+            
+            // Trigger reflow for transition
+            void overlay.offsetWidth; 
+            
+            overlay.classList.remove('opacity-0');
+            authModal.classList.remove('opacity-0', 'scale-95');
+            refreshIcons();
+        }
+
+        function openPaymentModal() {
+            const authModal = document.getElementById('modal-auth');
+            const payModal = document.getElementById('modal-payment');
+            
+            authModal.classList.add('hidden', 'opacity-0', 'scale-95');
+            payModal.classList.remove('hidden');
+            
+            void payModal.offsetWidth;
+            payModal.classList.remove('opacity-0', 'scale-95');
+            refreshIcons();
+        }
+
+        function closeModals() {
+            const overlay = document.getElementById('modal-overlay');
+            const modals = [document.getElementById('modal-auth'), document.getElementById('modal-payment')];
+            
+            overlay.classList.add('opacity-0');
+            modals.forEach(m => m.classList.add('opacity-0', 'scale-95'));
+            
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                modals.forEach(m => m.classList.add('hidden'));
+            }, 300);
+        }
+
+        function mockLogin(provider) {
+            state.user = { name: 'Geostrat Reader' };
+            document.getElementById('auth-btn').innerHTML = `
+                <i data-lucide="user" class="fa-solid fa-user w-4 h-4 mr-2 inline"></i> Profile
+            `;
+            refreshIcons();
+            
+            if (state.pendingLink) {
+                openPaymentModal();
+            } else {
+                closeModals();
+                showToast(`Successfully logged in via ${provider === 'google' ? 'Google' : 'Email'}`);
+            }
+        }
+
+        function handleReadToday() {
+            attemptAccess(CONFIG.TODAYS_NEWSPAPER_LINK);
+        }
+
+        function attemptAccess(link) {
+            if (!state.user) {
+                state.pendingLink = link;
+                openAuthModal();
+            } else if (!state.hasSubscription) {
+                state.pendingLink = link;
+                openPaymentModal();
+            } else {
+                // Have user & subscription, open link
+                window.open(link, '_blank');
+                state.pendingLink = null;
+            }
         }
 
         function copyUPI() {
-            const upi = "srimonbanik2007@okicici";
-            navigator.clipboard.writeText(upi).then(() => {
-                showToast("UPI ID Copied!");
-            }).catch(err => {
-                // Fallback for iframe environments
-                const textArea = document.createElement("textarea");
-                textArea.value = upi;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast("UPI ID Copied!");
-                } catch (e) {}
-                document.body.removeChild(textArea);
-            });
-        }
-
-        function confirmPayment() {
-            const btn = event.currentTarget;
-            const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
-            
-            setTimeout(() => {
-                btn.innerHTML = orig;
-                closeModal('payment-modal');
-                isSubscribed = true;
-                showToast("Payment verification pending. Temporary access granted.");
-                renderDashboard();
-            }, 2000);
-        }
-
-        function renderDashboard() {
-            const container = document.querySelector('#dashboard-section .grid');
-            const statusBadge = document.getElementById('subscription-status');
-
-            if (!currentUser) {
-                container.innerHTML = `<div class="col-span-full text-center py-20 text-gray-400">Please login to view available newspapers.</div>`;
-                return;
-            }
-
-            // Calculate dates to show (Fixed range: Aug 26, 2026 to Dec 31, 2026)
-            let datesToShow = [];
-            let startDate = new Date('2026-08-26T00:00:00');
-            let endDate = new Date('2026-12-31T00:00:00');
-            
-            // Loop from endDate down to startDate (Newest first)
-            let currentDateIter = new Date(endDate);
-            while (currentDateIter >= startDate) {
-                datesToShow.push(new Date(currentDateIter));
-                currentDateIter.setDate(currentDateIter.getDate() - 1);
-            }
-
-            if (!isSubscribed) {
-                statusBadge.className = "glass px-4 py-2 rounded-full text-sm font-semibold border-red-500/50 text-red-400";
-                statusBadge.innerHTML = '<i class="fas fa-lock mr-2"></i> Subscription Required';
-                
-                // Show locked preview
-                let html = '';
-                for(let d of datesToShow) {
-                    let dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-                    html += `
-                        <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center text-center opacity-70 border-white/5 relative overflow-hidden group cursor-pointer" onclick="document.getElementById('payment-modal').classList.remove('hidden')">
-                            <div class="absolute inset-0 bg-black/50 z-10 flex items-center justify-center backdrop-blur-[2px] transition-all group-hover:bg-black/40">
-                                <i class="fas fa-lock text-3xl text-[#D4AF37]"></i>
-                            </div>
-                            <i class="fas fa-folder text-5xl text-blue-400 mb-4 opacity-50"></i>
-                            <h4 class="font-bold text-lg">${dateStr}</h4>
-                            <p class="text-xs text-gray-500 mt-2">English, Bengali, Hindi</p>
-                        </div>
-                    `;
-                }
-                if(datesToShow.length === 0) {
-                    html = `<div class="col-span-full text-center py-10 text-gray-400">Newspapers will be available starting 26 Aug 2026.</div>`;
-                }
-                container.innerHTML = html;
-            } else {
-                statusBadge.className = "glass px-4 py-2 rounded-full text-sm font-semibold border-green-500/50 text-green-400";
-                statusBadge.innerHTML = '<i class="fas fa-unlock mr-2"></i> Premium Active';
-                
-                // Show unlocked folders with real Google Drive links
-                let html = '';
-                const driveLink = "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link";
-                for(let d of datesToShow) {
-                    let dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-                    
-                    html += `
-                        <a href="${driveLink}" target="_blank" onclick="showToast('Opening Google Drive folder for ${dateStr}...');" class="glass p-6 rounded-2xl flex flex-col items-center justify-center text-center border-white/10 hover:border-[#D4AF37] transition-all group transform hover:-translate-y-1">
-                            <i class="fas fa-folder-open text-5xl text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform"></i>
-                            <h4 class="font-bold text-lg">${dateStr}</h4>
-                            <p class="text-xs text-gray-400 mt-2">View PDFs <i class="fas fa-external-link-alt ml-1"></i></p>
-                        </a>
-                    `;
-                }
-                if(datesToShow.length === 0) {
-                    html = `<div class="col-span-full text-center py-10 text-gray-400">Newspapers will be available starting 26 Aug 2026.</div>`;
-                }
-                container.innerHTML = html;
-            }
-        }
-
-        // --- 3. Gemini AI Chatbot ---
-        function toggleChat() {
-            document.getElementById('chat-window').classList.toggle('open');
-        }
-
-        async function sendChatMessage() {
-            const inputEl = document.getElementById('chat-input');
-            const message = inputEl.value.trim();
-            if (!message) return;
-
-            appendMessage('user', message);
-            inputEl.value = '';
-            
-            // Show typing indicator
-            const typingId = 'typing-' + Date.now();
-            appendMessage('bot', '<i class="fas fa-ellipsis-h fa-fade"></i>', typingId);
-
+            const text = document.getElementById('upi-id').innerText;
+            // Fallback for iframe copy
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
             try {
-                // Prepare API request
-                const apiKey = ""; // Canvas environment handles this empty string
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-                
-                const systemPrompt = "You are a helpful customer support bot for 'Indian Geostrat', a website offering premium PDF uploads of popular Indian and international English, Bengali, and Hindi newspapers. The subscription cost is just ₹10 per month paid via UPI to srimonbanik2007@okicici. The creator is Srimon Banik. Keep answers concise, polite, and helpful.";
-                
-                const payload = {
-                    contents: [{ parts: [{ text: message }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                
-                // Remove typing indicator
-                document.getElementById(typingId).remove();
-
-                if (result.candidates && result.candidates[0].content.parts[0].text) {
-                    appendMessage('bot', result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>'));
-                } else {
-                    appendMessage('bot', "I'm sorry, I couldn't process that right now. Please email us at srimonbanik2007@gmail.com.");
-                }
-
-            } catch (error) {
-                console.error("Chat API Error:", error);
-                document.getElementById(typingId).remove();
-                appendMessage('bot', "Connection error. Please try again later.");
+                document.execCommand('copy');
+                showToast("UPI ID copied to clipboard!");
+            } catch (err) {
+                showToast("Failed to copy. Please select and copy manually.");
             }
+            document.body.removeChild(textArea);
         }
 
-        function appendMessage(role, text, id = null) {
-            const chatBox = document.getElementById('chat-messages');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-message ${role}`;
-            if (id) msgDiv.id = id;
-            msgDiv.innerHTML = text;
-            chatBox.appendChild(msgDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        // --- 4. Initialization ---
-        window.onload = function() {
-            initSpaceBackground();
+        function simulatePaymentVerification() {
+            const btnText = document.getElementById('btn-text');
+            const spinner = document.getElementById('btn-spinner');
             
-            // Remove loading screen after 1.5 seconds minimum for visual effect
+            btnText.innerText = "Verifying...";
+            spinner.classList.remove('hidden');
+            
+            // Mock delay to simulate backend verification
             setTimeout(() => {
-                const loader = document.getElementById('loading-screen');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 1000);
-            }, 1500);
+                state.hasSubscription = true;
+                closeModals();
+                showToast("Payment verified! Subscription active.");
+                
+                if (state.pendingLink) {
+                    setTimeout(() => {
+                        window.open(state.pendingLink, '_blank');
+                        state.pendingLink = null;
+                    }, 1000);
+                }
+                
+                // Reset button for future
+                btnText.innerText = "I have Paid ₹10";
+                spinner.classList.add('hidden');
+            }, 2500);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('contact-success').classList.remove('hidden');
+            showToast("Message recorded successfully.");
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        window.onload = () => {
+            init3DLoader();
+            renderArchive();
+            refreshIcons();
         };
+
     </script>
 </body>
 </html>
