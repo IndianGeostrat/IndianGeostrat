@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Icons (Dual Loading: FontAwesome 6 + Lucide for 100% Reliability) -->
+    <!-- Icons (FontAwesome 6 + Lucide for 100% Reliability) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
@@ -60,46 +60,90 @@
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+        }
+
+        * {
+            letter-spacing: 0 !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .dark body {
+            background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
         }
         
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: rgba(248, 250, 252, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px -28px rgba(15, 23, 42, 0.8);
         }
         
         .dark .glass-nav {
-            background: rgba(15, 23, 42, 0.85);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(2, 6, 23, 0.9);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        #loader-container {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #ffffff;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
-        }
-        
-        .dark #loader-container {
-            background-color: #020617;
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        #canvas-container {
-            width: 200px;
-            height: 200px;
+        .nav-link::after {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0.1rem;
+            height: 2px;
+            content: "";
+            transform: scaleX(0);
+            transform-origin: left;
+            background: #FF9933;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .editorial-hero {
+            min-height: clamp(34rem, calc(100svh - 8rem), 43rem);
+        }
+
+        .hero-image {
+            filter: saturate(0.92) contrast(1.05);
+        }
+
+        .hero-overlay {
+            background:
+                linear-gradient(90deg, rgba(2, 6, 23, 0.9) 0%, rgba(15, 23, 42, 0.78) 45%, rgba(15, 23, 42, 0.25) 100%),
+                linear-gradient(0deg, rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.1));
         }
 
         .newspaper-card {
-            transition: all 0.3s ease;
+            min-height: 10.25rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
+
         .newspaper-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.65);
+            border-color: rgba(255, 153, 51, 0.65);
+        }
+
+        .edition-cover {
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(226, 232, 240, 0.78)),
+                repeating-linear-gradient(0deg, rgba(100, 116, 139, 0.18) 0 1px, transparent 1px 8px);
+        }
+
+        .dark .edition-cover {
+            background:
+                linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9)),
+                repeating-linear-gradient(0deg, rgba(148, 163, 184, 0.14) 0 1px, transparent 1px 8px);
         }
 
         /* Hide scrollbar for horizontal scrolling */
@@ -124,15 +168,6 @@
     </style>
 </head>
 <body class="bg-brand-50 dark:bg-brand-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col">
-
-    <!-- 3D Loader Screen -->
-    <div id="loader-container">
-        <div id="canvas-container"></div>
-        <h2 class="mt-6 font-serif text-2xl font-bold tracking-widest text-slate-800 dark:text-white uppercase">
-            Indian Geostrat
-        </h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-sans tracking-wide">Loading Premium Experience...</p>
-    </div>
 
     <!-- AI Bot Embed -->
     <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
@@ -161,7 +196,7 @@
                     </button>
                     
                     <button id="auth-btn" onclick="openAuthModal('signup')" class="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md">
-                        Subscribe ₹10/mo
+                        Offer ₹10/mo
                     </button>
                 </nav>
 
@@ -184,7 +219,7 @@
                 <button onclick="navigate('home')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Home</button>
                 <button onclick="navigate('about')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">About Us</button>
                 <button onclick="navigate('contact')" class="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md">Contact Us</button>
-                <button onclick="openAuthModal('signup')" class="block w-full text-center mt-4 bg-saffron hover:bg-orange-500 text-white px-3 py-3 rounded-md font-bold transition-colors">Subscribe ₹10/mo</button>
+                <button onclick="openAuthModal('signup')" class="block w-full text-center mt-4 bg-saffron hover:bg-orange-500 text-white px-3 py-3 rounded-md font-bold transition-colors">Offer ₹10/mo</button>
             </div>
         </div>
     </header>
@@ -201,18 +236,18 @@
                     <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 bg-white dark:bg-brand-900 pt-10 sm:pt-16 lg:pt-20 px-4 sm:px-6 lg:px-8">
                         <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
                             <div class="sm:text-center lg:text-left">
-                                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider mb-4 border border-orange-200 dark:border-orange-800/50">LIMITED OFFER: ₹10/MONTH</span>
+                                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider mb-4 border border-orange-200 dark:border-orange-800/50">CURRENT OFFER: ₹10/MONTH</span>
                                 <h1 class="text-4xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-5xl md:text-6xl font-serif leading-tight">
                                     <span class="block xl:inline">Regional & Global</span>
                                     <span class="block text-saffron">Perspectives.</span>
                                 </h1>
                                 <p class="mt-3 text-base text-slate-500 dark:text-slate-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-sans leading-relaxed">
-                                    Access exclusive regional, national, and international newspapers in English, Bengali, and Hindi. Subscribe for unparalleled geopolitical insights at the limited-offer price of ₹10/month, down from the ₹30/month MRP.
+                                    Access regional, national, and international newspapers in English, Bengali, and Hindi. The regular subscription is ₹30/month; with the current offer, you can subscribe for ₹10/month.
                                 </p>
                                 <div class="mt-5 inline-flex flex-wrap items-center justify-center lg:justify-start gap-3 rounded-lg border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-900/20 px-4 py-3 text-sm">
-                                    <span class="font-semibold text-slate-700 dark:text-slate-200">Monthly plan</span>
-                                    <span class="text-slate-500 dark:text-slate-400 line-through">MRP ₹30/month</span>
-                                    <span class="font-bold text-orange-600 dark:text-orange-300">Limited offer ₹10/month</span>
+                                    <span class="font-semibold text-slate-700 dark:text-slate-200">Monthly subscription</span>
+                                    <span class="text-slate-500 dark:text-slate-400">Regular ₹30/month</span>
+                                    <span class="font-bold text-orange-600 dark:text-orange-300">Offer ₹10/month</span>
                                 </div>
                                 <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
                                     <div class="rounded-md shadow">
@@ -313,9 +348,9 @@
                                             <i data-lucide="credit-card" class="fa-solid fa-credit-card h-6 w-6 text-white flex items-center justify-center"></i>
                                         </span>
                                     </div>
-                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Limited-Offer Price</h3>
+                                    <h3 class="mt-8 text-lg font-medium text-white tracking-tight">Affordable Monthly Access</h3>
                                     <p class="mt-5 text-base text-slate-400">
-                                        MRP ₹30/month, now ₹10/month via convenient Google Pay UPI. Premium geopolitical insights stay accessible while subscriptions support daily operations.
+                                        The regular subscription is ₹30/month, now available for ₹10/month through the current offer via Google Pay UPI.
                                     </p>
                                 </div>
                             </div>
@@ -360,7 +395,7 @@
                 <div class="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 mt-12">
                     <h3 class="text-xl font-bold font-serif text-slate-900 dark:text-white mb-4">The Subscription Model</h3>
                     <p class="mb-0">
-                        Our monthly MRP is <strong>₹30/month</strong>, but the current limited-offer price is <strong>₹10/month</strong>. This minimal barrier to entry supports our operational sustainability while keeping vital information accessible to students, researchers, and professionals alike.
+                        The regular subscription is <strong>₹30/month</strong>. During the current offer, access is <strong>₹10/month</strong>. This monthly contribution supports daily operations while keeping useful newspaper access available to students, researchers, and professionals alike.
                     </p>
                 </div>
             </div>
@@ -485,8 +520,8 @@
                     </div>
                     <p class="text-slate-400 text-sm mb-4">Regional, national, and international newspapers delivered daily. Premium insights, accessible to all.</p>
                     <div class="mb-6 rounded-lg border border-slate-700 bg-slate-800/70 p-4">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Limited monthly offer</p>
-                        <p class="mt-2 text-sm text-slate-300"><span class="line-through text-slate-500">MRP ₹30/month</span> <span class="font-bold text-white">Now ₹10/month</span></p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Monthly subscription</p>
+                        <p class="mt-2 text-sm text-slate-300"><span class="text-slate-400">Regular ₹30/month</span> <span class="font-bold text-white">Offer ₹10/month</span></p>
                         <button onclick="openAuthModal('signup')" class="mt-3 w-full rounded-md bg-saffron px-3 py-2 text-sm font-bold text-white hover:bg-orange-500 transition-colors">Subscribe Now</button>
                     </div>
                     
@@ -570,8 +605,8 @@
                     </div>
                     <div class="mt-8 space-y-4">
                         <div class="rounded-lg border border-white/10 bg-white/5 p-4">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Limited monthly offer</p>
-                            <p class="mt-2 text-sm text-slate-300"><span class="line-through text-slate-500">MRP ₹30/month</span> <span class="font-bold text-white">Now ₹10/month</span></p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-saffron">Monthly subscription</p>
+                            <p class="mt-2 text-sm text-slate-300"><span class="text-slate-400">Regular ₹30/month</span> <span class="font-bold text-white">Offer ₹10/month</span></p>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-center">
                             <div class="rounded-lg bg-white/5 p-3">
@@ -665,16 +700,16 @@
                     <i data-lucide="lock" class="fa-solid fa-lock w-6 h-6"></i>
                 </div>
                 <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Premium Access</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Subscribe to view PDF editions. Limited offer: ₹10/month instead of the ₹30/month MRP.</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Regular access is ₹30/month; the current offer gives you full access for ₹10/month.</p>
             </div>
 
             <div class="mb-5 rounded-xl border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-900/20 p-4 text-center">
-                <p class="text-xs font-bold uppercase tracking-wide text-orange-600 dark:text-orange-300">Monthly subscription</p>
+                <p class="text-xs font-bold uppercase tracking-wide text-orange-600 dark:text-orange-300">Current offer</p>
                 <div class="mt-2 flex flex-wrap items-baseline justify-center gap-2">
-                    <span class="text-sm text-slate-500 dark:text-slate-400 line-through">MRP ₹30/month</span>
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Regular ₹30/month</span>
                     <span class="text-2xl font-black text-slate-900 dark:text-white">₹10/month</span>
                 </div>
-                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Limited-offer price for fast access to the current edition and archive.</p>
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Fast access to today's edition and the archive.</p>
             </div>
 
             <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 text-center flex flex-col items-center">
@@ -688,20 +723,16 @@
 
             <div class="space-y-3">
                 <button onclick="simulatePaymentVerification()" class="w-full bg-saffron hover:bg-orange-500 text-white font-bold py-3 rounded-lg transition-colors flex justify-center items-center">
-                    <span id="btn-text">I have Paid ₹10</span>
-                    <i id="btn-spinner" data-lucide="loader-2" class="fa-solid fa-spinner animate-spin w-5 h-5 hidden ml-2"></i>
+                    <span>I have paid ₹10</span>
                 </button>
                 <p class="text-xs text-center text-slate-500 dark:text-slate-400">
-                    Payment verification may take a few moments. Contact support if issues persist.
+                    Continue to your edition after completing the UPI payment.
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <!-- Three.js for 3D Loader -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
     <script>
         // ==========================================
         // CONFIGURATION (Easily Updatable Variables)
@@ -709,8 +740,8 @@
         const CONFIG = {
             TODAYS_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1Uk8a4_KIQM1btwTeoHAa2xs7mTVPKEiZ?usp=drive_link",
             ARCHIVE_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
-            MONTHLY_MRP: "₹30/month",
-            SUBSCRIPTION_PRICE: "₹10/month",
+            REGULAR_SUBSCRIPTION_PRICE: "₹30/month",
+            OFFER_SUBSCRIPTION_PRICE: "₹10/month",
             UPI_ID: "indiangeostrat@okicici",
             CONTACT_EMAIL: "indiangeostrat@gmail.com"
         };
@@ -746,7 +777,7 @@
 
             document.getElementById('auth-eyebrow').innerText = isSignup ? 'New subscription' : 'Subscriber login';
             document.getElementById('auth-title').innerText = isSignup ? 'Create your account' : 'Welcome back';
-            document.getElementById('auth-subtitle').innerText = isSignup ? 'Start your subscription and continue to the limited ₹10/month offer.' : 'Sign in to continue to your newspaper subscription.';
+            document.getElementById('auth-subtitle').innerText = isSignup ? 'Start with the current ₹10/month offer and continue to the editions.' : 'Sign in to continue to your newspaper subscription.';
             document.getElementById('google-auth-label').innerText = isSignup ? 'Sign up with Google' : 'Continue with Google';
             document.getElementById('auth-submit-label').innerText = isSignup ? 'Sign up' : 'Log in';
             document.getElementById('auth-switch-copy').innerText = isSignup ? 'Already have an account?' : 'New to Indian Geostrat?';
@@ -769,70 +800,6 @@
 
         // Initialize icons on DOM content ready
         document.addEventListener('DOMContentLoaded', refreshIcons);
-
-        // ==========================================
-        // 3D LOADER (Three.js Tricolor Animation)
-        // ==========================================
-        function init3DLoader() {
-            const container = document.getElementById('canvas-container');
-            const scene = new THREE.Scene();
-            
-            // Transparent background
-            const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-            camera.position.z = 5;
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(200, 200);
-            container.appendChild(renderer.domElement);
-
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambientLight);
-            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            dirLight.position.set(5, 5, 5);
-            scene.add(dirLight);
-
-            // Create Tricolor Rings (Saffron, White, Green)
-            const geometry = new THREE.TorusGeometry(1, 0.15, 16, 100);
-            
-            const matSaffron = new THREE.MeshPhongMaterial({ color: 0xFF9933, shininess: 100 });
-            const matWhite = new THREE.MeshPhongMaterial({ color: 0xFFFFFF, shininess: 100 });
-            const matGreen = new THREE.MeshPhongMaterial({ color: 0x138808, shininess: 100 });
-
-            const ring1 = new THREE.Mesh(geometry, matSaffron);
-            const ring2 = new THREE.Mesh(geometry, matWhite);
-            const ring3 = new THREE.Mesh(geometry, matGreen);
-
-            // Position and rotate slightly to interlock visually
-            ring1.rotation.x = Math.PI / 2;
-            ring2.rotation.y = Math.PI / 3;
-            ring3.rotation.y = -Math.PI / 3;
-
-            // Group them
-            const group = new THREE.Group();
-            group.add(ring1);
-            group.add(ring2);
-            group.add(ring3);
-            scene.add(group);
-
-            // Animation Loop
-            function animate() {
-                requestAnimationFrame(animate);
-                group.rotation.x += 0.01;
-                group.rotation.y += 0.02;
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            // Fade out loader after 2.5 seconds
-            setTimeout(() => {
-                const loader = document.getElementById('loader-container');
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.visibility = 'hidden';
-                }, 800);
-            }, 2500);
-        }
 
         // ==========================================
         // UI & NAVIGATION LOGIC
@@ -902,6 +869,27 @@
             'December': { days: 31, startDay: 1 }
         };
 
+        function getIndianToday() {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Asia/Kolkata',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }).formatToParts(new Date());
+
+            return {
+                day: Number(parts.find(part => part.type === 'day').value),
+                month: parts.find(part => part.type === 'month').value,
+                year: Number(parts.find(part => part.type === 'year').value)
+            };
+        }
+
+        function getArchiveLink(month, day) {
+            const today = getIndianToday();
+            const isToday = today.year === 2026 && today.month === month && today.day === day;
+            return isToday ? CONFIG.TODAYS_NEWSPAPER_LINK : CONFIG.ARCHIVE_NEWSPAPER_LINK;
+        }
+
         function renderArchive() {
             const tabsContainer = document.getElementById('month-tabs');
             const gridContainer = document.getElementById('dates-grid');
@@ -928,7 +916,7 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 const card = document.createElement('div');
                 card.className = 'newspaper-card bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden cursor-pointer flex flex-col group';
-                card.onclick = () => attemptAccess(CONFIG.ARCHIVE_NEWSPAPER_LINK);
+                card.onclick = () => attemptAccess(getArchiveLink(state.currentMonth, i));
                 
                 card.innerHTML = `
                     <div class="h-24 bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center relative overflow-hidden group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
@@ -1046,29 +1034,14 @@
         }
 
         function simulatePaymentVerification() {
-            const btnText = document.getElementById('btn-text');
-            const spinner = document.getElementById('btn-spinner');
-            
-            btnText.innerText = "Verifying...";
-            spinner.classList.remove('hidden');
-            
-            // Mock delay to simulate backend verification
-            setTimeout(() => {
-                state.hasSubscription = true;
-                closeModals();
-                showToast("Payment verified! Subscription active.");
-                
-                if (state.pendingLink) {
-                    setTimeout(() => {
-                        window.open(state.pendingLink, '_blank');
-                        state.pendingLink = null;
-                    }, 1000);
-                }
-                
-                // Reset button for future
-                btnText.innerText = "I have Paid ₹10";
-                spinner.classList.add('hidden');
-            }, 2500);
+            state.hasSubscription = true;
+            closeModals();
+            showToast("Payment recorded. Subscription active.");
+
+            if (state.pendingLink) {
+                window.open(state.pendingLink, '_blank');
+                state.pendingLink = null;
+            }
         }
 
         function handleContactSubmit(e) {
@@ -1082,7 +1055,6 @@
         // INITIALIZATION
         // ==========================================
         window.onload = () => {
-            init3DLoader();
             renderArchive();
             refreshIcons();
         };
