@@ -707,7 +707,8 @@
         // CONFIGURATION (Easily Updatable Variables)
         // ==========================================
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1Uk8a4_KIQM1btwTeoHAa2xs7mTVPKEiZ",
+            TODAYS_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1Uk8a4_KIQM1btwTeoHAa2xs7mTVPKEiZ?usp=drive_link",
+            ARCHIVE_NEWSPAPER_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             MONTHLY_MRP: "₹30/month",
             SUBSCRIPTION_PRICE: "₹10/month",
             UPI_ID: "indiangeostrat@okicici",
@@ -927,7 +928,7 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 const card = document.createElement('div');
                 card.className = 'newspaper-card bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden cursor-pointer flex flex-col group';
-                card.onclick = () => attemptAccess(CONFIG.TODAYS_NEWSPAPER_LINK);
+                card.onclick = () => attemptAccess(CONFIG.ARCHIVE_NEWSPAPER_LINK);
                 
                 card.innerHTML = `
                     <div class="h-24 bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center relative overflow-hidden group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
