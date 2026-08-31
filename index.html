@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Geostrat | Premium Regional & International Intelligence</title>
+    <title>Indian Geostrat | Regional & International News</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,9 +41,8 @@
                         'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                         'slide-up': 'slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 30s linear infinite',
-                        'blob': 'blob 10s infinite alternate',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'marquee': 'marquee 25s linear infinite',
+                        'blob': 'blob 7s infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -51,22 +50,18 @@
                             '100%': { opacity: '1' },
                         },
                         slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '0%': { opacity: '0', transform: 'translateY(24px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-50%)' } /* Adjusted for seamless loop logic */
+                            '100%': { transform: 'translateX(-100%)' }
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
                             '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                             '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                             '100%': { transform: 'translate(0px, 0px) scale(1)' }
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 5px rgba(255, 153, 51, 0.2)' },
-                            '100%': { boxShadow: '0 0 20px rgba(255, 153, 51, 0.6)' }
                         }
                     }
                 }
@@ -80,38 +75,25 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             background-color: #f8fafc;
-            overflow-x: hidden;
         }
 
         .dark body {
             background-color: #020617;
         }
 
-        /* Scroll Progress Bar */
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #FF9933, #138808);
-            z-index: 100;
-            transition: width 0.1s ease-out;
-        }
-
         /* Professional Mesh Gradient Background */
         .bg-mesh {
             background-image: 
-                radial-gradient(at 40% 20%, rgba(255, 153, 51, 0.05) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, rgba(15, 23, 42, 0.03) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
+                radial-gradient(at 40% 20%, rgba(255, 153, 51, 0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(15, 23, 42, 0.05) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
             background-attachment: fixed;
         }
         .dark .bg-mesh {
             background-image: 
-                radial-gradient(at 40% 20%, rgba(255, 153, 51, 0.03) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, rgba(255, 255, 255, 0.01) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.02) 0px, transparent 50%);
+                radial-gradient(at 40% 20%, rgba(255, 153, 51, 0.05) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(255, 255, 255, 0.02) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
         }
 
         * {
@@ -122,46 +104,34 @@
             scroll-behavior: smooth;
         }
         
-        /* Enhanced Glassmorphism */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .dark .glass-panel {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
         .glass-nav {
-            background: rgba(248, 250, 252, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
         
         .dark .glass-nav {
-            background: rgba(2, 6, 23, 0.75);
+            background: rgba(2, 6, 23, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* Header scrolled state */
         .glass-nav.scrolled {
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             padding-top: 0.25rem;
             padding-bottom: 0.25rem;
-            background: rgba(248, 250, 252, 0.9);
         }
         .dark .glass-nav.scrolled {
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            background: rgba(2, 6, 23, 0.9);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
 
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
         }
+
         .nav-link::after {
             position: absolute;
             left: 0;
@@ -171,9 +141,10 @@
             content: "";
             transform: scaleX(0);
             transform-origin: right;
-            background: linear-gradient(90deg, #FF9933, #f97316);
+            background: #FF9933;
             transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
         }
+
         .nav-link:hover::after {
             transform: scaleX(1);
             transform-origin: left;
@@ -183,49 +154,51 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(135deg, #FF9933, #ea580c, #c2410c);
+            background-image: linear-gradient(90deg, #FF9933, #f97316);
         }
 
-        /* 3D Card Effect */
         .newspaper-card {
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            will-change: transform;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .newspaper-card-inner {
-            transform: translateZ(20px); /* Lift content inside */
-        }
+
         .newspaper-card:hover {
-            box-shadow: 0 25px 50px -12px rgba(255, 153, 51, 0.15);
-            border-color: rgba(255, 153, 51, 0.5);
-            z-index: 10;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(255, 153, 51, 0.4);
         }
+
         .dark .newspaper-card:hover {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 153, 51, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 153, 51, 0.5);
         }
         
         .newspaper-card.active-date {
-            border-color: rgba(255, 153, 51, 0.4);
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.08), transparent);
+            border-color: rgba(255, 153, 51, 0.3);
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.05), transparent);
         }
         .dark .newspaper-card.active-date {
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.15), rgba(15, 23, 42, 0.8));
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.1), transparent);
         }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
         .auth-tab-active {
             background: #0f172a;
             color: #ffffff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
+
         .dark .auth-tab-active {
             background: #ffffff;
             color: #0f172a;
         }
         
-        /* Shimmer Effect for Premium Button */
         .btn-premium {
             position: relative;
             overflow: hidden;
@@ -234,162 +207,61 @@
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-20deg);
-            animation: shimmer 3s infinite;
+            transition: all 0.7s ease;
         }
-        @keyframes shimmer {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
+        .btn-premium:hover::before {
+            left: 150%;
         }
 
+        /* Ticker Pause on Hover */
         .ticker-container:hover .animate-marquee {
             animation-play-state: paused;
         }
-
-        /* Scroll Reveal Utility Classes */
-        .reveal-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-
-        /* Canvas Network Background */
-        #network-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-        }
-        .dark #network-canvas {
-            opacity: 0.3;
-        }
-
-        /* --- NEW ADVANCED FEATURES --- */
-        
-        /* Subtle Noise Overlay for Premium Texture */
-        .noise-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.04;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-        }
-        .dark .noise-bg { opacity: 0.06; mix-blend-mode: overlay; }
-
-        /* Custom Professional Cursor */
-        @media (pointer: fine) {
-            body { cursor: none; }
-            a, button, input, textarea, .cursor-pointer { cursor: none !important; }
-            
-            .cursor-dot,
-            .cursor-outline {
-                position: fixed;
-                top: 0; left: 0;
-                transform: translate(-50%, -50%);
-                border-radius: 50%;
-                z-index: 10000;
-                pointer-events: none;
-            }
-            .cursor-dot {
-                width: 6px;
-                height: 6px;
-                background-color: #FF9933;
-                transition: width 0.2s, height 0.2s, background-color 0.2s;
-            }
-            .cursor-outline {
-                width: 36px;
-                height: 36px;
-                border: 1px solid rgba(255, 153, 51, 0.4);
-                transition: transform 0.1s ease-out, width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
-            }
-            
-            /* Hover states for cursor */
-            body.hovering .cursor-dot {
-                width: 10px;
-                height: 10px;
-                background-color: transparent;
-                border: 2px solid #FF9933;
-            }
-            body.hovering .cursor-outline {
-                width: 50px;
-                height: 50px;
-                border-color: rgba(255, 153, 51, 0.8);
-                background-color: rgba(255, 153, 51, 0.1);
-            }
-        }
     </style>
 </head>
 <body class="text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col bg-mesh">
-
-    <!-- Advanced Features: Cursor & Texture -->
-    <div class="noise-bg"></div>
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <!-- Scroll Progress -->
-    <div id="scroll-progress"></div>
 
     <!-- AI Bot Embed -->
     <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
 
     <!-- News Ticker -->
-    <div class="fixed top-0 w-full z-[60] bg-slate-950 text-slate-300 text-[11px] font-semibold py-2 uppercase tracking-wider overflow-hidden ticker-container flex items-center border-b border-slate-800 shadow-md">
-        <div class="px-5 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center h-full animate-glow font-bold">
-            <span class="relative flex h-2.5 w-2.5 mr-2">
+    <div class="fixed top-0 w-full z-[60] bg-slate-900 text-slate-300 text-[11px] font-semibold py-1.5 uppercase tracking-wider overflow-hidden ticker-container flex items-center border-b border-slate-800">
+        <div class="px-4 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center shadow-[4px_0_10px_rgba(0,0,0,0.5)]">
+            <span class="relative flex h-2 w-2 mr-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-900"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-slate-900"></span>
             </span>
-            LIVE INTELLIGENCE
+            LIVE
         </div>
-        <div class="flex whitespace-nowrap animate-marquee items-center flex-grow pl-4">
-            <!-- Ticker Content -->
-            <div class="flex items-center">
-                <span class="mx-6">GEO-ECONOMICS: India strengthens bilateral ties in Southeast Asia with new comprehensive trade pacts.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">GLOBAL MARKETS: Asian indexes show remarkable resilience amidst shifting geopolitical landscapes in the Pacific.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">STRATEGIC DEFENSE: High-level dialogues emphasize maritime security architecture in the Indo-Pacific region.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">CLIMATE DIPLOMACY: New multilateral initiatives launched for sustainable development across emerging economies.</span>
-            </div>
+        <div class="flex whitespace-nowrap animate-marquee items-center flex-grow">
+            <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">DEFENSE: Strategic dialogues emphasize maritime security in the Indo-Pacific region.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
             <!-- Duplicate for seamless loop -->
-            <div class="flex items-center">
-                <span class="mx-6">GEO-ECONOMICS: India strengthens bilateral ties in Southeast Asia with new comprehensive trade pacts.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">GLOBAL MARKETS: Asian indexes show remarkable resilience amidst shifting geopolitical landscapes in the Pacific.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">STRATEGIC DEFENSE: High-level dialogues emphasize maritime security architecture in the Indo-Pacific region.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">CLIMATE DIPLOMACY: New multilateral initiatives launched for sustainable development across emerging economies.</span>
-            </div>
+            <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">DEFENSE: Strategic dialogues emphasize maritime security in the Indo-Pacific region.</span>
+            <span class="mx-2 text-saffron">|</span>
+            <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
         </div>
     </div>
 
     <!-- Navigation -->
-    <header id="main-header" class="fixed w-full top-[34px] z-50 glass-nav">
+    <header id="main-header" class="fixed w-full top-7 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="navigate('home')">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-saffron rounded-lg blur opacity-40 group-hover:opacity-70 transition-opacity"></div>
-                        <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="relative h-11 w-11 rounded-lg object-cover shadow-sm mr-3 border-2 border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors">
-                    </div>
-                    <span class="font-serif font-black text-2xl tracking-tight text-slate-900 dark:text-white">INDIAN GEOSTRAT</span>
+                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-10 w-10 sm:h-11 sm:w-11 rounded-lg object-cover shadow-sm mr-2.5 border border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors">
+                    <span class="font-serif font-black text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white">INDIAN GEOSTRAT</span>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -398,345 +270,166 @@
                     <button onclick="navigate('about')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">About Us</button>
                     <button onclick="navigate('contact')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Contact</button>
                     
-                    <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
+                    <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
                     
-                    <button id="theme-toggle" class="p-2.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-all flex items-center justify-center text-slate-500 hover:text-saffron dark:text-slate-400 dark:hover:text-saffron" title="Toggle Theme">
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" title="Toggle Theme">
+                        <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden"></i>
+                        <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block"></i>
                     </button>
                     
-                    <button id="auth-btn" onclick="openAuthModal('signup')" class="btn-premium bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-7 py-2.5 rounded-full font-semibold text-sm transition-all shadow-xl shadow-slate-900/20 dark:shadow-white/10 border border-slate-700 dark:border-white/50 transform hover:-translate-y-0.5">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1.5 opacity-80"></i> Sign up / Login
+                    <button id="auth-btn" onclick="openAuthModal('signup')" class="btn-premium bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg shadow-slate-900/20 dark:shadow-white/10 border border-transparent dark:border-slate-200">
+                        Sign up / Login
                     </button>
                 </nav>
 
                 <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center gap-3">
+                <div class="md:hidden flex items-center gap-2 sm:gap-3">
                     <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 dark:text-slate-400">
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden"></i>
+                        <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block"></i>
                     </button>
-                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-700">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden glass-panel absolute w-full shadow-2xl transition-all origin-top transform border-t border-slate-200 dark:border-slate-800">
-            <div class="px-4 pt-4 pb-6 space-y-2">
-                <button onclick="navigate('home')" class="flex items-center w-full px-4 py-3.5 text-base font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-xl transition-colors">
-                    <i data-lucide="home" class="w-5 h-5 mr-3 opacity-70"></i> Home
-                </button>
-                <  width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-        }
-        .dark #network-canvas {
-            opacity: 0.3;
-        }
-
-        /* --- NEW ADVANCED FEATURES --- */
-        
-        /* Subtle Noise Overlay for Premium Texture */
-        .noise-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.04;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-        }
-        .dark .noise-bg { opacity: 0.06; mix-blend-mode: overlay; }
-
-        /* Custom Professional Cursor */
-        @media (pointer: fine) {
-            body { cursor: none; }
-            a, button, input, textarea, .cursor-pointer { cursor: none !important; }
-            
-            .cursor-dot,
-            .cursor-outline {
-                position: fixed;
-                top: 0; left: 0;
-                transform: translate(-50%, -50%);
-                border-radius: 50%;
-                z-index: 10000;
-                pointer-events: none;
-            }
-            .cursor-dot {
-                width: 6px;
-                height: 6px;
-                background-color: #FF9933;
-                transition: width 0.2s, height 0.2s, background-color 0.2s;
-            }
-            .cursor-outline {
-                width: 36px;
-                height: 36px;
-                border: 1px solid rgba(255, 153, 51, 0.4);
-                transition: transform 0.1s ease-out, width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
-            }
-            
-            /* Hover states for cursor */
-            body.hovering .cursor-dot {
-                width: 10px;
-                height: 10px;
-                background-color: transparent;
-                border: 2px solid #FF9933;
-            }
-            body.hovering .cursor-outline {
-                width: 50px;
-                height: 50px;
-                border-color: rgba(255, 153, 51, 0.8);
-                background-color: rgba(255, 153, 51, 0.1);
-            }
-        }
-    </style>
-</head>
-<body class="text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col bg-mesh">
-
-    <!-- Advanced Features: Cursor & Texture -->
-    <div class="noise-bg"></div>
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <!-- Scroll Progress -->
-    <div id="scroll-progress"></div>
-
-    <!-- AI Bot Embed -->
-    <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
-
-    <!-- News Ticker -->
-    <div class="fixed top-0 w-full z-[60] bg-slate-950 text-slate-300 text-[11px] font-semibold py-2 uppercase tracking-wider overflow-hidden ticker-container flex items-center border-b border-slate-800 shadow-md">
-        <div class="px-5 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center h-full animate-glow font-bold">
-            <span class="relative flex h-2.5 w-2.5 mr-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-900"></span>
-            </span>
-            LIVE INTELLIGENCE
-        </div>
-        <div class="flex whitespace-nowrap animate-marquee items-center flex-grow pl-4">
-            <!-- Ticker Content -->
-            <div class="flex items-center">
-                <span class="mx-6">GEO-ECONOMICS: India strengthens bilateral ties in Southeast Asia with new comprehensive trade pacts.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">GLOBAL MARKETS: Asian indexes show remarkable resilience amidst shifting geopolitical landscapes in the Pacific.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">STRATEGIC DEFENSE: High-level dialogues emphasize maritime security architecture in the Indo-Pacific region.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">CLIMATE DIPLOMACY: New multilateral initiatives launched for sustainable development across emerging economies.</span>
-            </div>
-            <!-- Duplicate for seamless loop -->
-            <div class="flex items-center">
-                <span class="mx-6">GEO-ECONOMICS: India strengthens bilateral ties in Southeast Asia with new comprehensive trade pacts.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">GLOBAL MARKETS: Asian indexes show remarkable resilience amidst shifting geopolitical landscapes in the Pacific.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">STRATEGIC DEFENSE: High-level dialogues emphasize maritime security architecture in the Indo-Pacific region.</span>
-                <span class="mx-2 text-saffron/50">✦</span>
-                <span class="mx-6">CLIMATE DIPLOMACY: New multilateral initiatives launched for sustainable development across emerging economies.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <header id="main-header" class="fixed w-full top-[34px] z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="navigate('home')">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-saffron rounded-lg blur opacity-40 group-hover:opacity-70 transition-opacity"></div>
-                        <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="relative h-11 w-11 rounded-lg object-cover shadow-sm mr-3 border-2 border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors">
-                    </div>
-                    <span class="font-serif font-black text-2xl tracking-tight text-slate-900 dark:text-white">INDIAN GEOSTRAT</span>
-                </div>
-
-                <!-- Desktop Menu -->
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <button onclick="navigate('home')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Home</button>
-                    <button onclick="navigate('about')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">About Us</button>
-                    <button onclick="navigate('contact')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Contact</button>
-                    
-                    <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
-                    
-                    <button id="theme-toggle" class="p-2.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-all flex items-center justify-center text-slate-500 hover:text-saffron dark:text-slate-400 dark:hover:text-saffron" title="Toggle Theme">
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                    </button>
-                    
-                    <button id="auth-btn" onclick="openAuthModal('signup')" class="btn-premium bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-7 py-2.5 rounded-full font-semibold text-sm transition-all shadow-xl shadow-slate-900/20 dark:shadow-white/10 border border-slate-700 dark:border-white/50 transform hover:-translate-y-0.5">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1.5 opacity-80"></i> Sign up / Login
-                    </button>
-                </nav>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center gap-3">
-                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 dark:text-slate-400">
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                    </button>
-                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-700">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                        <i data-lucide="menu" class="fa-solid fa-bars w-6 h-6"></i>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden glass-panel absolute w-full shadow-2xl transition-all origin-top transform border-t border-slate-200 dark:border-slate-800">
-            <div class="px-4 pt-4 pb-6 space-y-2">
-                <button onclick="navigate('home')" class="flex items-center w-full px-4 py-3.5 text-base font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-xl transition-colors">
-                    <i data-lucide="home" class="w-5 h-5 mr-3 opacity-70"></i> Home
-                </button>
-                <button onclick="navigate('about')" class="flex items-center w-full px-4 py-3.5 text-base font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-xl transition-colors">
-                    <i data-lucide="info" class="w-5 h-5 mr-3 opacity-70"></i> About Us
-                </button>
-                <button onclick="navigate('contact')" class="flex items-center w-full px-4 py-3.5 text-base font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-xl transition-colors">
-                    <i data-lucide="mail" class="w-5 h-5 mr-3 opacity-70"></i> Contact
-                </button>
-                <div class="pt-4 px-2 mt-2 border-t border-slate-200 dark:border-slate-800">
-                    <button onclick="openAuthModal('signup')" class="w-full flex items-center justify-center bg-saffron hover:bg-orange-500 text-white px-4 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/20">
-                        <i data-lucide="lock" class="w-4 h-4 mr-2"></i> Sign up / Login
-                    </button>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-xl transition-all origin-top transform">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <button onclick="navigate('home')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</button>
+                <button onclick="navigate('about')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">About Us</button>
+                <button onclick="navigate('contact')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Contact</button>
+                <div class="pt-4 px-2">
+                    <button onclick="openAuthModal('signup')" class="block w-full text-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-lg font-bold transition-colors shadow-md">Sign up / Login</button>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-grow pt-[114px]">
+    <main id="main-content" class="flex-grow pt-28"> <!-- Increased padding for ticker -->
         
         <!-- === HOME PAGE === -->
-        <section id="page-home" class="page-section block">
+        <section id="page-home" class="page-section animate-fade-in block">
             
             <!-- Hero Section -->
-            <div class="relative overflow-hidden min-h-[85vh] flex items-center">
-                
-                <!-- Dynamic Canvas Background -->
-                <canvas id="network-canvas"></canvas>
+            <div class="relative bg-transparent overflow-hidden">
+                <!-- Abstract decorative blobs -->
+                <div class="absolute top-0 left-1/4 w-72 h-72 bg-saffron rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob"></div>
+                <div class="absolute top-0 right-1/4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob animation-delay-2000"></div>
+                <div class="absolute -bottom-8 left-1/3 w-72 h-72 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob animation-delay-4000"></div>
 
-                <!-- Abstract decorative blobs (fallback/layering) -->
-                <div class="absolute top-10 left-1/4 w-96 h-96 bg-saffron rounded-full mix-blend-multiply filter blur-[100px] opacity-20 dark:opacity-10 animate-blob"></div>
-                <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 dark:opacity-10 animate-blob animation-delay-2000"></div>
-
-                <div class="max-w-7xl mx-auto relative w-full z-10 px-4 sm:px-6 lg:px-8 py-12">
-                    <div class="text-center flex flex-col items-center">
-                        
-                        <div class="reveal-up inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold text-saffron bg-white/80 dark:bg-slate-900/80 border border-orange-200 dark:border-orange-500/30 mb-8 shadow-sm backdrop-blur-md magnetic-el">
-                            <span class="flex h-2.5 w-2.5 rounded-full bg-saffron mr-2.5 animate-pulse-slow"></span>
-                            <span class="tracking-wide uppercase text-xs">Latest Edition: 30 August 2026</span>
-                        </div>
-                        
-                        <h1 class="reveal-up delay-100 text-5xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-6xl md:text-7xl font-serif leading-[1.1] max-w-5xl mx-auto drop-shadow-sm">
-                            <span class="block mb-2">Decoding Regional &</span>
-                            <span class="block text-gradient pb-2">Global Geopolitics.</span>
-                        </h1>
-                        
-                        <p class="reveal-up delay-200 mt-6 text-lg text-slate-600 dark:text-slate-300 sm:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
-                            Access premium daily newspapers in English, Bengali, and Hindi. Stay ahead with unparalleled strategic insights curated for professionals, scholars, and policymakers.
-                        </p>
-                        
-                        <!-- Professional Pricing Badge -->
-                        <div class="reveal-up delay-300 mt-10 inline-flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white/60 dark:bg-slate-900/60 px-6 py-4 shadow-xl shadow-slate-200/20 dark:shadow-none backdrop-blur-lg">
-                            <div class="flex items-center gap-2">
-                                <div class="bg-green-100 dark:bg-green-900/40 p-1.5 rounded-lg">
-                                    <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                <div class="max-w-7xl mx-auto relative">
+                    <div class="relative z-10 pb-16 sm:pb-24 md:pb-32 lg:pb-40 bg-transparent pt-16 sm:pt-24 lg:pt-32 px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+                        <main class="mx-auto max-w-4xl">
+                            <div class="text-center flex flex-col items-center">
+                                <div class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-saffron bg-orange-50/80 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 mb-8 shadow-sm backdrop-blur-sm">
+                                    <span class="flex h-2 w-2 rounded-full bg-saffron mr-2 animate-pulse-slow"></span>
+                                    DAILY EDITIONS AVAILABLE
                                 </div>
-                                <span class="font-bold text-slate-800 dark:text-slate-100 text-base">All-Access Pass</span>
-                            </div>
-                            <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
-                            <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-sm font-medium">Standard: ₹30/mo</span>
-                            <span class="font-black text-saffron bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/40 dark:to-orange-900/20 px-4 py-2 rounded-xl border border-orange-200 dark:border-orange-800/60 flex items-center gap-2 relative overflow-hidden group shadow-inner">
-                                <i data-lucide="zap" class="w-4 h-4 relative z-10 fill-saffron"></i> 
-                                <span class="relative z-10 text-lg">Special: ₹10/mo</span>
-                            </span>
-                        </div>
+                                <h1 class="text-5xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-6xl md:text-7xl font-serif leading-[1.15]">
+                                    <span class="block">Regional & Global</span>
+                                    <span class="block text-gradient mt-2">Perspectives.</span>
+                                </h1>
+                                <p class="mt-6 text-base text-slate-600 dark:text-slate-400 sm:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
+                                    Access comprehensive daily newspapers in English, Bengali, and Hindi. Stay informed with unparalleled geopolitical insights curated for professionals and scholars.
+                                </p>
+                                
+                                <!-- Professional Pricing Badge -->
+                                <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                        <span class="font-semibold text-slate-800 dark:text-slate-200 text-base">Premium Access</span>
+                                    </div>
+                                    <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
+                                    <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-base">Standard: ₹30/mo</span>
+                                    <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base">
+                                        <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                                        <i data-lucide="tag" class="w-4 h-4 relative z-10"></i> 
+                                        <span class="relative z-10">Special Offer: ₹10/mo</span>
+                                    </span>
+                                </div>
 
-                        <div class="reveal-up delay-300 mt-12 flex flex-col sm:flex-row justify-center gap-5 w-full sm:w-auto">
-                            <button onclick="handleReadToday()" class="magnetic-el group relative flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-white bg-slate-900 dark:bg-white dark:text-slate-900 md:text-lg transition-all shadow-xl hover:shadow-2xl hover:shadow-slate-900/20 dark:hover:shadow-white/20 transform overflow-hidden w-full sm:w-auto">
-                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
-                                <i data-lucide="book-open" class="w-5 h-5 mr-2 relative z-10"></i>
-                                <span class="relative z-10">Read Edition (31 Aug)</span>
-                            </button>
-                            
-                            <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="magnetic-el flex items-center justify-center px-8 py-4 border-2 border-slate-200 dark:border-slate-700 text-base font-bold rounded-xl text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 backdrop-blur-sm md:text-lg transition-all shadow-sm group w-full sm:w-auto">
-                                <i data-lucide="layout-grid" class="w-5 h-5 mr-2 text-slate-400 group-hover:text-slate-700 dark:group-hover:text-white transition-colors"></i>
-                                Browse Archives
-                            </button>
-                        </div>
+                                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+                                    <div class="rounded-lg shadow-lg shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
+                                        <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
+                                            <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+                                            Read Today (Aug 31)
+                                        </button>
+                                    </div>
+                                    <div class="mt-3 sm:mt-0 w-full sm:w-auto">
+                                        <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-base font-medium rounded-lg text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 backdrop-blur-sm md:text-lg transition-all shadow-sm group">
+                                            <i data-lucide="layout-grid" class="w-5 h-5 mr-2 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors"></i>
+                                            Explore Archive
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
                     </div>
-                </div>
-                
-                <!-- Scroll down indicator -->
-                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-slate-400 dark:text-slate-500 cursor-pointer" onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})">
-                    <span class="text-[10px] font-bold uppercase tracking-widest mb-2">Discover</span>
-                    <i data-lucide="arrow-down" class="w-5 h-5"></i>
                 </div>
             </div>
 
             <!-- Trusted By / Credibility Section -->
-            <div class="border-y border-slate-200 dark:border-slate-800/50 glass-panel py-10 relative z-20">
+            <div class="border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm py-8">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">Trusted by scholars & analysts at</p>
-                    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-700 dark:opacity-40 dark:hover:opacity-100">
-                        <div class="flex items-center gap-2.5 font-serif font-bold text-xl text-slate-700 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron transition-colors"><i class="fa-solid fa-building-columns text-2xl"></i> Delhi University</div>
-                        <div class="flex items-center gap-2.5 font-serif font-bold text-xl text-slate-700 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron transition-colors"><i class="fa-solid fa-scale-balanced text-2xl"></i> NLU Consortium</div>
-                        <div class="flex items-center gap-2.5 font-serif font-bold text-xl text-slate-700 dark:text-slate-300 hover:text-saffron dark:hover:text-saffron transition-colors"><i class="fa-solid fa-globe text-2xl"></i> JNU Intl. Studies</div>
-                        <div class="flex items-center gap-2.5 font-serif font-bold text-xl text-slate-700 dark:text-slate-300 hidden sm:flex hover:text-saffron dark:hover:text-saffron transition-colors"><i class="fa-solid fa-book-open-reader text-2xl"></i> Civil Services Academy</div>
+                    <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-400 mb-6">Read by scholars and professionals at</p>
+                    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 dark:opacity-40 dark:hover:opacity-100">
+                        <!-- Mock University/Institution Logos using text for simplicity in this demo, ideally SVGs -->
+                        <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-building-columns"></i> Delhi University</div>
+                        <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-scale-balanced"></i> NLU Consortium</div>
+                        <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-globe"></i> JNU Intl. Studies</div>
+                        <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300 hidden sm:flex"><i class="fa-solid fa-book-open-reader"></i> Civil Services Academy</div>
                     </div>
                 </div>
             </div>
 
             <!-- Newspaper Archive Explorer -->
-            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 relative">
+            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
                 <!-- Background decoration -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-saffron/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-saffron/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-                <div class="text-center mb-20 reveal-up">
-                    <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-flex items-center"><i data-lucide="database" class="w-3 h-3 mr-2"></i> The Vault</span>
-                    <h2 class="mt-4 text-4xl leading-tight font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl font-serif">
-                        Intelligence Archive
+                <div class="text-center mb-16">
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">The Archives</span>
+                    <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl font-serif">
+                        Explore Past Editions
                     </h2>
-                    <p class="mt-5 max-w-2xl text-lg text-slate-500 dark:text-slate-400 mx-auto">
-                        Access our meticulously organized digital catalog. Hover and interact with available dates to retrieve high-resolution editions.
+                    <p class="mt-4 max-w-2xl text-lg text-slate-500 dark:text-slate-400 mx-auto">
+                        Access our comprehensive digital catalog. Click on highlighted dates to access specific high-quality PDFs.
                     </p>
                 </div>
 
-                <div class="glass-panel rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden relative z-10 reveal-up delay-100">
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10">
                     <!-- Year / Month Tabs -->
-                    <div class="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="p-3 bg-slate-900 dark:bg-white rounded-xl shadow-lg shadow-slate-900/20 dark:shadow-white/10 flex-shrink-0">
-                                <i data-lucide="calendar-days" class="w-6 h-6 text-white dark:text-slate-900"></i>
+                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700">
+                                <i data-lucide="calendar-days" class="w-5 h-5 text-saffron"></i>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-slate-900 dark:text-white text-xl font-serif" id="current-month-title">August 2026</h3>
-                                <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Select Timeline</p>
-                            </div>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 text-lg">Timeline</span>
                         </div>
                         
-                        <div class="flex items-center p-1.5 bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-x-auto no-scrollbar border border-slate-200 dark:border-slate-800" id="month-tabs">
+                        <div class="flex items-center p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar" id="month-tabs">
                             <!-- Populated via JS -->
                         </div>
                     </div>
 
                     <!-- Dates Grid -->
-                    <div class="p-6 sm:p-8 md:p-10 bg-white/40 dark:bg-slate-900/40 min-h-[500px]">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 pb-6 gap-4">
-                            <div class="flex gap-4 items-center">
-                                <span class="flex items-center text-sm font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-saffron mr-2 shadow-[0_0_5px_#FF9933]"></span>Available</span>
-                                <span class="flex items-center text-sm font-semibold text-slate-500 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm opacity-70"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-600 mr-2"></span>Archived</span>
+                    <div class="p-6 sm:p-8 md:p-10 bg-white dark:bg-slate-900 min-h-[400px]">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 border-b border-slate-100 dark:border-slate-800/60 pb-6 gap-4">
+                            <div>
+                                <h3 id="current-month-title" class="text-2xl sm:text-3xl font-serif font-bold text-slate-800 dark:text-slate-100">August 2026</h3>
+                                <p class="text-sm text-slate-500 mt-1">Select a date to view available editions.</p>
                             </div>
-                            <div class="text-sm font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner flex items-center">
-                                <i data-lucide="layers" class="w-4 h-4 mr-2 text-saffron"></i>
-                                <span id="doc-count" class="text-saffron text-lg mr-1">0</span> Documents
+                            <div class="flex gap-3 items-center flex-wrap">
+                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-saffron mr-2"></span>Available</span>
+                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 mr-2"></span>Archived</span>
+                                <span class="text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"><span id="doc-count" class="text-saffron">0</span> Total</span>
                             </div>
                         </div>
-                        
-                        <div id="dates-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-5 sm:gap-6 perspective-1000">
+                        <div id="dates-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6">
                             <!-- Populated via JS -->
                         </div>
                     </div>
@@ -744,58 +437,52 @@
             </div>
             
             <!-- Features/Value prop -->
-            <div class="relative py-32 bg-slate-950 border-y border-slate-800 overflow-hidden">
-                <!-- Tech grid background -->
-                <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+            <div class="relative py-24 bg-slate-900 dark:bg-black border-y border-slate-800 overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-                    <div class="text-center mb-20 reveal-up">
-                        <span class="bg-slate-800/50 text-saffron text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest border border-slate-700 mb-4 inline-block backdrop-blur-sm">Value Proposition</span>
-                        <h3 class="mt-4 text-4xl font-extrabold text-white font-serif sm:text-5xl">The Geostrat Advantage</h3>
-                    </div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+                    <span class="bg-slate-800 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-700 mb-4 inline-block">Value Proposition</span>
+                    <h3 class="mt-2 text-3xl font-extrabold text-white font-serif sm:text-4xl">Why Subscribe to Indian Geostrat?</h3>
                     
-                    <div class="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-3">
+                    <div class="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Feature 1 -->
-                        <div class="relative group reveal-up">
-                            <div class="absolute inset-0 bg-gradient-to-b from-saffron/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                            <div class="relative h-full bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-slate-800/90 hover:border-slate-700 transition-all duration-500 z-10 hover:-translate-y-2">
-                                <div class="w-20 h-20 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-center mb-8 shadow-inner shadow-white/5 group-hover:border-saffron/50 transition-colors duration-500 relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-saffron/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                    <i data-lucide="globe-2" class="w-10 h-10 text-saffron relative z-10 group-hover:scale-110 transition-transform"></i>
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-r from-saffron to-orange-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                                <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="globe-2" class="w-8 h-8 text-saffron"></i>
                                 </div>
-                                <h4 class="text-2xl font-bold text-white mb-4 font-serif">Trilingual Coverage</h4>
-                                <p class="text-base text-slate-400 leading-relaxed font-medium">
+                                <h4 class="text-xl font-bold text-white mb-4 font-serif">Trilingual Coverage</h4>
+                                <p class="text-base text-slate-400 leading-relaxed">
                                     Extensive reporting in English, Bengali, and Hindi ensuring you receive nuanced regional and international perspectives without language barriers.
                                 </p>
                             </div>
                         </div>
 
                         <!-- Feature 2 -->
-                        <div class="relative group reveal-up delay-100">
-                            <div class="absolute inset-0 bg-gradient-to-b from-indiaGreen/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                            <div class="relative h-full bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-slate-800/90 hover:border-slate-700 transition-all duration-500 z-10 hover:-translate-y-2">
-                                <div class="w-20 h-20 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-center mb-8 shadow-inner shadow-white/5 group-hover:border-indiaGreen/50 transition-colors duration-500 relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-indiaGreen/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                    <i data-lucide="file-check-2" class="w-10 h-10 text-indiaGreen relative z-10 group-hover:scale-110 transition-transform"></i>
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-r from-indiaGreen to-emerald-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                                <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="file-check-2" class="w-8 h-8 text-indiaGreen"></i>
                                 </div>
-                                <h4 class="text-2xl font-bold text-white mb-4 font-serif">High-Fidelity PDFs</h4>
-                                <p class="text-base text-slate-400 leading-relaxed font-medium">
-                                    Crisp, high-resolution digital copies of daily newspapers delivered securely via enterprise infrastructure for seamless reading across all your devices.
+                                <h4 class="text-xl font-bold text-white mb-4 font-serif">High-Quality PDFs</h4>
+                                <p class="text-base text-slate-400 leading-relaxed">
+                                    Crisp, high-resolution digital copies of daily newspapers delivered securely via Google Drive infrastructure for seamless reading across devices.
                                 </p>
                             </div>
                         </div>
 
                         <!-- Feature 3 -->
-                        <div class="relative group lg:col-span-1 reveal-up delay-200">
-                            <div class="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                            <div class="relative h-full bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-slate-800/90 hover:border-slate-700 transition-all duration-500 z-10 hover:-translate-y-2">
-                                <div class="w-20 h-20 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-center mb-8 shadow-inner shadow-white/5 group-hover:border-blue-500/50 transition-colors duration-500 relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-blue-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                    <i data-lucide="badge-percent" class="w-10 h-10 text-blue-400 relative z-10 group-hover:scale-110 transition-transform"></i>
+                        <div class="relative group sm:col-span-2 lg:col-span-1">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                                <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="badge-percent" class="w-8 h-8 text-blue-400"></i>
                                 </div>
-                                <h4 class="text-2xl font-bold text-white mb-4 font-serif">Accessible Pricing</h4>
-                                <p class="text-base text-slate-400 leading-relaxed font-medium">
-                                    Standard access is ₹30/mo. Take advantage of our limited-time promotion to secure complete archive access for just ₹10/mo via convenient UPI.
+                                <h4 class="text-xl font-bold text-white mb-4 font-serif">Affordable Access</h4>
+                                <p class="text-base text-slate-400 leading-relaxed">
+                                    Standard access is ₹30/month. Take advantage of our limited-time promotion to secure complete access for just ₹10/month via convenient UPI.
                                 </p>
                             </div>
                         </div>
@@ -804,102 +491,85 @@
             </div>
 
             <!-- Newsletter Section -->
-            <div class="py-24 bg-transparent relative overflow-hidden">
-                <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal-up">
-                    <div class="glass-panel rounded-[2rem] p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl">
-                        <!-- Decorative bg -->
-                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl pointer-events-none"></div>
-                        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                        
-                        <div class="w-20 h-20 mx-auto bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center shadow-xl mb-8 transform -rotate-6 hover:rotate-0 transition-transform duration-300">
-                            <i data-lucide="mail-open" class="w-10 h-10 text-white dark:text-slate-900"></i>
+            <div class="py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-700 shadow-xl text-center">
+                        <div class="w-16 h-16 mx-auto bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-md mb-6 border border-slate-100 dark:border-slate-700">
+                            <i data-lucide="mail-open" class="w-8 h-8 text-saffron"></i>
                         </div>
-                        <h3 class="text-3xl sm:text-4xl font-extrabold font-serif text-slate-900 dark:text-white mb-5">Strategic Weekly Briefing</h3>
-                        <p class="text-slate-600 dark:text-slate-300 mb-10 max-w-2xl mx-auto text-lg">Join 15,000+ analysts receiving our concise weekly recap of major regional developments directly in their inbox.</p>
+                        <h3 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mb-4">Get Weekly Geopolitical Insights</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto">Join 10,000+ subscribers receiving our free weekly recap of major regional developments directly in their inbox.</p>
                         
-                        <form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4" onsubmit="event.preventDefault(); showToast('Subscribed successfully to the briefing!'); this.reset();">
-                            <div class="relative flex-grow">
-                                <i data-lucide="at-sign" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input type="email" placeholder="Enter your official email address" required class="w-full pl-12 pr-5 py-4 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none transition-all dark:text-white placeholder-slate-400 font-medium shadow-sm">
-                            </div>
-                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap flex items-center justify-center gap-2">
-                                <span>Subscribe</span>
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); showToast('Subscribed successfully to the newsletter!'); this.reset();">
+                            <input type="email" placeholder="Enter your email address" required class="flex-grow px-5 py-3.5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
+                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-orange-500/20 whitespace-nowrap">
+                                Subscribe
                             </button>
                         </form>
-                        <p class="text-xs text-slate-400 mt-6 font-semibold uppercase tracking-wider">No spam. Unsubscribe anytime.</p>
+                        <p class="text-xs text-slate-400 mt-4">No spam. Unsubscribe anytime.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- === ABOUT US PAGE === -->
-        <section id="page-about" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-            <div class="text-center mb-20 reveal-up">
-                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-6 inline-block">Our Story</span>
-                <h1 class="text-5xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-6xl tracking-tight">About Indian Geostrat</h1>
+        <section id="page-about" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in">
+            <div class="text-center mb-16">
+                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">Our Story</span>
+                <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl lg:text-6xl tracking-tight">About Indian Geostrat</h1>
                 <div class="mt-8 w-24 h-1.5 bg-gradient-to-r from-saffron to-orange-500 mx-auto rounded-full"></div>
             </div>
             
-            <div class="prose prose-lg md:prose-xl dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300 leading-relaxed reveal-up delay-100">
-                <blockquote class="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-20 text-center italic border-none px-0 leading-tight">
-                    "Bridging the critical gap between regional ground realities and global geopolitical shifts."
+            <div class="prose prose-lg md:prose-xl dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300 leading-relaxed">
+                <blockquote class="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-16 text-center italic border-none px-0 leading-tight">
+                    "Bridging the gap between regional developments and global geopolitical shifts."
                 </blockquote>
                 
-                <div class="my-20 grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="my-16 grid md:grid-cols-2 gap-12 items-center">
                     <div>
                         <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6">Our Mission</h3>
-                        <p class="mb-6">
-                            Indian Geostrat was founded with a singular vision: to democratize access to high-quality, comprehensive news coverage across linguistic boundaries. We recognize that true geopolitical understanding requires diverse, unfiltered perspectives.
+                        <p class="mb-4">
+                            Indian Geostrat was founded with a singular vision: to democratize access to high-quality, comprehensive news coverage across linguistic boundaries. We recognize that true geopolitical understanding requires diverse perspectives.
                         </p>
                         <p>
-                            By curating premium daily newspapers in English, Bengali, and Hindi, we provide our readers with a holistic view of regional, national, and international affairs, empowering informed decision-making at every level.
+                            By curating premium daily newspapers in English, Bengali, and Hindi, we provide our readers with a holistic view of regional, national, and international affairs, empowering informed decision-making.
                         </p>
                     </div>
-                    <div class="glass-panel p-10 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-xl relative overflow-hidden group">
-                        <div class="absolute -right-10 -bottom-10 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i data-lucide="target" class="w-64 h-64 text-saffron"></i>
-                        </div>
-                        <div class="relative z-10">
-                            <div class="w-16 h-16 bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center mb-8 shadow-lg">
-                                <i data-lucide="compass" class="w-8 h-8 text-white dark:text-slate-900"></i>
-                            </div>
-                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 font-serif">Core Objective</h4>
-                            <p class="text-lg leading-relaxed font-medium">To provide uninterrupted, clutter-free access to daily printed knowledge, enabling deep research and comprehensive daily awareness for our subscribers without algorithmic bias.</p>
-                        </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
+                        <i data-lucide="target" class="w-12 h-12 text-saffron mb-6"></i>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Core Objective</h4>
+                        <p class="text-base">To provide uninterrupted, clutter-free access to daily printed knowledge, enabling deep research and comprehensive daily awareness for our subscribers.</p>
                     </div>
                 </div>
 
-                <div class="my-20 glass-panel p-12 rounded-[2rem] text-center shadow-sm">
-                    <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6">Editorial Standards</h3>
-                    <p class="mb-0 max-w-3xl mx-auto text-lg">
-                        Our platform ensures that you receive uncompromised, high-fidelity digital replicas of daily editions. We maintain a strict focus on providing organized, easily accessible archives without the clutter of traditional news aggregators, pop-ups, or distracting advertisements. Pure signal, no noise.
+                <div class="my-16 border-t border-slate-200 dark:border-slate-800 pt-16">
+                    <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6 text-center">Editorial Standards</h3>
+                    <p class="mb-6 text-center max-w-3xl mx-auto">
+                        Our platform ensures that you receive uncompromised, high-fidelity digital replicas of daily editions. We maintain a strict focus on providing organized, easily accessible archives without the clutter of traditional news aggregators or distracting advertisements.
                     </p>
                 </div>
                 
-                <div class="bg-slate-950 p-10 md:p-16 rounded-[2rem] shadow-2xl relative overflow-hidden group text-white">
-                    <div class="absolute -top-32 -right-32 w-96 h-96 bg-saffron/20 rounded-full blur-[80px] z-0 group-hover:bg-saffron/30 transition-colors duration-700"></div>
-                    <div class="relative z-10">
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-8 mb-10 border-b border-white/10 pb-10">
-                            <div class="p-5 bg-white/10 rounded-2xl backdrop-blur-md flex-shrink-0 border border-white/20">
-                                <i data-lucide="credit-card" class="w-10 h-10 text-saffron"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-3xl sm:text-4xl font-bold font-serif text-white m-0">The Subscription Model</h3>
-                                <p class="text-slate-400 mt-3 text-lg font-medium">Transparent pricing for premium, unrestricted access.</p>
-                            </div>
+                <div class="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 mt-20 relative overflow-hidden group">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl -z-10 group-hover:bg-saffron/20 transition-colors duration-500"></div>
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8 border-b border-slate-100 dark:border-slate-800 pb-8">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex-shrink-0">
+                            <i data-lucide="credit-card" class="w-8 h-8 text-saffron"></i>
                         </div>
-                        <div class="grid md:grid-cols-2 gap-10">
-                            <div>
-                                <p class="mb-6 text-lg text-slate-300">
-                                    Our standard subscription is priced at <strong class="text-white">₹30/month</strong>. However, for a limited period, readers can unlock complete access at a promotional rate of <strong class="text-saffron text-2xl px-1">₹10/month</strong>. 
-                                </p>
-                            </div>
-                            <div>
-                                <p class="mb-0 text-lg text-slate-300">
-                                    This modest monthly contribution supports our daily curation and server operations while ensuring that vital geopolitical resources remain financially accessible to students, academic researchers, and professionals alike.
-                                </p>
-                            </div>
+                        <div>
+                            <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white m-0">The Subscription Model</h3>
+                            <p class="text-slate-500 mt-2 text-base">Transparent pricing for premium access.</p>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="mb-4">
+                                Our standard subscription is priced at <strong class="text-slate-900 dark:text-white">₹30/month</strong>. However, for a limited period, readers can unlock complete access at a promotional rate of <strong class="text-saffron text-xl">₹10/month</strong>. 
+                            </p>
+                        </div>
+                        <div>
+                            <p class="mb-0">
+                                This modest monthly contribution supports our daily curation operations while ensuring that vital geopolitical resources remain financially accessible to students, academic researchers, and professionals alike.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -907,27 +577,27 @@
         </section>
 
         <!-- === CONTACT US PAGE === -->
-        <section id="page-contact" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal-up">
-                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-6 inline-block">Get in Touch</span>
-                <h1 class="text-5xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-6xl">Contact Us</h1>
-                <p class="mt-6 text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your premium access.</p>
+        <section id="page-contact" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
+            <div class="text-center mb-16">
+                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">Get in Touch</span>
+                <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
+                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-16 reveal-up delay-100">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
                 <!-- Contact Info -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="glass-panel rounded-3xl shadow-lg p-10 h-full relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-40 h-40 bg-saffron/10 rounded-bl-full -z-10"></div>
-                        <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-10">Headquarters</h3>
-                        <ul class="space-y-10">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm p-8 border border-slate-200 dark:border-slate-800 h-full relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -z-10"></div>
+                        <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-8">Headquarters</h3>
+                        <ul class="space-y-8">
                             <li class="flex items-start group">
-                                <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl mr-6 flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm group-hover:border-saffron group-hover:shadow-saffron/20 transition-all">
-                                    <i data-lucide="map-pin" class="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-saffron transition-colors"></i>
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
-                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider">Address</h4>
-                                    <span class="text-slate-600 dark:text-slate-400 leading-relaxed text-base font-medium block">
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Address</h4>
+                                    <span class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                                         Street No. 18, DN Block, Sector V,<br>
                                         Salt Lake City, Calcutta,<br>
                                         West Bengal, 700091
@@ -935,12 +605,12 @@
                                 </div>
                             </li>
                             <li class="flex items-start group">
-                                <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl mr-6 flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm group-hover:border-saffron group-hover:shadow-saffron/20 transition-all">
-                                    <i data-lucide="mail" class="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-saffron transition-colors"></i>
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all">
+                                    <i data-lucide="mail" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
-                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider">Email</h4>
-                                    <a href="mailto:indiangeostrat@gmail.com" class="text-slate-600 dark:text-slate-400 hover:text-saffron transition-colors text-base font-medium">
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Email</h4>
+                                    <a href="mailto:indiangeostrat@gmail.com" class="text-slate-600 dark:text-slate-400 hover:text-saffron transition-colors text-sm">
                                         indiangeostrat@gmail.com
                                     </a>
                                 </div>
@@ -951,44 +621,41 @@
 
                 <!-- Contact Form -->
                 <div class="lg:col-span-3">
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 sm:p-12 border border-slate-200 dark:border-slate-800 relative">
-                        <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none"><i data-lucide="message-square" class="w-32 h-32"></i></div>
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none p-8 sm:p-10 border border-slate-200 dark:border-slate-800">
+                        <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-2">Send a Message</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-8 text-sm">Fill out the form below and our team will get back to you promptly.</p>
                         
-                        <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-3">Send a Message</h3>
-                        <p class="text-slate-500 dark:text-slate-400 mb-10 text-base font-medium">Fill out the form below and our support team will respond promptly.</p>
-                        
-                        <form id="contact-form" class="space-y-6 relative z-10" onsubmit="handleContactSubmit(event)">
+                        <form id="contact-form" class="space-y-6" onsubmit="handleContactSubmit(event)">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">Full Name</label>
-                                    <input type="text" required placeholder="Jane Doe" class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none transition-all dark:text-white placeholder-slate-400 font-medium">
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                                    <input type="text" required placeholder="John Doe" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">Email Address</label>
-                                    <input type="email" required placeholder="jane@example.com" class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none transition-all dark:text-white placeholder-slate-400 font-medium">
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                                    <input type="email" required placeholder="john@example.com" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">Subject</label>
-                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none transition-all dark:text-white placeholder-slate-400 font-medium">
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Subject</label>
+                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">Message</label>
-                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none transition-all dark:text-white resize-none placeholder-slate-400 font-medium"></textarea>
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Message</label>
+                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none placeholder-slate-400 shadow-sm"></textarea>
                             </div>
-                            <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-4 px-10 rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 mt-4 flex items-center justify-center gap-3 text-lg">
+                            <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3.5 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl mt-2 flex items-center justify-center gap-2">
                                 <span>Send Message</span>
-                                <i data-lucide="send" class="w-5 h-5"></i>
+                                <i data-lucide="send" class="w-4 h-4"></i>
                             </button>
                         </form>
-                        
-                        <div id="contact-success" class="hidden mt-6 p-8 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-2xl border border-green-200 dark:border-green-800/50 flex items-center shadow-inner">
-                            <div class="p-3 bg-green-100 dark:bg-green-800/50 rounded-full mr-5 shadow-sm">
-                                <i data-lucide="check" class="w-8 h-8 flex-shrink-0"></i>
+                        <div id="contact-success" class="hidden mt-6 p-6 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-xl border border-green-200 dark:border-green-800/50 flex items-center">
+                            <div class="p-2 bg-green-100 dark:bg-green-800/50 rounded-full mr-4">
+                                <i data-lucide="check" class="w-6 h-6 flex-shrink-0"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-xl mb-2">Message Received!</h4>
-                                <span class="font-medium text-base opacity-90">We will reply to your provided email address shortly.</span>
+                                <h4 class="font-bold text-lg mb-1">Message Received!</h4>
+                                <span class="font-medium text-sm opacity-90">We will reply to your provided email address shortly.</span>
                             </div>
                         </div>
                     </div>
@@ -996,28 +663,28 @@
             </div>
 
             <!-- Social Media Bar -->
-            <div class="glass-panel rounded-3xl p-8 md:p-10 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg reveal-up delay-200">
-                <div class="flex items-center space-x-5 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    <div class="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <i data-lucide="share-nodes" class="w-6 h-6 text-saffron"></i>
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+                <div class="flex items-center space-x-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <i data-lucide="share-2" class="w-5 h-5 text-saffron"></i>
                     </div>
-                    <span class="text-lg font-serif">Connect with us on official platforms:</span>
+                    <span class="text-base">Connect with us on official platforms:</span>
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-4">
-                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2.5 px-6 py-3 text-sm font-bold rounded-xl bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
+                <div class="flex flex-wrap justify-center items-center gap-3">
+                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <i data-lucide="youtube" class="fa-brands fa-youtube text-red-500 text-lg"></i>
                         <span>YouTube</span>
                     </a>
-                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2.5 px-6 py-3 text-sm font-bold rounded-xl bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-x-twitter text-xl"></i>
-                        <span>X (Twitter)</span>
+                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <i data-lucide="twitter" class="fa-brands fa-x-twitter text-lg"></i>
+                        <span>X</span>
                     </a>
-                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2.5 px-6 py-3 text-sm font-bold rounded-xl bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-instagram text-pink-500 text-xl"></i>
+                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <i data-lucide="instagram" class="fa-brands fa-instagram text-pink-500 text-lg"></i>
                         <span>Instagram</span>
                     </a>
-                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2.5 px-6 py-3 text-sm font-bold rounded-xl bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-linkedin-in text-blue-500 text-xl"></i>
+                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <i data-lucide="linkedin" class="fa-brands fa-linkedin-in text-blue-500 text-lg"></i>
                         <span>LinkedIn</span>
                     </a>
                 </div>
@@ -1026,86 +693,81 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 pt-20 pb-10 text-slate-300 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 mb-16">
+    <footer class="bg-slate-900 dark:bg-[#050505] border-t border-slate-800 pt-16 pb-8 text-slate-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
                 
                 <!-- Branding & Subscription -->
                 <div class="md:col-span-5">
-                    <div class="flex items-center mb-8 cursor-pointer" onclick="navigate('home')">
-                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-14 w-14 rounded-xl mr-4 border border-slate-700 object-cover shadow-lg">
-                        <span class="font-serif font-black text-3xl tracking-tight text-white">INDIAN GEOSTRAT</span>
+                    <div class="flex items-center mb-6 cursor-pointer" onclick="navigate('home')">
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover">
+                        <span class="font-serif font-black text-2xl tracking-tight text-white">INDIAN GEOSTRAT</span>
                     </div>
-                    <p class="text-slate-400 text-base mb-10 leading-relaxed max-w-sm font-medium">
-                        Curating regional, national, and international newspapers daily. Premium geopolitical insights, made accessible. Trilingual coverage for the informed mind.
+                    <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-sm">
+                        Curating regional, national, and international newspapers daily. Premium geopolitical insights, made accessible to all. Stay informed with our trilingual coverage.
                     </p>
                     
-                    <div class="mb-8 rounded-3xl border border-slate-800 bg-slate-900/80 p-6 max-w-sm backdrop-blur-sm shadow-xl relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 text-saffron/10"><i data-lucide="award" class="w-24 h-24"></i></div>
-                        <div class="flex items-center justify-between mb-4 relative z-10">
-                            <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-4 h-4 mr-1.5 fill-saffron"></i> Premium Access</p>
-                            <span class="flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]"></span>
+                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Premium Access</p>
+                            <span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
                         </div>
-                        <div class="flex items-baseline gap-3 mb-6 relative z-10">
-                            <span class="text-base text-slate-500 line-through decoration-slate-600 font-medium">₹30/mo</span>
-                            <span class="text-3xl font-black text-white">₹10<span class="text-base text-slate-400 font-medium">/mo</span></span>
+                        <div class="flex items-baseline gap-3 mb-5">
+                            <span class="text-sm text-slate-500 line-through decoration-slate-600">₹30/mo</span>
+                            <span class="text-2xl font-bold text-white">₹10<span class="text-sm text-slate-400 font-normal">/mo</span></span>
                         </div>
-                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-white text-slate-900 px-4 py-3.5 text-sm font-bold hover:bg-slate-200 transition-colors shadow-lg relative z-10 flex justify-center items-center gap-2">
-                            <i data-lucide="unlock" class="w-4 h-4"></i> Subscribe Now
-                        </button>
+                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">Subscribe Now</button>
                     </div>
                 </div>
 
                 <!-- Contact & Links -->
                 <div class="md:col-span-3">
-                    <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-8 flex items-center"><i data-lucide="headphones" class="w-4 h-4 mr-2 text-saffron"></i> Support</h3>
-                    <ul class="space-y-6 text-sm text-slate-400 font-medium">
+                    <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-6">Contact Us</h3>
+                    <ul class="space-y-5 text-sm text-slate-400">
                         <li class="flex items-start">
-                            <div class="p-2 bg-slate-900 rounded-lg mr-4 mt-0.5 border border-slate-800 shadow-sm">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-300 flex-shrink-0"></i>
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 mt-0.5 border border-slate-700">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0"></i>
                             </div>
                             <span class="leading-relaxed">Street No. 18, DN Block, Sector V,<br>Salt Lake City, Calcutta,<br>West Bengal, 700091</span>
                         </li>
                         <li class="flex items-center">
-                            <div class="p-2 bg-slate-900 rounded-lg mr-4 border border-slate-800 shadow-sm">
-                                <i data-lucide="mail" class="w-4 h-4 text-slate-300 flex-shrink-0"></i>
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 border border-slate-700">
+                                <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0"></i>
                             </div>
                             <a href="mailto:indiangeostrat@gmail.com" class="hover:text-saffron transition-colors">indiangeostrat@gmail.com</a>
                         </li>
                     </ul>
 
-                    <h3 class="text-sm font-bold text-white tracking-widest uppercase mt-12 mb-6">Social</h3>
+                    <h3 class="text-sm font-bold text-white tracking-widest uppercase mt-10 mb-6">Follow Us</h3>
                     <div class="flex items-center gap-3">
-                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-800 hover:border-slate-600 shadow-sm hover:-translate-y-1">
-                            <i class="fa-brands fa-youtube w-5 h-5 flex justify-center items-center"></i>
+                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                            <i class="fa-brands fa-youtube w-4 h-4"></i>
                         </a>
-                        <a href="https://x.com/IndianGeostrat" target="_blank" class="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-800 hover:border-slate-600 shadow-sm hover:-translate-y-1">
-                            <i class="fa-brands fa-x-twitter w-5 h-5 flex justify-center items-center"></i>
+                        <a href="https://x.com/IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                            <i class="fa-brands fa-x-twitter w-4 h-4"></i>
                         </a>
-                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-800 hover:border-slate-600 shadow-sm hover:-translate-y-1">
-                            <i class="fa-brands fa-instagram w-5 h-5 flex justify-center items-center"></i>
+                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                            <i class="fa-brands fa-instagram w-4 h-4"></i>
                         </a>
-                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-800 hover:border-slate-600 shadow-sm hover:-translate-y-1">
-                            <i class="fa-brands fa-linkedin-in w-5 h-5 flex justify-center items-center"></i>
+                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                            <i class="fa-brands fa-linkedin-in w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Map -->
                 <div class="md:col-span-4">
-                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-8 flex items-center"><i data-lucide="navigation" class="w-4 h-4 mr-2 text-saffron"></i> Location</h3>
-                    <div class="rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 h-64 shadow-2xl group relative">
-                        <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-transparent transition-colors pointer-events-none z-10 duration-500"></div>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="grayscale group-hover:grayscale-0 transition-all duration-700"></iframe>
+                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-6">Location</h3>
+                    <div class="rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-800 h-52 shadow-inner group relative">
+                        <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors pointer-events-none z-10"></div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="grayscale group-hover:grayscale-0 transition-all duration-500"></iframe>
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 font-medium">
+            <div class="border-t border-slate-800/80 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
                 <p>&copy; 2026 Indian Geostrat. All rights reserved.</p>
-                <div class="mt-4 md:mt-0 flex gap-6">
+                <div class="mt-4 md:mt-0 space-x-6">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
                 </div>
@@ -1114,58 +776,61 @@
     </footer>
 
     <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-2xl shadow-2xl shadow-slate-900/30 transform translate-y-32 opacity-0 transition-all duration-400 cubic-bezier(0.68, -0.55, 0.265, 1.55) z-[100] flex items-center max-w-sm border border-slate-700 dark:border-slate-200">
-        <i data-lucide="info" class="w-6 h-6 mr-4 text-saffron flex-shrink-0"></i>
-        <span id="toast-message" class="font-bold text-sm leading-tight"></span>
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-2xl shadow-slate-900/20 transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center max-w-sm border border-slate-700 dark:border-slate-200">
+        <i data-lucide="info" class="w-5 h-5 mr-3 text-saffron flex-shrink-0"></i>
+        <span id="toast-message" class="font-medium text-sm leading-tight"></span>
     </div>
 
     <!-- Modals Overlay -->
-    <div id="modal-overlay" class="fixed inset-0 bg-slate-900/80 dark:bg-black/90 backdrop-blur-md z-[70] hidden opacity-0 transition-opacity duration-400 flex items-center justify-center p-4">
+    <div id="modal-overlay" class="fixed inset-0 bg-slate-900/70 dark:bg-black/80 backdrop-blur-md z-[70] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
         
         <!-- Auth Modal -->
-        <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl max-w-4xl w-full transform scale-95 opacity-0 transition-all duration-400 border border-slate-200 dark:border-slate-800 relative overflow-hidden max-h-[95vh] overflow-y-auto hidden">
-            <button onclick="closeModals()" class="absolute top-5 right-5 z-20 p-2.5 bg-white/20 hover:bg-white/40 dark:bg-slate-800/50 dark:hover:bg-slate-700 rounded-full text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors backdrop-blur-md border border-white/30 dark:border-slate-600">
+        <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-4xl w-full transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative overflow-hidden max-h-[95vh] overflow-y-auto">
+            <button onclick="closeModals()" class="absolute top-4 right-4 z-20 p-2 bg-white/10 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors backdrop-blur-sm">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
-            <div class="grid md:grid-cols-[0.9fr_1.1fr] h-full min-h-[600px]">
+            <div class="grid md:grid-cols-[0.9fr_1.1fr] h-full">
                 <!-- Modal Left (Branding) -->
                 <div class="bg-slate-950 text-white p-8 sm:p-12 flex flex-col justify-between relative overflow-hidden h-full">
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-saffron/20 via-transparent to-transparent opacity-60"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-saffron/20 to-transparent opacity-30"></div>
+                    <!-- decorative circles -->
+                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
                     
                     <div class="relative z-10">
-                        <div class="flex items-center gap-4 mb-16">
+                        <div class="flex items-center gap-4 mb-12">
                             <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-xl border border-white/20 object-cover shadow-lg">
                             <div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-saffron mb-0.5">Indian Geostrat</p>
-                                <p class="font-serif text-xl font-bold">Portal Access</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-saffron">Indian Geostrat</p>
+                                <p class="font-serif text-xl font-bold">Premium Access</p>
                             </div>
                         </div>
-                        <h3 class="font-serif text-4xl sm:text-5xl font-bold leading-[1.1] mb-6">Unlock geopolitical clarity.</h3>
-                        <p class="text-base leading-relaxed text-slate-300 font-medium max-w-sm">Create an account to manage your subscription and gain unlimited access to our entire trilingual PDF archive.</p>
+                        <h3 class="font-serif text-3xl sm:text-4xl font-bold leading-tight mb-5">Unlock geopolitical clarity.</h3>
+                        <p class="text-sm leading-relaxed text-slate-300 font-medium">Create an account to manage your subscription, payments, and gain unlimited access to our entire trilingual PDF archive.</p>
                     </div>
                     
                     <div class="mt-12 space-y-4 relative z-10">
-                        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md shadow-inner">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
                             <div class="flex justify-between items-center mb-3">
-                                <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-4 h-4 mr-1.5 fill-saffron"></i> Special Promotion</p>
+                                <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Current Promotion</p>
                             </div>
                             <div class="flex items-baseline gap-3">
-                                <span class="text-base text-slate-400 line-through font-medium">Standard ₹30/mo</span>
-                                <span class="text-3xl font-black text-white">Offer ₹10/mo</span>
+                                <span class="text-sm text-slate-400 line-through">Standard ₹30/mo</span>
+                                <span class="text-2xl font-bold text-white">Offer ₹10/mo</span>
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/10 backdrop-blur-sm">
-                                <p class="text-2xl font-black text-saffron">3</p>
-                                <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-2">Languages</p>
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                                <p class="text-2xl font-bold text-saffron">3</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Languages</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/10 backdrop-blur-sm">
-                                <p class="text-2xl font-black text-saffron flex justify-center"><i data-lucide="infinity" class="w-6 h-6"></i></p>
-                                <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-2">Access</p>
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                                <p class="text-2xl font-bold text-saffron flex justify-center"><i data-lucide="infinity" class="w-6 h-6"></i></p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Access</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/10 backdrop-blur-sm">
-                                <p class="text-2xl font-black text-saffron flex justify-center"><i data-lucide="file-check-2" class="w-6 h-6"></i></p>
-                                <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-2">Archive</p>
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                                <p class="text-2xl font-bold text-saffron flex justify-center"><i data-lucide="file-check-2" class="w-6 h-6"></i></p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Archive</p>
                             </div>
                         </div>
                     </div>
@@ -1173,61 +838,61 @@
 
                 <!-- Modal Right (Form) -->
                 <div class="p-8 sm:p-12 bg-white dark:bg-slate-900 flex flex-col justify-center">
-                    <div class="mb-10">
-                        <p id="auth-eyebrow" class="text-xs font-bold uppercase tracking-widest text-saffron mb-3">Subscriber login</p>
-                        <h3 id="auth-title" class="text-4xl font-serif font-bold text-slate-900 dark:text-white">Welcome back</h3>
-                        <p id="auth-subtitle" class="text-base text-slate-500 dark:text-slate-400 mt-3 font-medium">Sign in to manage your newspaper subscription.</p>
+                    <div class="mb-8">
+                        <p id="auth-eyebrow" class="text-xs font-bold uppercase tracking-widest text-saffron mb-2">Subscriber login</p>
+                        <h3 id="auth-title" class="text-3xl font-serif font-bold text-slate-900 dark:text-white">Welcome back</h3>
+                        <p id="auth-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-2">Sign in to manage your newspaper subscription.</p>
                     </div>
 
-                    <div class="mb-8 grid grid-cols-2 rounded-xl bg-slate-100 dark:bg-slate-800 p-1.5 text-sm font-bold border border-slate-200 dark:border-slate-700/50 shadow-inner">
-                        <button id="auth-tab-login" type="button" onclick="setAuthMode('login')" class="auth-tab-active rounded-lg py-3 transition-all">Log in</button>
-                        <button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')" class="rounded-lg py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Sign up</button>
+                    <div class="mb-8 grid grid-cols-2 rounded-xl bg-slate-100 dark:bg-slate-800 p-1.5 text-sm font-semibold border border-slate-200 dark:border-slate-700/50">
+                        <button id="auth-tab-login" type="button" onclick="setAuthMode('login')" class="auth-tab-active rounded-lg py-2.5 transition-all">Log in</button>
+                        <button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')" class="rounded-lg py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Sign up</button>
                     </div>
 
-                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-8 font-bold shadow-sm hover:shadow-md">
+                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 font-semibold shadow-sm">
                         <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
                         <span id="google-auth-label">Continue with Google</span>
                     </button>
 
-                    <div class="relative flex items-center mb-8">
+                    <div class="relative flex items-center py-4">
                         <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
-                        <span class="flex-shrink-0 px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">or email</span>
+                        <span class="flex-shrink-0 px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">or email</span>
                         <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
                     </div>
 
-                    <form onsubmit="event.preventDefault(); mockLogin('email');" class="space-y-5">
+                    <form onsubmit="event.preventDefault(); mockLogin('email');" class="mt-4 space-y-5">
                         <div id="signup-name-field" class="hidden">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2" for="auth-name">Full name</label>
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-name">Full name</label>
                             <div class="relative">
-                                <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input id="auth-name" type="text" autocomplete="name" placeholder="John Doe" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
+                                <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-name" type="text" autocomplete="name" placeholder="John Doe" class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2" for="auth-email">Email address</label>
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-email">Email address</label>
                             <div class="relative">
-                                <i data-lucide="mail" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
+                                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
                             </div>
                         </div>
                         <div>
-                            <div class="mb-2 flex items-center justify-between">
-                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300" for="auth-password">Password</label>
-                                <button id="forgot-password-link" type="button" class="text-xs font-bold text-saffron hover:text-orange-500 transition-colors">Forgot password?</button>
+                            <div class="mb-1.5 flex items-center justify-between">
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300" for="auth-password">Password</label>
+                                <button id="forgot-password-link" type="button" class="text-xs font-semibold text-saffron hover:text-orange-500 transition-colors">Forgot password?</button>
                             </div>
                             <div class="relative">
-                                <i data-lucide="lock" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••" required class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-saffron/20 focus:border-saffron outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
+                                <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                                <input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
                             </div>
                         </div>
                         <div class="flex items-start gap-3 pt-2">
-                            <input id="auth-consent" type="checkbox" class="mt-1 h-5 w-5 rounded border-slate-300 text-saffron focus:ring-saffron bg-slate-50 dark:bg-slate-800 cursor-pointer">
-                            <label id="auth-consent-label" for="auth-consent" class="text-sm font-medium text-slate-600 dark:text-slate-400 cursor-pointer select-none">Keep me signed in on this device.</label>
+                            <input id="auth-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-saffron focus:ring-saffron bg-slate-50 dark:bg-slate-800 cursor-pointer">
+                            <label id="auth-consent-label" for="auth-consent" class="text-sm text-slate-500 dark:text-slate-400 cursor-pointer select-none">Keep me signed in on this device.</label>
                         </div>
-                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 mt-4 text-lg">
+                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg mt-2 text-base">
                             Log in
                         </button>
-                        <p class="text-center text-sm font-medium text-slate-500 dark:text-slate-400 pt-6">
+                        <p class="text-center text-sm text-slate-500 dark:text-slate-400 pt-4">
                             <span id="auth-switch-copy">New to Indian Geostrat?</span>
                             <button id="auth-switch-button" type="button" onclick="setAuthMode('signup')" class="font-bold text-saffron hover:text-orange-500 transition-colors ml-1">Create an account</button>
                         </p>
@@ -1290,12 +955,10 @@
         // ==========================================
         // CONFIGURATION & STATE
         // ==========================================
-        const PROVIDED_LINK = "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ";
-        
         const SPECIFIC_DATE_LINKS = {
             'August': {
-                31: PROVIDED_LINK, // Connected to 30 August as requested
-                30: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link"
+                31: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link",
+                30: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link", // fallback
                 29: "https://drive.google.com/drive/folders/1lfo7E0nlllfLtoTaEOA9mGLTQFbWu65Z?usp=drive_link",
                 28: "https://drive.google.com/drive/folders/1G_Oym3M0gBjI9B5aQnTxSbzrWUWjy22F?usp=drive_link",
                 27: "https://drive.google.com/drive/folders/1EvqBBptoH4hyShYMkTcf-gZ14XVC0_N0?usp=drive_link",
@@ -1304,7 +967,7 @@
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['August'][31], // Connected "Today" to the requested link via Aug 31
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['August'][31], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -1328,41 +991,16 @@
             }
         }
 
-        // Advanced Scroll Effects
+        // Header Scroll Effect
         window.addEventListener('scroll', () => {
-            // Header styling
             const header = document.getElementById('main-header');
-            if (window.scrollY > 20) {
+            if (window.scrollY > 10) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
-
-            // Scroll Progress Bar
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('scroll-progress').style.width = scrolled + "%";
         });
 
-        // Intersection Observer for Reveal Animations
-        const revealOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-        const revealObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) { return; }
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            });
-        }, revealOptions);
-
-        function setupRevealAnimations() {
-            document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
-        }
-
-        // Auth Logic
         function setAuthMode(mode) {
             state.authMode = mode === 'signup' ? 'signup' : 'login';
             const isSignup = state.authMode === 'signup';
@@ -1406,8 +1044,6 @@
             if (target) {
                 target.classList.remove('hidden');
                 target.classList.add('block');
-                // Re-trigger animations if needed, though they might already be visible
-                setTimeout(setupRevealAnimations, 100);
             }
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0, 0);
@@ -1419,7 +1055,6 @@
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            initCanvas(); // Redraw canvas with new theme colors
         }
         themeToggles.forEach(btn => btn.addEventListener('click', toggleTheme));
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -1435,12 +1070,12 @@
         function showToast(message, duration = 3500) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').innerText = message;
-            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.remove('translate-y-24', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
             
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-32', 'opacity-0');
+                toast.classList.add('translate-y-24', 'opacity-0');
             }, duration);
         }
 
@@ -1471,7 +1106,7 @@
             Object.keys(archiveData).forEach(month => {
                 const isActive = month === state.currentMonth;
                 const btn = document.createElement('button');
-                btn.className = `px-6 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-800 text-saffron shadow-sm border border-slate-200 dark:border-slate-700' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'}`;
+                btn.className = `px-5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-700 text-saffron shadow-sm' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50'}`;
                 btn.innerText = month;
                 btn.onclick = () => {
                     state.currentMonth = month;
@@ -1489,47 +1124,26 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                const isToday = state.currentMonth === 'August' && i === 30;
+                const isToday = state.currentMonth === 'August' && i === 31; // Configured for Aug 31
                 
                 const card = document.createElement('div');
-                card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800/80 border-saffron/40 shadow-lg active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-70'}`;
+                card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
                 
                 card.onclick = () => attemptAccess(getArchiveLink(state.currentMonth, i));
                 
-                // Add 3D Tilt Effect logic
-                card.addEventListener('mousemove', (e) => {
-                    if(!isAvailable) return;
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg rotation
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                });
-
                 card.innerHTML = `
-                    <div class="newspaper-card-inner h-full flex flex-col">
-                        ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg z-10 uppercase tracking-widest shadow-md">Latest</div>` : ''}
-                        <div class="h-32 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/80 dark:bg-orange-900/20 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
-                            <i data-lucide="${isAvailable ? 'file-text' : 'lock'}" class="w-12 h-12 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-500"></i>
-                            ${isAvailable ? `
-                            <div class="absolute bottom-3 left-3 flex space-x-1.5">
-                                <span class="w-2 h-2 rounded-full bg-saffron shadow-sm" title="English"></span>
-                                <span class="w-2 h-2 rounded-full bg-indiaGreen shadow-sm" title="Hindi"></span>
-                                <span class="w-2 h-2 rounded-full bg-blue-500 shadow-sm" title="Bengali"></span>
-                            </div>` : ''}
+                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase">New</div>` : ''}
+                    <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
+                        <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute bottom-2 left-2 flex space-x-1">
+                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-600'}" title="English"></span>
+                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-600'}" title="Hindi"></span>
+                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600'}" title="Bengali"></span>
                         </div>
-                        <div class="p-5 text-center flex-grow flex flex-col justify-center ${isAvailable ? 'bg-white dark:bg-transparent' : 'bg-slate-50 dark:bg-transparent'}">
-                            <span class="block text-3xl font-black font-serif ${isAvailable ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500'} group-hover:text-saffron transition-colors">${i}</span>
-                            <span class="block text-[11px] font-bold uppercase tracking-widest ${isAvailable ? 'text-slate-500' : 'text-slate-400'} mt-1.5">${state.currentMonth.substring(0,3)}</span>
-                        </div>
+                    </div>
+                    <div class="p-4 text-center ${isAvailable ? 'bg-white dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-800/50'}">
+                        <span class="block text-2xl font-bold font-serif ${isAvailable ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'} group-hover:text-saffron transition-colors">${i}</span>
+                        <span class="block text-[10px] font-bold uppercase tracking-widest ${isAvailable ? 'text-slate-500' : 'text-slate-400'} mt-1">${state.currentMonth.substring(0,3)}</span>
                     </div>
                 `;
                 gridContainer.appendChild(card);
@@ -1538,7 +1152,6 @@
             refreshIcons();
         }
 
-        // Modals & Auth Flow
         function openAuthModal(mode = 'login') {
             const overlay = document.getElementById('modal-overlay');
             const authModal = document.getElementById('modal-auth');
@@ -1558,14 +1171,12 @@
             const authModal = document.getElementById('modal-auth');
             const payModal = document.getElementById('modal-payment');
             
-            authModal.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                authModal.classList.add('hidden');
-                payModal.classList.remove('hidden');
-                void payModal.offsetWidth;
-                payModal.classList.remove('opacity-0', 'scale-95');
-                refreshIcons();
-            }, 300); // Wait for auth modal to fade out
+            authModal.classList.add('hidden', 'opacity-0', 'scale-95');
+            payModal.classList.remove('hidden');
+            
+            void payModal.offsetWidth;
+            payModal.classList.remove('opacity-0', 'scale-95');
+            refreshIcons();
         }
 
         function closeModals() {
@@ -1578,14 +1189,14 @@
             setTimeout(() => {
                 overlay.classList.add('hidden');
                 modals.forEach(m => m.classList.add('hidden'));
-            }, 400);
+            }, 300);
         }
 
         function mockLogin(provider) {
             const wasSignup = state.authMode === 'signup';
             state.user = { name: 'Geostrat Reader' };
             const authBtn = document.getElementById('auth-btn');
-            authBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 mr-2 inline"></i> My Account`;
+            authBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 mr-2 inline"></i> Account`;
             authBtn.classList.remove('btn-premium', 'bg-slate-900', 'text-white');
             authBtn.classList.add('bg-white', 'text-slate-900', 'border', 'border-slate-200', 'hover:bg-slate-50', 'dark:bg-slate-800', 'dark:text-white', 'dark:border-slate-700', 'dark:hover:bg-slate-700');
             
@@ -1593,7 +1204,7 @@
             
             if (wasSignup || state.pendingLink) {
                 openPaymentModal();
-                showToast(`${wasSignup ? 'Account created' : 'Signed in'}. Complete activation to continue.`);
+                showToast(`${wasSignup ? 'Account created' : 'Signed in'} via ${provider === 'google' ? 'Google' : 'Email'}. Please activate subscription.`);
             } else {
                 closeModals();
                 showToast(`Successfully logged in via ${provider === 'google' ? 'Google' : 'Email'}`);
@@ -1625,7 +1236,7 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-                showToast("UPI ID copied. Open your app to complete payment.");
+                showToast("UPI ID copied to clipboard. Open your UPI app to pay.");
             } catch (err) {
                 showToast("Failed to copy. Please select and copy manually.");
             }
@@ -1635,13 +1246,13 @@
         function simulatePaymentVerification() {
             state.hasSubscription = true;
             closeModals();
-            showToast("Payment verified. Premium access activated!");
+            showToast("Payment verified. Premium subscription activated.");
 
             if (state.pendingLink) {
                 setTimeout(() => {
                     window.open(state.pendingLink, '_blank');
                     state.pendingLink = null;
-                }, 1500);
+                }, 1000);
             }
         }
 
@@ -1652,181 +1263,12 @@
             showToast("Support ticket created successfully.");
         }
 
-        // Canvas Network Background Logic
-        const canvas = document.getElementById('network-canvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-
-        function initCanvas() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-            
-            particlesArray = [];
-            const numberOfParticles = (canvas.width * canvas.height) / 15000; // Density
-            
-            const isDark = document.documentElement.classList.contains('dark');
-            const particleColor = isDark ? 'rgba(255, 153, 51, 0.4)' : 'rgba(255, 153, 51, 0.3)';
-            const lineColor = isDark ? 'rgba(255, 153, 51, 0.1)' : 'rgba(15, 23, 42, 0.05)';
-
-            class Particle {
-                constructor(x, y, directionX, directionY, size, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.directionX = directionX;
-                    this.directionY = directionY;
-                    this.size = size;
-                    this.color = color;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                }
-                update() {
-                    if (this.x > canvas.width || this.x < 0) {
-                        this.directionX = -this.directionX;
-                    }
-                    if (this.y > canvas.height || this.y < 0) {
-                        this.directionY = -this.directionY;
-                    }
-                    this.x += this.directionX;
-                    this.y += this.directionY;
-                    this.draw();
-                }
-            }
-
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 0.4) - 0.2;
-                let directionY = (Math.random() * 0.4) - 0.2;
-                
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, particleColor));
-            }
-            
-            animateCanvas(lineColor);
-        }
-
-        let animationFrameId;
-        function animateCanvas(lineColor) {
-            cancelAnimationFrame(animationFrameId);
-            function animate() {
-                animationFrameId = requestAnimationFrame(animate);
-                ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-                for (let i = 0; i < particlesArray.length; i++) {
-                    particlesArray[i].update();
-                }
-                connectParticles(lineColor);
-            }
-            animate();
-        }
-
-        function connectParticles(lineColor) {
-            let opacityValue = 1;
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
-                        // Modify line color opacity based on distance
-                        let colorBase = lineColor.substring(0, lineColor.lastIndexOf(',') + 1);
-                        ctx.strokeStyle = `${colorBase} ${opacityValue})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             renderArchive();
             refreshIcons();
-            setupRevealAnimations();
-            
-            // Only init canvas if on home page
-            if(document.getElementById('page-home').classList.contains('block')) {
-                 initCanvas();
-            }
-
-            // Init Advanced Cursor & Magnetic Elements
-            initAdvancedCursor();
-            initMagneticElements();
         });
 
-        window.addEventListener('resize', () => {
-             if(document.getElementById('page-home').classList.contains('block')) {
-                 initCanvas();
-             }
-        });
-
-        // ==========================================
-        // ADVANCED FEATURES JS
-        // ==========================================
-
-        function initAdvancedCursor() {
-            if (window.matchMedia("(pointer: coarse)").matches) return; // Skip for touch
-            
-            const cursorDot = document.getElementById('cursor-dot');
-            const cursorOutline = document.getElementById('cursor-outline');
-            
-            if (!cursorDot || !cursorOutline) return;
-
-            window.addEventListener('mousemove', (e) => {
-                const posX = e.clientX;
-                const posY = e.clientY;
-                
-                cursorDot.style.left = `${posX}px`;
-                cursorDot.style.top = `${posY}px`;
-                
-                cursorOutline.animate({
-                    left: `${posX}px`,
-                    top: `${posY}px`
-                }, { duration: 250, fill: "forwards" });
-            });
-
-            const observeInteractives = () => {
-                const interactives = document.querySelectorAll('a, button, input, textarea, .cursor-pointer, .newspaper-card, .nav-link');
-                interactives.forEach(el => {
-                    if(!el.dataset.cursorBound) {
-                        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-                        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-                        el.dataset.cursorBound = "true";
-                    }
-                });
-            };
-            
-            observeInteractives();
-            setInterval(observeInteractives, 1000); // Re-observe dynamic elements (like tabs/cards)
-        }
-
-        function initMagneticElements() {
-            if (window.matchMedia("(pointer: coarse)").matches) return; // Skip for touch
-
-            const magneticEls = document.querySelectorAll('.magnetic-el');
-            magneticEls.forEach(el => {
-                el.style.transition = 'transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease';
-                
-                el.addEventListener('mousemove', (e) => {
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.02)`;
-                });
-                
-                el.addEventListener('mouseleave', () => {
-                    el.style.transform = `translate(0px, 0px) scale(1)`;
-                });
-            });
-        }
     </script>
 </body>
 </html>
