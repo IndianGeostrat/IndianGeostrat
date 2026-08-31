@@ -497,7 +497,7 @@
                             <button onclick="handleReadToday()" class="magnetic-el group relative flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-white bg-slate-900 dark:bg-white dark:text-slate-900 md:text-lg transition-all shadow-xl hover:shadow-2xl hover:shadow-slate-900/20 dark:hover:shadow-white/20 transform overflow-hidden w-full sm:w-auto">
                                 <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
                                 <i data-lucide="book-open" class="w-5 h-5 mr-2 relative z-10"></i>
-                                <span class="relative z-10">Read Edition (30 Aug)</span>
+                                <span class="relative z-10">Read Edition (31 Aug)</span>
                             </button>
                             
                             <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="magnetic-el flex items-center justify-center px-8 py-4 border-2 border-slate-200 dark:border-slate-700 text-base font-bold rounded-xl text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 backdrop-blur-sm md:text-lg transition-all shadow-sm group w-full sm:w-auto">
@@ -1128,11 +1128,12 @@
         // ==========================================
         // CONFIGURATION & STATE
         // ==========================================
-        const PROVIDED_LINK = "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link";
+        const PROVIDED_LINK = "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ";
         
         const SPECIFIC_DATE_LINKS = {
             'August': {
-                30: PROVIDED_LINK, // Connected to 30 August as requested
+                31: PROVIDED_LINK, // Connected to 30 August as requested
+                30: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link"
                 29: "https://drive.google.com/drive/folders/1lfo7E0nlllfLtoTaEOA9mGLTQFbWu65Z?usp=drive_link",
                 28: "https://drive.google.com/drive/folders/1G_Oym3M0gBjI9B5aQnTxSbzrWUWjy22F?usp=drive_link",
                 27: "https://drive.google.com/drive/folders/1EvqBBptoH4hyShYMkTcf-gZ14XVC0_N0?usp=drive_link",
@@ -1141,7 +1142,7 @@
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['August'][30], // Connected "Today" to the requested link via Aug 30
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['August'][31], // Connected "Today" to the requested link via Aug 31
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
