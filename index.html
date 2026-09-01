@@ -2,20 +2,17 @@
 <html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Indian Geostrat | Regional & International News</title>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,8 +38,9 @@
                         'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                         'slide-up': 'slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 25s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
                         'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -55,13 +53,18 @@
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' }
+                            '100%': { transform: 'translateX(-50%)' }
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
                             '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                             '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                             '100%': { transform: 'translate(0px, 0px) scale(1)' }
+                        },
+                        float: {
+                            '0%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                            '100%': { transform: 'translateY(0px)' }
                         }
                     }
                 }
@@ -69,12 +72,13 @@
         }
     </script>
 
-    <!-- Custom CSS -->
     <style>
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             background-color: #f8fafc;
+            /* CRITICAL FIX: Prevent horizontal scrolling on mobile devices */
+            overflow-x: hidden; 
         }
 
         .dark body {
@@ -117,7 +121,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Header scrolled state */
         .glass-nav.scrolled {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             padding-top: 0.25rem;
@@ -158,22 +161,22 @@
         }
 
         .newspaper-card {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .newspaper-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: rgba(255, 153, 51, 0.4);
+            border-color: rgba(255, 153, 51, 0.5);
         }
 
         .dark .newspaper-card:hover {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 153, 51, 0.5);
+            border-color: rgba(255, 153, 51, 0.6);
         }
         
         .newspaper-card.active-date {
-            border-color: rgba(255, 153, 51, 0.3);
+            border-color: rgba(255, 153, 51, 0.4);
             background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.05), transparent);
         }
         .dark .newspaper-card.active-date {
@@ -215,27 +218,38 @@
             left: 150%;
         }
 
-        /* Ticker Pause on Hover */
         .ticker-container:hover .animate-marquee {
             animation-play-state: paused;
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col bg-mesh">
 
+    <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-saffron to-orange-500 z-[80] w-0 transition-all duration-150"></div>
+
     <!-- AI Bot Embed -->
     <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
 
-    <!-- News Ticker -->
-    <div class="fixed top-0 w-full z-[60] bg-slate-900 text-slate-300 text-[11px] font-semibold py-1.5 uppercase tracking-wider overflow-hidden ticker-container flex items-center border-b border-slate-800">
-        <div class="px-4 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center shadow-[4px_0_10px_rgba(0,0,0,0.5)]">
+    <div class="fixed top-1 w-full z-[60] bg-slate-900 text-slate-300 text-[11px] font-semibold py-1.5 uppercase tracking-wider flex items-center border-b border-slate-800 max-w-[100vw] overflow-hidden shadow-md">
+        <div class="px-4 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center shadow-[4px_0_10px_rgba(0,0,0,0.5)] h-full">
             <span class="relative flex h-2 w-2 mr-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-slate-900"></span>
             </span>
             LIVE
         </div>
-        <div class="flex whitespace-nowrap animate-marquee items-center flex-grow">
+        <div class="flex whitespace-nowrap animate-marquee items-center pl-4 w-[200%]">
             <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
@@ -243,7 +257,8 @@
             <span class="mx-6">DEFENSE: Strategic dialogues emphasize maritime security in the Indo-Pacific region.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
-            <!-- Duplicate for seamless loop -->
+            <span class="mx-2 text-saffron">|</span>
+            <!-- Duplicate content for infinite smooth loop -->
             <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
@@ -254,14 +269,13 @@
         </div>
     </div>
 
-    <!-- Navigation -->
-    <header id="main-header" class="fixed w-full top-7 z-50 glass-nav transition-all duration-300">
+    <header id="main-header" class="fixed w-full top-8 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="navigate('home')">
                     <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-10 w-10 sm:h-11 sm:w-11 rounded-lg object-cover shadow-sm mr-2.5 border border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors">
-                    <span class="font-serif font-black text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white">INDIAN GEOSTRAT</span>
+                    <span class="font-serif font-black text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white group-hover:text-saffron transition-colors">INDIAN GEOSTRAT</span>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -295,21 +309,20 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-xl transition-all origin-top transform">
-            <div class="px-4 pt-2 pb-6 space-y-1">
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-2xl transition-all origin-top transform">
+            <div class="px-4 pt-2 pb-6 space-y-2">
                 <button onclick="navigate('home')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</button>
                 <button onclick="navigate('about')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">About Us</button>
                 <button onclick="navigate('contact')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Contact</button>
                 <div class="pt-4 px-2">
-                    <button onclick="openAuthModal('signup')" class="block w-full text-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-lg font-bold transition-colors shadow-md">Sign up / Login</button>
+                    <button onclick="openAuthModal('signup')" class="block w-full text-center bg-saffron hover:bg-orange-500 text-white px-4 py-3.5 rounded-xl font-bold transition-colors shadow-md">Sign up / Login</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main id="main-content" class="flex-grow pt-28"> <!-- Increased padding for ticker -->
+    <main id="main-content" class="flex-grow pt-28 relative">
         
         <!-- === HOME PAGE === -->
         <section id="page-home" class="page-section animate-fade-in block">
@@ -323,9 +336,9 @@
 
                 <div class="max-w-7xl mx-auto relative">
                     <div class="relative z-10 pb-16 sm:pb-24 md:pb-32 lg:pb-40 bg-transparent pt-16 sm:pt-24 lg:pt-32 px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-                        <main class="mx-auto max-w-4xl">
+                        <main class="mx-auto max-w-4xl reveal">
                             <div class="text-center flex flex-col items-center">
-                                <div class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-saffron bg-orange-50/80 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 mb-8 shadow-sm backdrop-blur-sm">
+                                <div class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-saffron bg-orange-50/80 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 mb-8 shadow-sm backdrop-blur-sm animate-float">
                                     <span class="flex h-2 w-2 rounded-full bg-saffron mr-2 animate-pulse-slow"></span>
                                     DAILY EDITIONS AVAILABLE
                                 </div>
@@ -338,7 +351,7 @@
                                 </p>
                                 
                                 <!-- Professional Pricing Badge -->
-                                <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md">
+                                <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md hover:shadow-md transition-shadow">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
                                         <span class="font-semibold text-slate-800 dark:text-slate-200 text-base">Premium Access</span>
@@ -346,17 +359,17 @@
                                     <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
                                     <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-base">Standard: ₹30/mo</span>
                                     <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base">
-                                        <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                                        <span class="absolute inset-0 bg-white/40 dark:bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
                                         <i data-lucide="tag" class="w-4 h-4 relative z-10"></i> 
                                         <span class="relative z-10">Special Offer: ₹10/mo</span>
                                     </span>
                                 </div>
 
                                 <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-                                    <div class="rounded-lg shadow-lg shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
+                                    <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
                                         <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
                                             <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
-                                            Read Today (Aug 31)
+                                            Read Today (Sept 1)
                                         </button>
                                     </div>
                                     <div class="mt-3 sm:mt-0 w-full sm:w-auto">
@@ -372,12 +385,10 @@
                 </div>
             </div>
 
-            <!-- Trusted By / Credibility Section -->
-            <div class="border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm py-8">
+            <div class="border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm py-8 reveal">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-400 mb-6">Read by scholars and professionals at</p>
                     <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 dark:opacity-40 dark:hover:opacity-100">
-                        <!-- Mock University/Institution Logos using text for simplicity in this demo, ideally SVGs -->
                         <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-building-columns"></i> Delhi University</div>
                         <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-scale-balanced"></i> NLU Consortium</div>
                         <div class="flex items-center gap-2 font-serif font-bold text-xl text-slate-700 dark:text-slate-300"><i class="fa-solid fa-globe"></i> JNU Intl. Studies</div>
@@ -386,13 +397,12 @@
                 </div>
             </div>
 
-            <!-- Newspaper Archive Explorer -->
-            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
+            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative reveal">
                 <!-- Background decoration -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-saffron/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
                 <div class="text-center mb-16">
-                    <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">The Archives</span>
+                    <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">The Archives</span>
                     <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl font-serif">
                         Explore Past Editions
                     </h2>
@@ -401,30 +411,31 @@
                     </p>
                 </div>
 
-                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10">
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10 group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                     <!-- Year / Month Tabs -->
-                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
                         <div class="flex items-center space-x-3">
-                            <div class="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700">
+                            <div class="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 group-hover:border-saffron/50 transition-colors">
                                 <i data-lucide="calendar-days" class="w-5 h-5 text-saffron"></i>
                             </div>
                             <span class="font-bold text-slate-800 dark:text-slate-200 text-lg">Timeline</span>
                         </div>
                         
-                        <div class="flex items-center p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar" id="month-tabs">
+                        <div class="flex items-center p-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar shadow-inner" id="month-tabs">
                             <!-- Populated via JS -->
                         </div>
                     </div>
 
                     <!-- Dates Grid -->
-                    <div class="p-6 sm:p-8 md:p-10 bg-white dark:bg-slate-900 min-h-[400px]">
+                    <div class="p-6 sm:p-8 md:p-10 bg-white dark:bg-slate-900 min-h-[400px] relative z-10">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 border-b border-slate-100 dark:border-slate-800/60 pb-6 gap-4">
                             <div>
-                                <h3 id="current-month-title" class="text-2xl sm:text-3xl font-serif font-bold text-slate-800 dark:text-slate-100">August 2026</h3>
+                                <h3 id="current-month-title" class="text-2xl sm:text-3xl font-serif font-bold text-slate-800 dark:text-slate-100">September 2026</h3>
                                 <p class="text-sm text-slate-500 mt-1">Select a date to view available editions.</p>
                             </div>
                             <div class="flex gap-3 items-center flex-wrap">
-                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-saffron mr-2"></span>Available</span>
+                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-saffron mr-2 shadow-[0_0_5px_rgba(255,153,51,0.5)]"></span>Available</span>
                                 <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 mr-2"></span>Archived</span>
                                 <span class="text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"><span id="doc-count" class="text-saffron">0</span> Total</span>
                             </div>
@@ -436,8 +447,7 @@
                 </div>
             </div>
             
-            <!-- Features/Value prop -->
-            <div class="relative py-24 bg-slate-900 dark:bg-black border-y border-slate-800 overflow-hidden">
+            <div class="relative py-24 bg-slate-900 dark:bg-black border-y border-slate-800 overflow-hidden reveal">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 
                 <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
@@ -446,9 +456,9 @@
                     
                     <div class="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Feature 1 -->
-                        <div class="relative group">
+                        <div class="relative group h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-saffron to-orange-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
                                     <i data-lucide="globe-2" class="w-8 h-8 text-saffron"></i>
                                 </div>
@@ -460,9 +470,9 @@
                         </div>
 
                         <!-- Feature 2 -->
-                        <div class="relative group">
+                        <div class="relative group h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-indiaGreen to-emerald-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
                                     <i data-lucide="file-check-2" class="w-8 h-8 text-indiaGreen"></i>
                                 </div>
@@ -474,9 +484,9 @@
                         </div>
 
                         <!-- Feature 3 -->
-                        <div class="relative group sm:col-span-2 lg:col-span-1">
+                        <div class="relative group sm:col-span-2 lg:col-span-1 h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10">
+                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
                                     <i data-lucide="badge-percent" class="w-8 h-8 text-blue-400"></i>
                                 </div>
@@ -490,10 +500,9 @@
                 </div>
             </div>
 
-            <!-- Newsletter Section -->
-            <div class="py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+            <div class="py-20 bg-white dark:bg-slate-900 relative overflow-hidden reveal">
                 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-700 shadow-xl text-center">
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-700 shadow-xl text-center transform hover:scale-[1.01] transition-transform duration-500">
                         <div class="w-16 h-16 mx-auto bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-md mb-6 border border-slate-100 dark:border-slate-700">
                             <i data-lucide="mail-open" class="w-8 h-8 text-saffron"></i>
                         </div>
@@ -502,7 +511,7 @@
                         
                         <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); showToast('Subscribed successfully to the newsletter!'); this.reset();">
                             <input type="email" placeholder="Enter your email address" required class="flex-grow px-5 py-3.5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
-                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-orange-500/20 whitespace-nowrap">
+                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-orange-500/20 whitespace-nowrap active:scale-95">
                                 Subscribe
                             </button>
                         </form>
@@ -514,18 +523,18 @@
 
         <!-- === ABOUT US PAGE === -->
         <section id="page-about" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in">
-            <div class="text-center mb-16">
-                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">Our Story</span>
+            <div class="text-center mb-16 reveal">
+                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">Our Story</span>
                 <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl lg:text-6xl tracking-tight">About Indian Geostrat</h1>
                 <div class="mt-8 w-24 h-1.5 bg-gradient-to-r from-saffron to-orange-500 mx-auto rounded-full"></div>
             </div>
             
-            <div class="prose prose-lg md:prose-xl dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300 leading-relaxed">
+            <div class="prose prose-lg md:prose-xl dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300 leading-relaxed reveal">
                 <blockquote class="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-16 text-center italic border-none px-0 leading-tight">
                     "Bridging the gap between regional developments and global geopolitical shifts."
                 </blockquote>
                 
-                <div class="my-16 grid md:grid-cols-2 gap-12 items-center">
+                <div class="my-16 grid md:grid-cols-2 gap-12 items-center reveal">
                     <div>
                         <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6">Our Mission</h3>
                         <p class="mb-4">
@@ -535,24 +544,24 @@
                             By curating premium daily newspapers in English, Bengali, and Hindi, we provide our readers with a holistic view of regional, national, and international affairs, empowering informed decision-making.
                         </p>
                     </div>
-                    <div class="bg-slate-100 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
+                    <div class="bg-slate-100 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
                         <i data-lucide="target" class="w-12 h-12 text-saffron mb-6"></i>
                         <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Core Objective</h4>
                         <p class="text-base">To provide uninterrupted, clutter-free access to daily printed knowledge, enabling deep research and comprehensive daily awareness for our subscribers.</p>
                     </div>
                 </div>
 
-                <div class="my-16 border-t border-slate-200 dark:border-slate-800 pt-16">
+                <div class="my-16 border-t border-slate-200 dark:border-slate-800 pt-16 reveal">
                     <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6 text-center">Editorial Standards</h3>
                     <p class="mb-6 text-center max-w-3xl mx-auto">
                         Our platform ensures that you receive uncompromised, high-fidelity digital replicas of daily editions. We maintain a strict focus on providing organized, easily accessible archives without the clutter of traditional news aggregators or distracting advertisements.
                     </p>
                 </div>
                 
-                <div class="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 mt-20 relative overflow-hidden group">
+                <div class="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 mt-20 relative overflow-hidden group reveal">
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl -z-10 group-hover:bg-saffron/20 transition-colors duration-500"></div>
                     <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8 border-b border-slate-100 dark:border-slate-800 pb-8">
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex-shrink-0">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex-shrink-0 group-hover:scale-105 transition-transform">
                             <i data-lucide="credit-card" class="w-8 h-8 text-saffron"></i>
                         </div>
                         <div>
@@ -578,21 +587,21 @@
 
         <!-- === CONTACT US PAGE === -->
         <section id="page-contact" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
-            <div class="text-center mb-16">
-                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block">Get in Touch</span>
+            <div class="text-center mb-16 reveal">
+                <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">Get in Touch</span>
                 <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
                 <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-12 reveal">
                 <!-- Contact Info -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm p-8 border border-slate-200 dark:border-slate-800 h-full relative overflow-hidden">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm hover:shadow-lg transition-shadow p-8 border border-slate-200 dark:border-slate-800 h-full relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -z-10"></div>
                         <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-8">Headquarters</h3>
                         <ul class="space-y-8">
                             <li class="flex items-start group">
-                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all">
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all shadow-sm">
                                     <i data-lucide="map-pin" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
@@ -605,7 +614,7 @@
                                 </div>
                             </li>
                             <li class="flex items-start group">
-                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all">
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all shadow-sm">
                                     <i data-lucide="mail" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
@@ -629,22 +638,22 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
-                                    <input type="text" required placeholder="John Doe" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
+                                    <input type="text" required placeholder="John Doe" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
-                                    <input type="email" required placeholder="john@example.com" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
+                                    <input type="email" required placeholder="john@example.com" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Subject</label>
-                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
+                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Message</label>
-                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none placeholder-slate-400 shadow-sm"></textarea>
+                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600"></textarea>
                             </div>
-                            <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3.5 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl mt-2 flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3.5 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 mt-2 flex items-center justify-center gap-2">
                                 <span>Send Message</span>
                                 <i data-lucide="send" class="w-4 h-4"></i>
                             </button>
@@ -662,28 +671,27 @@
                 </div>
             </div>
 
-            <!-- Social Media Bar -->
-            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm reveal">
                 <div class="flex items-center space-x-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                         <i data-lucide="share-2" class="w-5 h-5 text-saffron"></i>
                     </div>
                     <span class="text-base">Connect with us on official platforms:</span>
                 </div>
                 <div class="flex flex-wrap justify-center items-center gap-3">
-                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
                         <i data-lucide="youtube" class="fa-brands fa-youtube text-red-500 text-lg"></i>
                         <span>YouTube</span>
                     </a>
-                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
                         <i data-lucide="twitter" class="fa-brands fa-x-twitter text-lg"></i>
                         <span>X</span>
                     </a>
-                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
                         <i data-lucide="instagram" class="fa-brands fa-instagram text-pink-500 text-lg"></i>
                         <span>Instagram</span>
                     </a>
-                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
                         <i data-lucide="linkedin" class="fa-brands fa-linkedin-in text-blue-500 text-lg"></i>
                         <span>LinkedIn</span>
                     </a>
@@ -692,22 +700,25 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 p-3 bg-saffron hover:bg-orange-500 text-white rounded-full shadow-2xl z-[60] translate-y-24 opacity-0 transition-all duration-300 hover:scale-110 active:scale-95" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to top">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
     <footer class="bg-slate-900 dark:bg-[#050505] border-t border-slate-800 pt-16 pb-8 text-slate-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
                 
                 <!-- Branding & Subscription -->
                 <div class="md:col-span-5">
-                    <div class="flex items-center mb-6 cursor-pointer" onclick="navigate('home')">
-                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover">
-                        <span class="font-serif font-black text-2xl tracking-tight text-white">INDIAN GEOSTRAT</span>
+                    <div class="flex items-center mb-6 cursor-pointer group" onclick="navigate('home')">
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover group-hover:border-saffron transition-colors">
+                        <span class="font-serif font-black text-2xl tracking-tight text-white group-hover:text-saffron transition-colors">INDIAN GEOSTRAT</span>
                     </div>
                     <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-sm">
                         Curating regional, national, and international newspapers daily. Premium geopolitical insights, made accessible to all. Stay informed with our trilingual coverage.
                     </p>
                     
-                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm">
+                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm shadow-inner">
                         <div class="flex items-center justify-between mb-3">
                             <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Premium Access</p>
                             <span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
@@ -716,7 +727,7 @@
                             <span class="text-sm text-slate-500 line-through decoration-slate-600">₹30/mo</span>
                             <span class="text-2xl font-bold text-white">₹10<span class="text-sm text-slate-400 font-normal">/mo</span></span>
                         </div>
-                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">Subscribe Now</button>
+                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-all shadow-lg shadow-orange-500/20 active:scale-95">Subscribe Now</button>
                     </div>
                 </div>
 
@@ -724,15 +735,15 @@
                 <div class="md:col-span-3">
                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-6">Contact Us</h3>
                     <ul class="space-y-5 text-sm text-slate-400">
-                        <li class="flex items-start">
-                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 mt-0.5 border border-slate-700">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0"></i>
+                        <li class="flex items-start group">
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 mt-0.5 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0 group-hover:text-saffron transition-colors"></i>
                             </div>
-                            <span class="leading-relaxed">Street No. 18, DN Block, Sector V,<br>Salt Lake City, Calcutta,<br>West Bengal, 700091</span>
+                            <span class="leading-relaxed group-hover:text-slate-300 transition-colors">Street No. 18, DN Block, Sector V,<br>Salt Lake City, Calcutta,<br>West Bengal, 700091</span>
                         </li>
-                        <li class="flex items-center">
-                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 border border-slate-700">
-                                <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0"></i>
+                        <li class="flex items-center group">
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors">
+                                <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0 group-hover:text-saffron transition-colors"></i>
                             </div>
                             <a href="mailto:indiangeostrat@gmail.com" class="hover:text-saffron transition-colors">indiangeostrat@gmail.com</a>
                         </li>
@@ -740,16 +751,16 @@
 
                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mt-10 mb-6">Follow Us</h3>
                     <div class="flex items-center gap-3">
-                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-500 transition-all border border-slate-700/60 hover:border-red-500/50">
                             <i class="fa-brands fa-youtube w-4 h-4"></i>
                         </a>
                         <a href="https://x.com/IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
                             <i class="fa-brands fa-x-twitter w-4 h-4"></i>
                         </a>
-                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-pink-500/20 text-slate-400 hover:text-pink-500 transition-all border border-slate-700/60 hover:border-pink-500/50">
                             <i class="fa-brands fa-instagram w-4 h-4"></i>
                         </a>
-                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-blue-500/20 text-slate-400 hover:text-blue-500 transition-all border border-slate-700/60 hover:border-blue-500/50">
                             <i class="fa-brands fa-linkedin-in w-4 h-4"></i>
                         </a>
                     </div>
@@ -775,10 +786,10 @@
         </div>
     </footer>
 
-    <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-2xl shadow-slate-900/20 transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center max-w-sm border border-slate-700 dark:border-slate-200">
+    <!-- Custom Toast Notification - Position adjusted for scroll-to-top button -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-2xl shadow-slate-900/20 transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center w-full max-w-sm border border-slate-700 dark:border-slate-200">
         <i data-lucide="info" class="w-5 h-5 mr-3 text-saffron flex-shrink-0"></i>
-        <span id="toast-message" class="font-medium text-sm leading-tight"></span>
+        <span id="toast-message" class="font-medium text-sm leading-tight text-center w-full"></span>
     </div>
 
     <!-- Modals Overlay -->
@@ -849,7 +860,7 @@
                         <button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')" class="rounded-lg py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Sign up</button>
                     </div>
 
-                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 font-semibold shadow-sm">
+                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 font-semibold shadow-sm active:scale-[0.98]">
                         <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
                         <span id="google-auth-label">Continue with Google</span>
                     </button>
@@ -889,7 +900,7 @@
                             <input id="auth-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-saffron focus:ring-saffron bg-slate-50 dark:bg-slate-800 cursor-pointer">
                             <label id="auth-consent-label" for="auth-consent" class="text-sm text-slate-500 dark:text-slate-400 cursor-pointer select-none">Keep me signed in on this device.</label>
                         </div>
-                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg mt-2 text-base">
+                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg mt-2 text-base active:scale-[0.98]">
                             Log in
                         </button>
                         <p class="text-center text-sm text-slate-500 dark:text-slate-400 pt-4">
@@ -939,7 +950,7 @@
             </div>
 
             <div class="space-y-4">
-                <button onclick="simulatePaymentVerification()" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex justify-center items-center gap-2 text-base">
+                <button onclick="simulatePaymentVerification()" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex justify-center items-center gap-2 text-base active:scale-[0.98]">
                     <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                     <span>I have completed payment</span>
                 </button>
@@ -950,24 +961,27 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
         // ==========================================
         // CONFIGURATION & STATE
         // ==========================================
+        
+        // Setup Date Links - Added September 1st
         const SPECIFIC_DATE_LINKS = {
             'August': {
                 31: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link",
-                30: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link", // fallback
                 29: "https://drive.google.com/drive/folders/1lfo7E0nlllfLtoTaEOA9mGLTQFbWu65Z?usp=drive_link",
                 28: "https://drive.google.com/drive/folders/1G_Oym3M0gBjI9B5aQnTxSbzrWUWjy22F?usp=drive_link",
                 27: "https://drive.google.com/drive/folders/1EvqBBptoH4hyShYMkTcf-gZ14XVC0_N0?usp=drive_link",
                 26: "https://drive.google.com/drive/folders/1Uk8a4_KIQM1btwTeoHAa2xs7mTVPKEiZ?usp=drive_link"
+            },
+            'September': {
+                1: "https://drive.google.com/drive/folders/1f03HiqnI0nBaFwY3yfAI1JZwFtEo2-KJ?usp=drive_link"
             }
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['August'][31], 
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][1], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -975,7 +989,7 @@
         const state = {
             user: null,
             hasSubscription: false,
-            currentMonth: 'August',
+            currentMonth: 'September', // Now default to September
             pendingLink: null,
             authMode: 'login'
         };
@@ -991,15 +1005,48 @@
             }
         }
 
-        // Header Scroll Effect
+        // Handle Global Scroll Events (Header, Progress Bar, Back-To-Top, Reveals)
         window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            
+            // Header styling
             const header = document.getElementById('main-header');
-            if (window.scrollY > 10) {
-                header.classList.add('scrolled');
+            if (scrollY > 10) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+
+            // Reading Progress Bar
+            const progress = (scrollY / docHeight) * 100;
+            document.getElementById('reading-progress').style.width = `${progress}%`;
+
+            // Scroll to Top Button
+            const topBtn = document.getElementById('scroll-to-top');
+            if (scrollY > 500) {
+                topBtn.classList.remove('translate-y-24', 'opacity-0');
             } else {
-                header.classList.remove('scrolled');
+                topBtn.classList.add('translate-y-24', 'opacity-0');
             }
         });
+
+        // Initialize Intersection Observer for Scroll Reveals
+        function setupScrollReveals() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Reveal only once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
 
         function setAuthMode(mode) {
             state.authMode = mode === 'signup' ? 'signup' : 'login';
@@ -1047,6 +1094,8 @@
             }
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0, 0);
+            // Re-trigger scroll reveals for the new page
+            setTimeout(setupScrollReveals, 100);
         }
 
         // Theme Toggle
@@ -1124,7 +1173,8 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                const isToday = state.currentMonth === 'August' && i === 31; // Configured for Aug 31
+                // Flag September 1 as the current "Today" indicator
+                const isToday = state.currentMonth === 'September' && i === 1; 
                 
                 const card = document.createElement('div');
                 card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
@@ -1132,7 +1182,7 @@
                 card.onclick = () => attemptAccess(getArchiveLink(state.currentMonth, i));
                 
                 card.innerHTML = `
-                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase">New</div>` : ''}
+                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase shadow-sm">New</div>` : ''}
                     <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
                         <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300"></i>
                         <div class="absolute bottom-2 left-2 flex space-x-1">
@@ -1267,6 +1317,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderArchive();
             refreshIcons();
+            setupScrollReveals();
         });
 
     </script>
