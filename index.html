@@ -274,7 +274,7 @@
             <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="navigate('home')">
-                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-10 w-10 sm:h-11 sm:w-11 rounded-lg object-cover shadow-sm mr-2.5 border border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors">
+                    <img src="Gemini_Generated_Image_.jpg" alt="Indian Geostrat Logo" class="h-10 w-10 sm:h-11 sm:w-11 rounded-lg object-cover shadow-sm mr-2.5 border border-slate-200 dark:border-slate-700 group-hover:border-saffron transition-colors" onerror="this.src='https://placehold.co/100x100/FF9933/FFFFFF?text=IG'">
                     <span class="font-serif font-black text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white group-hover:text-saffron transition-colors">INDIAN GEOSTRAT</span>
                 </div>
 
@@ -369,7 +369,7 @@
                                     <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
                                         <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
                                             <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
-                                            Read Today (Sept 1)
+                                            Read Today (Sept 2)
                                         </button>
                                     </div>
                                     <div class="mt-3 sm:mt-0 w-full sm:w-auto">
@@ -711,7 +711,7 @@
                 <!-- Branding & Subscription -->
                 <div class="md:col-span-5">
                     <div class="flex items-center mb-6 cursor-pointer group" onclick="navigate('home')">
-                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover group-hover:border-saffron transition-colors">
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover group-hover:border-saffron transition-colors" onerror="this.src='https://placehold.co/100x100/FF9933/FFFFFF?text=IG'">
                         <span class="font-serif font-black text-2xl tracking-tight text-white group-hover:text-saffron transition-colors">INDIAN GEOSTRAT</span>
                     </div>
                     <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-sm">
@@ -810,7 +810,7 @@
                     
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-12">
-                            <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-xl border border-white/20 object-cover shadow-lg">
+                            <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-xl border border-white/20 object-cover shadow-lg" onerror="this.src='https://placehold.co/100x100/FF9933/FFFFFF?text=IG'">
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-saffron">Indian Geostrat</p>
                                 <p class="font-serif text-xl font-bold">Premium Access</p>
@@ -937,7 +937,7 @@
 
             <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 mb-8 text-center flex flex-col items-center shadow-inner">
                 <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm mb-5">
-                    <img src="image_ca9d6d.jpg" alt="UPI QR Code" class="w-40 h-40 rounded-lg">
+                    <img src="image_ca9d6d.jpg" alt="UPI QR Code" class="w-40 h-40 rounded-lg" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'">
                 </div>
                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Scan to pay via any UPI app</p>
                 <div class="flex items-center bg-white dark:bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-saffron hover:ring-1 hover:ring-saffron transition-all group shadow-sm w-full justify-between" onclick="copyUPI()">
@@ -950,7 +950,7 @@
             </div>
 
             <div class="space-y-4">
-                <button onclick="simulatePaymentVerification()" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex justify-center items-center gap-2 text-base active:scale-[0.98]">
+                <button onclick="simulatePaymentVerification(event)" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex justify-center items-center gap-2 text-base active:scale-[0.98]">
                     <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                     <span>I have completed payment</span>
                 </button>
@@ -966,22 +966,24 @@
         // CONFIGURATION & STATE
         // ==========================================
         
-        // Setup Date Links - Added September 1st
+        // Setup Date Links - Updated with new Aug 30, Aug 31 and Sept 2 links
         const SPECIFIC_DATE_LINKS = {
             'August': {
-                31: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link",
+                31: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link",
+                30: "https://drive.google.com/drive/folders/1bjNGwWjE5J6Q0HCIPXSCnQ-WxrZ1LZCJ?usp=drive_link",
                 29: "https://drive.google.com/drive/folders/1lfo7E0nlllfLtoTaEOA9mGLTQFbWu65Z?usp=drive_link",
                 28: "https://drive.google.com/drive/folders/1G_Oym3M0gBjI9B5aQnTxSbzrWUWjy22F?usp=drive_link",
                 27: "https://drive.google.com/drive/folders/1EvqBBptoH4hyShYMkTcf-gZ14XVC0_N0?usp=drive_link",
                 26: "https://drive.google.com/drive/folders/1Uk8a4_KIQM1btwTeoHAa2xs7mTVPKEiZ?usp=drive_link"
             },
             'September': {
-                1: "https://drive.google.com/drive/folders/1f03HiqnI0nBaFwY3yfAI1JZwFtEo2-KJ?usp=drive_link"
+                1: "https://drive.google.com/drive/folders/1f03HiqnI0nBaFwY3yfAI1JZwFtEo2-KJ?usp=drive_link",
+                2: "https://drive.google.com/drive/folders/1VhyTjS_IKcoOmd9p-Il2wNz7WR8tED_i?usp=drive_link" // Today's Newspaper
             }
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][1], 
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][2], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -989,7 +991,7 @@
         const state = {
             user: null,
             hasSubscription: false,
-            currentMonth: 'September', // Now default to September
+            currentMonth: 'September', 
             pendingLink: null,
             authMode: 'login'
         };
@@ -1173,8 +1175,8 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                // Flag September 1 as the current "Today" indicator
-                const isToday = state.currentMonth === 'September' && i === 1; 
+                // Flag September 2 as the current "Today" indicator
+                const isToday = state.currentMonth === 'September' && i === 2; 
                 
                 const card = document.createElement('div');
                 card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
@@ -1202,124 +1204,168 @@
             refreshIcons();
         }
 
-        function openAuthModal(mode = 'login') {
+        // Authentication & Modals logic (Completed section)
+        function openAuthModal(mode) {
+            setAuthMode(mode);
             const overlay = document.getElementById('modal-overlay');
             const authModal = document.getElementById('modal-auth');
-            setAuthMode(mode);
             
             overlay.classList.remove('hidden');
-            authModal.classList.remove('hidden');
+            overlay.classList.add('flex');
             
-            void overlay.offsetWidth; 
-            
-            overlay.classList.remove('opacity-0');
-            authModal.classList.remove('opacity-0', 'scale-95');
-            refreshIcons();
+            // Tiny delay for transitions
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                authModal.classList.remove('hidden');
+                setTimeout(() => {
+                    authModal.classList.remove('scale-95', 'opacity-0');
+                }, 50);
+            }, 10);
         }
 
         function openPaymentModal() {
             const authModal = document.getElementById('modal-auth');
             const payModal = document.getElementById('modal-payment');
             
-            authModal.classList.add('hidden', 'opacity-0', 'scale-95');
+            authModal.classList.add('hidden', 'scale-95', 'opacity-0');
             payModal.classList.remove('hidden');
             
-            void payModal.offsetWidth;
-            payModal.classList.remove('opacity-0', 'scale-95');
-            refreshIcons();
+            setTimeout(() => {
+                payModal.classList.remove('scale-95', 'opacity-0');
+            }, 50);
         }
 
         function closeModals() {
             const overlay = document.getElementById('modal-overlay');
-            const modals = [document.getElementById('modal-auth'), document.getElementById('modal-payment')];
+            const authModal = document.getElementById('modal-auth');
+            const payModal = document.getElementById('modal-payment');
             
+            authModal.classList.add('scale-95', 'opacity-0');
+            payModal.classList.add('scale-95', 'opacity-0');
             overlay.classList.add('opacity-0');
-            modals.forEach(m => m.classList.add('opacity-0', 'scale-95'));
             
             setTimeout(() => {
+                authModal.classList.add('hidden');
+                payModal.classList.add('hidden');
                 overlay.classList.add('hidden');
-                modals.forEach(m => m.classList.add('hidden'));
+                overlay.classList.remove('flex');
             }, 300);
         }
 
-        function mockLogin(provider) {
-            const wasSignup = state.authMode === 'signup';
-            state.user = { name: 'Geostrat Reader' };
-            const authBtn = document.getElementById('auth-btn');
-            authBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 mr-2 inline"></i> Account`;
-            authBtn.classList.remove('btn-premium', 'bg-slate-900', 'text-white');
-            authBtn.classList.add('bg-white', 'text-slate-900', 'border', 'border-slate-200', 'hover:bg-slate-50', 'dark:bg-slate-800', 'dark:text-white', 'dark:border-slate-700', 'dark:hover:bg-slate-700');
-            
-            refreshIcons();
-            
-            if (wasSignup || state.pendingLink) {
-                openPaymentModal();
-                showToast(`${wasSignup ? 'Account created' : 'Signed in'} via ${provider === 'google' ? 'Google' : 'Email'}. Please activate subscription.`);
-            } else {
-                closeModals();
-                showToast(`Successfully logged in via ${provider === 'google' ? 'Google' : 'Email'}`);
+        function attemptAccess(link) {
+            state.pendingLink = link;
+            if (!state.user) {
+                showToast("Please log in to access the archives.", 3000);
+                openAuthModal('login');
+                return;
             }
+            if (!state.hasSubscription) {
+                showToast("Premium subscription required.", 3000);
+                openPaymentModal();
+                return;
+            }
+            window.open(link, '_blank');
+            state.pendingLink = null;
         }
 
         function handleReadToday() {
             attemptAccess(CONFIG.TODAYS_NEWSPAPER_LINK);
         }
 
-        function attemptAccess(link) {
-            if (!state.user) {
-                state.pendingLink = link;
-                openAuthModal('signup');
-            } else if (!state.hasSubscription) {
-                state.pendingLink = link;
-                openPaymentModal();
+        function mockLogin(provider) {
+            state.user = { name: "Reader" };
+            document.getElementById('auth-btn').innerText = 'My Account';
+            
+            if (state.hasSubscription) {
+                closeModals();
+                showToast("Successfully logged in!");
+                if (state.pendingLink) {
+                    window.open(state.pendingLink, '_blank');
+                    state.pendingLink = null;
+                }
             } else {
-                window.open(link, '_blank');
-                state.pendingLink = null;
+                openPaymentModal();
             }
         }
 
         function copyUPI() {
-            const text = document.getElementById('upi-id').innerText;
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                showToast("UPI ID copied to clipboard. Open your UPI app to pay.");
-            } catch (err) {
-                showToast("Failed to copy. Please select and copy manually.");
+            // Attempt standard clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(CONFIG.UPI_ID).then(() => {
+                    showToast("UPI ID copied to clipboard!");
+                }).catch(() => fallbackCopyUPI());
+            } else {
+                fallbackCopyUPI();
             }
-            document.body.removeChild(textArea);
         }
 
-        function simulatePaymentVerification() {
-            state.hasSubscription = true;
-            closeModals();
-            showToast("Payment verified. Premium subscription activated.");
-
-            if (state.pendingLink) {
-                setTimeout(() => {
-                    window.open(state.pendingLink, '_blank');
-                    state.pendingLink = null;
-                }, 1000);
+        function fallbackCopyUPI() {
+            // Fallback for iframe/older browsers
+            const el = document.createElement('textarea');
+            el.value = CONFIG.UPI_ID;
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+                showToast("UPI ID copied to clipboard!");
+            } catch (err) {
+                showToast("Failed to copy UPI. Please select manually.");
             }
+            document.body.removeChild(el);
+        }
+
+        function simulatePaymentVerification(event) {
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i><span>Verifying...</span>`;
+            refreshIcons();
+            
+            setTimeout(() => {
+                state.hasSubscription = true;
+                btn.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>Payment Successful</span>`;
+                btn.classList.replace('bg-slate-900', 'bg-green-600');
+                btn.classList.replace('dark:bg-white', 'dark:bg-green-500');
+                btn.classList.replace('text-slate-900', 'text-white'); // Fix dark text color
+                refreshIcons();
+                
+                showToast("Premium subscription activated! Welcome aboard.");
+                
+                setTimeout(() => {
+                    closeModals();
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-green-600', 'bg-slate-900');
+                    btn.classList.replace('dark:bg-green-500', 'dark:bg-white');
+                    btn.classList.replace('text-white', 'text-slate-900'); // Restore
+                    
+                    if (state.pendingLink) {
+                        window.open(state.pendingLink, '_blank');
+                        state.pendingLink = null;
+                    }
+                }, 1500);
+            }, 2000);
         }
 
         function handleContactSubmit(e) {
             e.preventDefault();
-            document.getElementById('contact-form').style.display = 'none';
-            document.getElementById('contact-success').classList.remove('hidden');
-            showToast("Support ticket created successfully.");
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Sending...</span>`;
+            refreshIcons();
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                document.getElementById('contact-success').classList.remove('hidden');
+                e.target.reset();
+                refreshIcons();
+            }, 1000);
         }
 
-        // Initialize on load
+        // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderArchive();
             refreshIcons();
             setupScrollReveals();
         });
-
     </script>
 </body>
 </html>
