@@ -370,7 +370,6 @@
             </div>
         </div>
         
-        <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-2xl transition-all origin-top transform">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <button onclick="navigate('home')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</button>
@@ -492,16 +491,16 @@
                         </div>
                         
                         <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <!-- Advanced Language Filter -->
+                            <!-- Advanced Language Filter with working interactive buttons -->
                             <div class="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-1 shadow-sm w-full sm:w-auto">
                                 <span class="pl-2 pr-1 text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Filter:</span>
-                                <button class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
+                                <button id="filter-eng" onclick="toggleLanguage('eng')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
                                     <span class="w-2 h-2 rounded-full bg-saffron"></span> Eng
                                 </button>
-                                <button class="px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5">
+                                <button id="filter-hin" onclick="toggleLanguage('hin')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
                                     <span class="w-2 h-2 rounded-full bg-indiaGreen"></span> Hin
                                 </button>
-                                <button class="px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5">
+                                <button id="filter-ben" onclick="toggleLanguage('ben')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
                                     <span class="w-2 h-2 rounded-full bg-blue-500"></span> Ben
                                 </button>
                             </div>
@@ -569,7 +568,7 @@
                             </div>
                         </div>
 
-                        <!-- Feature 3 - Updated with Refund Policy -->
+                        <!-- Feature 3 -->
                         <div class="relative group sm:col-span-2 lg:col-span-1 h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
                             <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
@@ -645,7 +644,6 @@
                     </p>
                 </div>
                 
-                <!-- Expanded Subscription Info with Refund Policy -->
                 <div class="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 mt-20 relative overflow-hidden group reveal">
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl -z-10 group-hover:bg-saffron/20 transition-colors duration-500"></div>
                     <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8 border-b border-slate-100 dark:border-slate-800 pb-8">
@@ -682,7 +680,6 @@
 
         <!-- === CONTACT US PAGE === -->
         <section id="page-contact" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
-            <!-- (Contact page content remains exactly the same as original) -->
             <div class="text-center mb-16 reveal">
                 <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">Get in Touch</span>
                 <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
@@ -1033,8 +1030,8 @@
             </div>
         </div>
 
-        <!-- Payment Modal (Updated with Refund Policy) -->
-        <div id="modal-payment" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative">
+        <!-- Payment Modal (Updated with max-h and overflow for mobile scrolling) -->
+        <div id="modal-payment" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative max-h-[95vh] overflow-y-auto">
             <button onclick="closeModals()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 bg-slate-100 dark:bg-slate-800 rounded-full transition-colors">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -1125,7 +1122,8 @@
             currentMonth: 'September', 
             pendingLink: null,
             authMode: 'login',
-            isSearchOpen: false
+            isSearchOpen: false,
+            activeLanguages: ['eng', 'hin', 'ben'] // State for interactive language filters
         };
 
         // UI Initialization
@@ -1323,6 +1321,44 @@
             return CONFIG.ARCHIVE_FALLBACK_LINK;
         }
 
+        // New Logic to Handle the interactive Language Filters
+        function toggleLanguage(lang) {
+            if (state.activeLanguages.includes(lang)) {
+                if (state.activeLanguages.length > 1) {
+                    state.activeLanguages = state.activeLanguages.filter(l => l !== lang);
+                } else {
+                    showToast("At least one language must be selected.", 2000);
+                    return;
+                }
+            } else {
+                state.activeLanguages.push(lang);
+            }
+            updateLanguageFilterUI();
+            renderArchive(); // Re-render the archive dots to reflect selection
+        }
+
+        function updateLanguageFilterUI() {
+            const langs = [
+                { id: 'eng', color: 'bg-saffron', label: 'Eng' },
+                { id: 'hin', color: 'bg-indiaGreen', label: 'Hin' },
+                { id: 'ben', color: 'bg-blue-500', label: 'Ben' }
+            ];
+            
+            langs.forEach(l => {
+                const btn = document.getElementById(`filter-${l.id}`);
+                if (!btn) return;
+                
+                const dot = `<span class="w-2 h-2 rounded-full ${l.color}"></span>`;
+                
+                if (state.activeLanguages.includes(l.id)) {
+                    btn.className = "px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5";
+                } else {
+                    btn.className = "px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5 opacity-60";
+                }
+                btn.innerHTML = `${dot} ${l.label}`;
+            });
+        }
+
         function renderArchive() {
             const tabsContainer = document.getElementById('month-tabs');
             const gridContainer = document.getElementById('dates-grid');
@@ -1346,6 +1382,11 @@
             const monthInfo = archiveData[state.currentMonth];
             let count = 0;
             
+            // Check active states for dynamic dots rendering
+            const engActive = state.activeLanguages.includes('eng');
+            const hinActive = state.activeLanguages.includes('hin');
+            const benActive = state.activeLanguages.includes('ben');
+            
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
@@ -1362,13 +1403,13 @@
                     <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
                         <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300"></i>
                         <div class="absolute bottom-2 left-2 flex space-x-1.5">
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && engActive ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
                                 <span class="tooltip">English</span>
                             </span>
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && hinActive ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
                                 <span class="tooltip">Hindi</span>
                             </span>
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && benActive ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
                                 <span class="tooltip">Bengali</span>
                             </span>
                         </div>
@@ -1539,6 +1580,7 @@
 
         // Init
         document.addEventListener('DOMContentLoaded', () => {
+            updateLanguageFilterUI();
             renderArchive();
             refreshIcons();
             setupScrollReveals();
