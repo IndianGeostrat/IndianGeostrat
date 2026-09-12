@@ -41,6 +41,7 @@
                         'marquee': 'marquee 30s linear infinite',
                         'blob': 'blob 7s infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'slide-down': 'slideDown 0.3s ease-out forwards',
                     },
                     keyframes: {
                         fadeIn: {
@@ -49,6 +50,10 @@
                         },
                         slideUp: {
                             '0%': { opacity: '0', transform: 'translateY(24px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         marquee: {
@@ -77,7 +82,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             background-color: #f8fafc;
-            /* CRITICAL FIX: Prevent horizontal scrolling on mobile devices */
             overflow-x: hidden; 
         }
 
@@ -110,8 +114,8 @@
         
         .glass-nav {
             background: rgba(248, 250, 252, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(15, 23, 42, 0.06);
             transition: all 0.3s ease;
         }
@@ -122,12 +126,12 @@
         }
 
         .glass-nav.scrolled {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
             padding-top: 0.25rem;
             padding-bottom: 0.25rem;
         }
         .dark .glass-nav.scrolled {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
         .nav-link {
@@ -165,22 +169,24 @@
         }
 
         .newspaper-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: rgba(255, 153, 51, 0.5);
+            border-color: rgba(255, 153, 51, 0.4);
         }
 
         .dark .newspaper-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 153, 51, 0.6);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 153, 51, 0.5);
         }
         
         .newspaper-card.active-date {
-            border-color: rgba(255, 153, 51, 0.4);
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.05), transparent);
+            border-color: rgba(255, 153, 51, 0.5);
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.08), transparent);
+            box-shadow: 0 0 15px rgba(255, 153, 51, 0.15);
         }
         .dark .newspaper-card.active-date {
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.1), transparent);
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.12), transparent);
+            box-shadow: 0 0 20px rgba(255, 153, 51, 0.2);
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -232,6 +238,52 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Custom Tooltip */
+        .has-tooltip {
+            position: relative;
+        }
+        .has-tooltip:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(5px);
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 10;
+            margin-bottom: 5px;
+        }
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -4px;
+            border-width: 4px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
     </style>
 </head>
 <body class="text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col bg-mesh">
@@ -250,7 +302,7 @@
             LIVE
         </div>
         <div class="flex whitespace-nowrap animate-marquee items-center pl-4 w-[200%]">
-            <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
+            <span class="mx-6 text-white font-bold">SEPT 12: India strengthens bilateral ties in Southeast Asia.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -259,7 +311,7 @@
             <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
             <span class="mx-2 text-saffron">|</span>
             <!-- Duplicate content for infinite smooth loop -->
-            <span class="mx-6">BREAKING: India strengthens bilateral ties in Southeast Asia with new trade pacts.</span>
+            <span class="mx-6 text-white font-bold">SEPT 12: India strengthens bilateral ties in Southeast Asia.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -279,13 +331,19 @@
                 </div>
 
                 <!-- Desktop Menu -->
-                <nav class="hidden md:flex space-x-8 items-center">
+                <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
                     <button onclick="navigate('home')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Home</button>
                     <button onclick="navigate('about')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">About Us</button>
                     <button onclick="navigate('contact')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Contact</button>
                     
                     <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
                     
+                    <!-- Search Icon -->
+                    <button onclick="toggleSearchModal()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 hover:text-saffron dark:text-slate-400 dark:hover:text-saffron" title="Search Archives">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Theme Toggle -->
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" title="Toggle Theme">
                         <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden"></i>
                         <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block"></i>
@@ -298,6 +356,9 @@
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center gap-2 sm:gap-3">
+                    <button onclick="toggleSearchModal()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 dark:text-slate-400">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
                     <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 dark:text-slate-400">
                         <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden"></i>
                         <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block"></i>
@@ -351,25 +412,32 @@
                                 </p>
                                 
                                 <!-- Professional Pricing Badge -->
-                                <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md hover:shadow-md transition-shadow">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
-                                        <span class="font-semibold text-slate-800 dark:text-slate-200 text-base">Premium Access</span>
+                                <div class="mt-8 flex flex-col items-center justify-center">
+                                    <div class="inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md hover:shadow-md transition-shadow">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                            <span class="font-semibold text-slate-800 dark:text-slate-200 text-base">Premium Access</span>
+                                        </div>
+                                        <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
+                                        <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-base">Standard: ₹30/mo</span>
+                                        <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base">
+                                            <span class="absolute inset-0 bg-white/40 dark:bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                                            <i data-lucide="tag" class="w-4 h-4 relative z-10"></i> 
+                                            <span class="relative z-10">Special Offer: ₹10/mo</span>
+                                        </span>
                                     </div>
-                                    <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
-                                    <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-base">Standard: ₹30/mo</span>
-                                    <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base">
-                                        <span class="absolute inset-0 bg-white/40 dark:bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-                                        <i data-lucide="tag" class="w-4 h-4 relative z-10"></i> 
-                                        <span class="relative z-10">Special Offer: ₹10/mo</span>
-                                    </span>
+                                    <!-- Return Policy Banner -->
+                                    <div class="mt-4 flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-4 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800/50 shadow-sm">
+                                        <i data-lucide="badge-check" class="w-4 h-4"></i>
+                                        Backed by our 7-Day 50% Refund Policy
+                                    </div>
                                 </div>
 
                                 <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
                                     <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
                                         <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
                                             <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
-                                            Read Today (Sept 2)
+                                            Read Today (Sept 12)
                                         </button>
                                     </div>
                                     <div class="mt-3 sm:mt-0 w-full sm:w-auto">
@@ -413,8 +481,9 @@
 
                 <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10 group">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                    <!-- Year / Month Tabs -->
-                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+                    
+                    <!-- Advanced Filters & Tabs -->
+                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
                         <div class="flex items-center space-x-3">
                             <div class="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 group-hover:border-saffron/50 transition-colors">
                                 <i data-lucide="calendar-days" class="w-5 h-5 text-saffron"></i>
@@ -422,8 +491,25 @@
                             <span class="font-bold text-slate-800 dark:text-slate-200 text-lg">Timeline</span>
                         </div>
                         
-                        <div class="flex items-center p-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar shadow-inner" id="month-tabs">
-                            <!-- Populated via JS -->
+                        <div class="flex flex-col sm:flex-row items-center gap-4">
+                            <!-- Advanced Language Filter -->
+                            <div class="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-1 shadow-sm w-full sm:w-auto">
+                                <span class="pl-2 pr-1 text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Filter:</span>
+                                <button class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-saffron"></span> Eng
+                                </button>
+                                <button class="px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-indiaGreen"></span> Hin
+                                </button>
+                                <button class="px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500"></span> Ben
+                                </button>
+                            </div>
+                            
+                            <!-- Month Tabs -->
+                            <div class="flex items-center p-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar shadow-inner w-full sm:w-auto" id="month-tabs">
+                                <!-- Populated via JS -->
+                            </div>
                         </div>
                     </div>
 
@@ -483,16 +569,17 @@
                             </div>
                         </div>
 
-                        <!-- Feature 3 -->
+                        <!-- Feature 3 - Updated with Refund Policy -->
                         <div class="relative group sm:col-span-2 lg:col-span-1 h-full">
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
                             <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
-                                <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
-                                    <i data-lucide="badge-percent" class="w-8 h-8 text-blue-400"></i>
+                                <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300 relative">
+                                    <i data-lucide="shield-check" class="w-8 h-8 text-blue-400"></i>
+                                    <div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">Risk-Free</div>
                                 </div>
-                                <h4 class="text-xl font-bold text-white mb-4 font-serif">Affordable Access</h4>
-                                <p class="text-base text-slate-400 leading-relaxed">
-                                    Standard access is ₹30/month. Take advantage of our limited-time promotion to secure complete access for just ₹10/month via convenient UPI.
+                                <h4 class="text-xl font-bold text-white mb-4 font-serif">Affordable & Secure</h4>
+                                <p class="text-base text-slate-400 leading-relaxed mb-4">
+                                    Subscribe for just ₹10/month via convenient UPI. If you are not satisfied, utilize our <strong class="text-white">7-Day 50% Refund Guarantee</strong>, no questions asked.
                                 </p>
                             </div>
                         </div>
@@ -558,6 +645,7 @@
                     </p>
                 </div>
                 
+                <!-- Expanded Subscription Info with Refund Policy -->
                 <div class="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 mt-20 relative overflow-hidden group reveal">
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl -z-10 group-hover:bg-saffron/20 transition-colors duration-500"></div>
                     <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8 border-b border-slate-100 dark:border-slate-800 pb-8">
@@ -566,7 +654,7 @@
                         </div>
                         <div>
                             <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white m-0">The Subscription Model</h3>
-                            <p class="text-slate-500 mt-2 text-base">Transparent pricing for premium access.</p>
+                            <p class="text-slate-500 mt-2 text-base">Transparent pricing with absolute security.</p>
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 gap-8">
@@ -574,10 +662,17 @@
                             <p class="mb-4">
                                 Our standard subscription is priced at <strong class="text-slate-900 dark:text-white">₹30/month</strong>. However, for a limited period, readers can unlock complete access at a promotional rate of <strong class="text-saffron text-xl">₹10/month</strong>. 
                             </p>
-                        </div>
-                        <div>
                             <p class="mb-0">
                                 This modest monthly contribution supports our daily curation operations while ensuring that vital geopolitical resources remain financially accessible to students, academic researchers, and professionals alike.
+                            </p>
+                        </div>
+                        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 border border-emerald-200 dark:border-emerald-800/50">
+                            <h4 class="text-lg font-bold text-emerald-800 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                Risk-Free Guarantee
+                            </h4>
+                            <p class="text-base text-emerald-700 dark:text-emerald-500/90 mb-0">
+                                We stand by the quality of our curation. If you find the service unsatisfactory, we offer a comprehensive <strong class="text-emerald-900 dark:text-emerald-300">7-Day 50% Return Policy</strong>. Contact our support within the first week of your subscription to receive a hassle-free partial refund, guaranteeing a risk-free trial of our premium features.
                             </p>
                         </div>
                     </div>
@@ -587,10 +682,11 @@
 
         <!-- === CONTACT US PAGE === -->
         <section id="page-contact" class="page-section hidden py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
+            <!-- (Contact page content remains exactly the same as original) -->
             <div class="text-center mb-16 reveal">
                 <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">Get in Touch</span>
                 <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
-                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription.</p>
+                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription or refund policy.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-12 reveal">
@@ -718,16 +814,20 @@
                         Curating regional, national, and international newspapers daily. Premium geopolitical insights, made accessible to all. Stay informed with our trilingual coverage.
                     </p>
                     
-                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm shadow-inner">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm shadow-inner relative overflow-hidden">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-saffron/10 rounded-full blur-xl pointer-events-none"></div>
+                        <div class="flex items-center justify-between mb-3 relative z-10">
                             <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Premium Access</p>
-                            <span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
+                            <span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]" title="7-Day Refund Policy Active"></span>
                         </div>
-                        <div class="flex items-baseline gap-3 mb-5">
+                        <div class="flex items-baseline gap-3 mb-2 relative z-10">
                             <span class="text-sm text-slate-500 line-through decoration-slate-600">₹30/mo</span>
                             <span class="text-2xl font-bold text-white">₹10<span class="text-sm text-slate-400 font-normal">/mo</span></span>
                         </div>
-                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-all shadow-lg shadow-orange-500/20 active:scale-95">Subscribe Now</button>
+                        <p class="text-[10px] text-emerald-400/80 mb-5 flex items-center relative z-10">
+                            <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i> Includes 7-Day 50% Refund Guarantee
+                        </p>
+                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-all shadow-lg shadow-orange-500/20 active:scale-95 relative z-10">Subscribe Now</button>
                     </div>
                 </div>
 
@@ -781,15 +881,36 @@
                 <div class="mt-4 md:mt-0 space-x-6">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors">Refund Policy</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Custom Toast Notification - Position adjusted for scroll-to-top button -->
+    <!-- Custom Toast Notification -->
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-2xl shadow-slate-900/20 transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center w-full max-w-sm border border-slate-700 dark:border-slate-200">
         <i data-lucide="info" class="w-5 h-5 mr-3 text-saffron flex-shrink-0"></i>
         <span id="toast-message" class="font-medium text-sm leading-tight text-center w-full"></span>
+    </div>
+
+    <!-- Full-Screen Search Modal -->
+    <div id="search-modal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/60 search-overlay z-[80] hidden opacity-0 transition-opacity duration-300 flex items-start justify-center pt-24 px-4">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform -translate-y-4 transition-transform duration-300 border border-slate-200 dark:border-slate-700" id="search-container">
+            <div class="relative flex items-center p-4 border-b border-slate-100 dark:border-slate-800">
+                <i data-lucide="search" class="w-6 h-6 text-slate-400 absolute left-6"></i>
+                <input type="text" id="search-input" placeholder="Search archives by date or topic (e.g., September 12)..." class="w-full pl-12 pr-12 py-3 bg-transparent text-lg focus:outline-none dark:text-white placeholder-slate-400" autofocus>
+                <button onclick="toggleSearchModal()" class="absolute right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-900/50 max-h-[60vh] overflow-y-auto hidden" id="search-results">
+                <!-- Search results injected here -->
+                <p class="text-sm text-slate-500 text-center py-8">Press Enter to search...</p>
+            </div>
+            <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center text-xs text-slate-400">
+                <span class="flex items-center gap-1">Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-slate-500 dark:text-slate-400">ESC</kbd> to close</span>
+            </div>
+        </div>
     </div>
 
     <!-- Modals Overlay -->
@@ -797,7 +918,7 @@
         
         <!-- Auth Modal -->
         <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-4xl w-full transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative overflow-hidden max-h-[95vh] overflow-y-auto">
-            <button onclick="closeModals()" class="absolute top-4 right-4 z-20 p-2 bg-white/10 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors backdrop-blur-sm">
+            <button onclick="closeModals()" class="absolute top-4 right-4 z-20 p-2 bg-white/10 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors backdrop-blur-sm shadow-sm">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <div class="grid md:grid-cols-[0.9fr_1.1fr] h-full">
@@ -836,8 +957,8 @@
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Languages</p>
                             </div>
                             <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
-                                <p class="text-2xl font-bold text-saffron flex justify-center"><i data-lucide="infinity" class="w-6 h-6"></i></p>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Access</p>
+                                <p class="text-2xl font-bold text-emerald-400 flex justify-center"><i data-lucide="shield-check" class="w-6 h-6"></i></p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Guarantee</p>
                             </div>
                             <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
                                 <p class="text-2xl font-bold text-saffron flex justify-center"><i data-lucide="file-check-2" class="w-6 h-6"></i></p>
@@ -912,18 +1033,27 @@
             </div>
         </div>
 
-        <!-- Payment Modal -->
+        <!-- Payment Modal (Updated with Refund Policy) -->
         <div id="modal-payment" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative">
             <button onclick="closeModals()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 bg-slate-100 dark:bg-slate-800 rounded-full transition-colors">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             
-            <div class="text-center mb-8 mt-2">
+            <div class="text-center mb-6 mt-2">
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-900/30 text-saffron mb-5 border border-orange-100 dark:border-orange-800/50 shadow-inner">
                     <i data-lucide="unlock" class="w-8 h-8"></i>
                 </div>
                 <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Activate Premium</h3>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 px-4 leading-relaxed">Secure full access to our curated archive. Pay via UPI below.</p>
+            </div>
+
+            <!-- Refund Policy Notice inside Payment Modal -->
+            <div class="mb-5 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-3 flex items-start gap-3">
+                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                <div>
+                    <h4 class="text-sm font-bold text-emerald-800 dark:text-emerald-400">7-Day 50% Refund Guarantee</h4>
+                    <p class="text-xs text-emerald-700 dark:text-emerald-500/90 mt-0.5 leading-snug">Risk-free subscription. Contact us within 7 days if unsatisfied.</p>
+                </div>
             </div>
 
             <div class="mb-8 rounded-2xl border border-orange-200 dark:border-orange-800/50 bg-gradient-to-br from-orange-50 to-white dark:from-orange-900/20 dark:to-slate-900 p-6 text-center shadow-sm relative overflow-hidden">
@@ -966,7 +1096,7 @@
         // CONFIGURATION & STATE
         // ==========================================
         
-        // Setup Date Links - Updated with new Aug 30, Aug 31 and Sept 2 links
+        // Setup Date Links - Updated with new September 12, 2026 link
         const SPECIFIC_DATE_LINKS = {
             'August': {
                 31: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link",
@@ -978,12 +1108,13 @@
             },
             'September': {
                 1: "https://drive.google.com/drive/folders/1f03HiqnI0nBaFwY3yfAI1JZwFtEo2-KJ?usp=drive_link",
-                2: "https://drive.google.com/drive/folders/1VhyTjS_IKcoOmd9p-Il2wNz7WR8tED_i?usp=drive_link" // Today's Newspaper
+                2: "https://drive.google.com/drive/folders/1VhyTjS_IKcoOmd9p-Il2wNz7WR8tED_i?usp=drive_link",
+                12: "https://drive.google.com/drive/folders/115K7eZCwSWNImqOKfY5xFTvMC3qmAX0A?usp=drive_link" // Today's Newspaper Link (Sept 12, 2026)
             }
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][2], 
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][12], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -993,7 +1124,8 @@
             hasSubscription: false,
             currentMonth: 'September', 
             pendingLink: null,
-            authMode: 'login'
+            authMode: 'login',
+            isSearchOpen: false
         };
 
         // UI Initialization
@@ -1005,6 +1137,14 @@
             } catch (err) {
                 console.warn('Lucide icon initialization skipped/failed:', err);
             }
+        }
+
+        // Get Dynamic Greeting
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return "Good morning";
+            if (hour < 18) return "Good afternoon";
+            return "Good evening";
         }
 
         // Handle Global Scroll Events (Header, Progress Bar, Back-To-Top, Reveals)
@@ -1059,8 +1199,10 @@
             const nameField = document.getElementById('signup-name-field');
             const passwordField = document.getElementById('auth-password');
             const forgotLink = document.getElementById('forgot-password-link');
+            
+            const greeting = getGreeting();
 
-            document.getElementById('auth-eyebrow').innerText = isSignup ? 'New subscription' : 'Subscriber login';
+            document.getElementById('auth-eyebrow').innerText = isSignup ? 'New subscription' : `${greeting}, Reader`;
             document.getElementById('auth-title').innerText = isSignup ? 'Create your account' : 'Welcome back';
             document.getElementById('auth-subtitle').innerText = isSignup ? 'Start with the special ₹10/month offer to access daily editions.' : 'Sign in to manage your newspaper subscription.';
             document.getElementById('google-auth-label').innerText = isSignup ? 'Sign up with Google' : 'Continue with Google';
@@ -1118,6 +1260,38 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
+        // Search Overlay Logic
+        function toggleSearchModal() {
+            const searchModal = document.getElementById('search-modal');
+            const searchContainer = document.getElementById('search-container');
+            const searchInput = document.getElementById('search-input');
+            
+            state.isSearchOpen = !state.isSearchOpen;
+            
+            if (state.isSearchOpen) {
+                searchModal.classList.remove('hidden');
+                setTimeout(() => {
+                    searchModal.classList.remove('opacity-0');
+                    searchContainer.classList.remove('-translate-y-4');
+                    searchInput.focus();
+                }, 10);
+            } else {
+                searchModal.classList.add('opacity-0');
+                searchContainer.classList.add('-translate-y-4');
+                setTimeout(() => {
+                    searchModal.classList.add('hidden');
+                    searchInput.value = '';
+                }, 300);
+            }
+        }
+        
+        // Escape key closes search modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && state.isSearchOpen) {
+                toggleSearchModal();
+            }
+        });
+
         function showToast(message, duration = 3500) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').innerText = message;
@@ -1157,7 +1331,7 @@
             Object.keys(archiveData).forEach(month => {
                 const isActive = month === state.currentMonth;
                 const btn = document.createElement('button');
-                btn.className = `px-5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-700 text-saffron shadow-sm' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50'}`;
+                btn.className = `px-4 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-700 text-saffron shadow-sm' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50'}`;
                 btn.innerText = month;
                 btn.onclick = () => {
                     state.currentMonth = month;
@@ -1175,8 +1349,8 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                // Flag September 2 as the current "Today" indicator
-                const isToday = state.currentMonth === 'September' && i === 2; 
+                // Flag September 12 as the current "Today" indicator
+                const isToday = state.currentMonth === 'September' && i === 12; 
                 
                 const card = document.createElement('div');
                 card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
@@ -1184,13 +1358,19 @@
                 card.onclick = () => attemptAccess(getArchiveLink(state.currentMonth, i));
                 
                 card.innerHTML = `
-                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase shadow-sm">New</div>` : ''}
+                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase shadow-sm flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>Today</div>` : ''}
                     <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
                         <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300"></i>
-                        <div class="absolute bottom-2 left-2 flex space-x-1">
-                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-600'}" title="English"></span>
-                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-600'}" title="Hindi"></span>
-                            <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600'}" title="Bengali"></span>
+                        <div class="absolute bottom-2 left-2 flex space-x-1.5">
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                                <span class="tooltip">English</span>
+                            </span>
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                                <span class="tooltip">Hindi</span>
+                            </span>
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600'} shadow-sm">
+                                <span class="tooltip">Bengali</span>
+                            </span>
                         </div>
                     </div>
                     <div class="p-4 text-center ${isAvailable ? 'bg-white dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-800/50'}">
@@ -1204,7 +1384,7 @@
             refreshIcons();
         }
 
-        // Authentication & Modals logic (Completed section)
+        // Authentication & Modals logic
         function openAuthModal(mode) {
             setAuthMode(mode);
             const overlay = document.getElementById('modal-overlay');
@@ -1213,7 +1393,6 @@
             overlay.classList.remove('hidden');
             overlay.classList.add('flex');
             
-            // Tiny delay for transitions
             setTimeout(() => {
                 overlay.classList.remove('opacity-0');
                 authModal.classList.remove('hidden');
@@ -1289,7 +1468,6 @@
         }
 
         function copyUPI() {
-            // Attempt standard clipboard API first
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(CONFIG.UPI_ID).then(() => {
                     showToast("UPI ID copied to clipboard!");
@@ -1300,7 +1478,6 @@
         }
 
         function fallbackCopyUPI() {
-            // Fallback for iframe/older browsers
             const el = document.createElement('textarea');
             el.value = CONFIG.UPI_ID;
             document.body.appendChild(el);
@@ -1325,7 +1502,7 @@
                 btn.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>Payment Successful</span>`;
                 btn.classList.replace('bg-slate-900', 'bg-green-600');
                 btn.classList.replace('dark:bg-white', 'dark:bg-green-500');
-                btn.classList.replace('text-slate-900', 'text-white'); // Fix dark text color
+                btn.classList.replace('text-slate-900', 'text-white');
                 refreshIcons();
                 
                 showToast("Premium subscription activated! Welcome aboard.");
@@ -1335,7 +1512,7 @@
                     btn.innerHTML = originalText;
                     btn.classList.replace('bg-green-600', 'bg-slate-900');
                     btn.classList.replace('dark:bg-green-500', 'dark:bg-white');
-                    btn.classList.replace('text-white', 'text-slate-900'); // Restore
+                    btn.classList.replace('text-white', 'text-slate-900'); 
                     
                     if (state.pendingLink) {
                         window.open(state.pendingLink, '_blank');
