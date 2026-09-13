@@ -302,7 +302,7 @@
             LIVE
         </div>
         <div class="flex whitespace-nowrap animate-marquee items-center pl-4 w-[200%]">
-            <span class="mx-6 text-white font-bold">SEPT 12: India strengthens bilateral ties in Southeast Asia.</span>
+            <span class="mx-6 text-white font-bold">SEPT 13: India strengthens bilateral ties in Southeast Asia.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -311,7 +311,7 @@
             <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
             <span class="mx-2 text-saffron">|</span>
             <!-- Duplicate content for infinite smooth loop -->
-            <span class="mx-6 text-white font-bold">SEPT 12: India strengthens bilateral ties in Southeast Asia.</span>
+            <span class="mx-6 text-white font-bold">SEPT 13: India strengthens bilateral ties in Southeast Asia.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -436,7 +436,7 @@
                                     <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
                                         <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
                                             <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
-                                            Read Today (Sept 12)
+                                            Read Today (Sept 13)
                                         </button>
                                     </div>
                                     <div class="mt-3 sm:mt-0 w-full sm:w-auto">
@@ -464,7 +464,27 @@
                 </div>
             </div>
 
-            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative reveal">
+            <!-- Tutorial Video Section -->
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 reveal">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700">
+                    <div class="text-center mb-8">
+                        <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-blue-200 dark:border-blue-800/50 mb-4 inline-block shadow-sm">Help Guide</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold font-serif text-slate-900 dark:text-white">How to Get a Newspaper</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base max-w-xl mx-auto">Watch this quick video tutorial to learn how to access your daily editions and navigate the archives effectively.</p>
+                    </div>
+                    
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center group">
+                        <video controls class="w-full h-full object-cover" preload="metadata" poster="https://placehold.co/1280x720/0f172a/FF9933?text=How+to+Get+a+Newspaper">
+                            <source src="tutorial.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <!-- Fallback visual if no video is loading immediately -->
+                        <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="archive-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative reveal">
                 <!-- Background decoration -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-saffron/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
@@ -895,7 +915,7 @@
         <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform -translate-y-4 transition-transform duration-300 border border-slate-200 dark:border-slate-700" id="search-container">
             <div class="relative flex items-center p-4 border-b border-slate-100 dark:border-slate-800">
                 <i data-lucide="search" class="w-6 h-6 text-slate-400 absolute left-6"></i>
-                <input type="text" id="search-input" placeholder="Search archives by date or topic (e.g., September 12)..." class="w-full pl-12 pr-12 py-3 bg-transparent text-lg focus:outline-none dark:text-white placeholder-slate-400" autofocus>
+                <input type="text" id="search-input" placeholder="Search archives by date or topic (e.g., September 13)..." class="w-full pl-12 pr-12 py-3 bg-transparent text-lg focus:outline-none dark:text-white placeholder-slate-400" autofocus>
                 <button onclick="toggleSearchModal()" class="absolute right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -1093,7 +1113,7 @@
         // CONFIGURATION & STATE
         // ==========================================
         
-        // Setup Date Links - Updated with new September 12, 2026 link
+        // Setup Date Links - Updated with new September 13, 2026 link
         const SPECIFIC_DATE_LINKS = {
             'August': {
                 31: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link",
@@ -1106,12 +1126,13 @@
             'September': {
                 1: "https://drive.google.com/drive/folders/1f03HiqnI0nBaFwY3yfAI1JZwFtEo2-KJ?usp=drive_link",
                 2: "https://drive.google.com/drive/folders/1VhyTjS_IKcoOmd9p-Il2wNz7WR8tED_i?usp=drive_link",
-                12: "https://drive.google.com/drive/folders/115K7eZCwSWNImqOKfY5xFTvMC3qmAX0A?usp=drive_link" // Today's Newspaper Link (Sept 12, 2026)
+                12: "https://drive.google.com/drive/folders/115K7eZCwSWNImqOKfY5xFTvMC3qmAX0A?usp=drive_link", 
+                13: "https://drive.google.com/drive/folders/16Xcv5uf5ihGSAa1eHoraVBBtKNxmUBmi?usp=drive_link" // Today's Newspaper Link (Sept 13, 2026)
             }
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][12], 
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][13], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -1390,8 +1411,8 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                // Flag September 12 as the current "Today" indicator
-                const isToday = state.currentMonth === 'September' && i === 12; 
+                // Flag September 13 as the current "Today" indicator
+                const isToday = state.currentMonth === 'September' && i === 13; 
                 
                 const card = document.createElement('div');
                 card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
