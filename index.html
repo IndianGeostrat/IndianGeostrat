@@ -11,7 +11,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -42,6 +41,7 @@
                         'blob': 'blob 7s infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'slide-down': 'slideDown 0.3s ease-out forwards',
+                        'audio-bar': 'audioBar 1s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         fadeIn: {
@@ -70,6 +70,10 @@
                             '0%': { transform: 'translateY(0px)' },
                             '50%': { transform: 'translateY(-10px)' },
                             '100%': { transform: 'translateY(0px)' }
+                        },
+                        audioBar: {
+                            '0%': { height: '0.25rem' },
+                            '100%': { height: '1.25rem' }
                         }
                     }
                 }
@@ -83,6 +87,25 @@
             -moz-osx-font-smoothing: grayscale;
             background-color: #f8fafc;
             overflow-x: hidden; 
+        }
+
+        /* Custom Scrollbar for professional look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.05); 
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: rgba(2, 6, 23, 0.5); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 153, 51, 0.4); 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 153, 51, 0.8); 
         }
 
         .dark body {
@@ -113,25 +136,27 @@
         }
         
         .glass-nav {
-            background: rgba(248, 250, 252, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(248, 250, 252, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(15, 23, 42, 0.06);
             transition: all 0.3s ease;
         }
         
         .dark .glass-nav {
-            background: rgba(2, 6, 23, 0.85);
+            background: rgba(2, 6, 23, 0.75);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .glass-nav.scrolled {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            padding-top: 0.15rem;
+            padding-bottom: 0.15rem;
+            background: rgba(248, 250, 252, 0.95);
         }
         .dark .glass-nav.scrolled {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            background: rgba(2, 6, 23, 0.95);
         }
 
         .nav-link {
@@ -169,24 +194,25 @@
         }
 
         .newspaper-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: rgba(255, 153, 51, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.1), 0 15px 15px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(255, 153, 51, 0.6);
+            z-index: 10;
         }
 
         .dark .newspaper-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 153, 51, 0.5);
+            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.5), 0 15px 15px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 153, 51, 0.7);
         }
         
         .newspaper-card.active-date {
-            border-color: rgba(255, 153, 51, 0.5);
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.08), transparent);
-            box-shadow: 0 0 15px rgba(255, 153, 51, 0.15);
+            border-color: rgba(255, 153, 51, 0.6);
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.1), transparent);
+            box-shadow: 0 0 20px rgba(255, 153, 51, 0.2);
         }
         .dark .newspaper-card.active-date {
-            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.12), transparent);
-            box-shadow: 0 0 20px rgba(255, 153, 51, 0.2);
+            background: linear-gradient(to bottom right, rgba(255, 153, 51, 0.15), transparent);
+            box-shadow: 0 0 25px rgba(255, 153, 51, 0.3);
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -231,78 +257,86 @@
         /* Scroll Reveal Animation Classes */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Custom Tooltip */
+        /* Enhanced Tooltip */
         .has-tooltip {
             position: relative;
         }
         .has-tooltip:hover .tooltip {
             visibility: visible;
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         .tooltip {
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            bottom: 100%;
+            bottom: 120%;
             left: 50%;
-            transform: translateX(-50%) translateY(5px);
-            background-color: #1e293b;
+            transform: translateX(-50%) translateY(10px) scale(0.95);
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(4px);
             color: #fff;
             text-align: center;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
             font-weight: 600;
             white-space: nowrap;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
-            z-index: 10;
-            margin-bottom: 5px;
+            z-index: 20;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .tooltip::after {
             content: "";
             position: absolute;
             top: 100%;
             left: 50%;
-            margin-left: -4px;
-            border-width: 4px;
+            margin-left: -5px;
+            border-width: 5px;
             border-style: solid;
-            border-color: #1e293b transparent transparent transparent;
+            border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
         }
 
-        /* Search Overlay */
         .search-overlay {
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
     </style>
 </head>
 <body class="text-slate-800 dark:text-slate-200 transition-colors duration-300 min-h-screen flex flex-col bg-mesh">
 
-    <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-saffron to-orange-500 z-[80] w-0 transition-all duration-150"></div>
+    <div id="reading-progress" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-saffron via-orange-400 to-orange-600 z-[80] w-0 transition-all duration-150 rounded-r-full shadow-[0_0_10px_rgba(255,153,51,0.5)]"></div>
 
     <!-- AI Bot Embed -->
     <script src='https://cdn.jotfor.ms/agent/embedjs/01a03a5a5e2070008b32d936b6b161f49131/embed.js'></script>
 
-    <div class="fixed top-1 w-full z-[60] bg-slate-900 text-slate-300 text-[11px] font-semibold py-1.5 uppercase tracking-wider flex items-center border-b border-slate-800 max-w-[100vw] overflow-hidden shadow-md">
-        <div class="px-4 bg-saffron text-slate-900 flex-shrink-0 z-10 relative flex items-center shadow-[4px_0_10px_rgba(0,0,0,0.5)] h-full">
+    <!-- Top News Ticker with Clock -->
+    <div class="fixed top-1 w-full z-[60] bg-slate-900 text-slate-300 text-[11px] font-semibold py-1.5 uppercase tracking-wider flex items-center border-b border-slate-800 max-w-[100vw] overflow-hidden shadow-md ticker-container">
+        <div class="px-4 bg-saffron text-slate-900 flex-shrink-0 z-20 relative flex items-center shadow-[4px_0_15px_rgba(0,0,0,0.6)] h-full">
             <span class="relative flex h-2 w-2 mr-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-slate-900"></span>
             </span>
             LIVE
         </div>
-        <div class="flex whitespace-nowrap animate-marquee items-center pl-4 w-[200%]">
-            <span class="mx-6 text-white font-bold">SEPT 14: India strengthens bilateral ties in Southeast Asia.</span>
+        <!-- Live Clock Widget -->
+        <div class="px-4 bg-slate-800 text-saffron flex-shrink-0 z-10 relative flex items-center h-full border-r border-slate-700 font-mono tracking-widest shadow-[4px_0_10px_rgba(0,0,0,0.4)]">
+            <i data-lucide="clock" class="w-3 h-3 mr-1.5"></i>
+            <span id="ist-clock">00:00:00 IST</span>
+        </div>
+        
+        <div class="flex whitespace-nowrap animate-marquee items-center pl-4 w-[200%] cursor-default">
+            <span class="mx-6 text-white font-bold">SEPT 15: India strengthens bilateral ties in Southeast Asia with new trade accords.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -311,7 +345,7 @@
             <span class="mx-6">CLIMATE: New initiatives launched for sustainable development across emerging economies.</span>
             <span class="mx-2 text-saffron">|</span>
             <!-- Duplicate content for infinite smooth loop -->
-            <span class="mx-6 text-white font-bold">SEPT 14: India strengthens bilateral ties in Southeast Asia.</span>
+            <span class="mx-6 text-white font-bold">SEPT 15: India strengthens bilateral ties in Southeast Asia with new trade accords.</span>
             <span class="mx-2 text-saffron">|</span>
             <span class="mx-6">MARKETS: Global indexes show resilience amidst shifting geopolitical landscapes.</span>
             <span class="mx-2 text-saffron">|</span>
@@ -336,20 +370,20 @@
                     <button onclick="navigate('about')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">About Us</button>
                     <button onclick="navigate('contact')" class="nav-link text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Contact</button>
                     
-                    <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
+                    <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
                     
                     <!-- Search Icon -->
-                    <button onclick="toggleSearchModal()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 hover:text-saffron dark:text-slate-400 dark:hover:text-saffron" title="Search Archives">
+                    <button onclick="toggleSearchModal()" class="p-2.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-all flex items-center justify-center text-slate-500 hover:text-saffron dark:text-slate-400 dark:hover:text-saffron hover:shadow-inner" title="Search Archives">
                         <i data-lucide="search" class="w-5 h-5"></i>
                     </button>
 
                     <!-- Theme Toggle -->
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-center text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" title="Toggle Theme">
+                    <button id="theme-toggle" class="p-2.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-all flex items-center justify-center text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:shadow-inner" title="Toggle Theme">
                         <i data-lucide="moon" class="fa-solid fa-moon w-5 h-5 dark:hidden"></i>
                         <i data-lucide="sun" class="fa-solid fa-sun w-5 h-5 hidden dark:block"></i>
                     </button>
                     
-                    <button id="auth-btn" onclick="openAuthModal('signup')" class="btn-premium bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg shadow-slate-900/20 dark:shadow-white/10 border border-transparent dark:border-slate-200">
+                    <button id="auth-btn" onclick="openAuthModal('signup')" class="btn-premium bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg shadow-slate-900/20 dark:shadow-white/10 border border-transparent dark:border-slate-200 hover:-translate-y-0.5">
                         Sign up / Login
                     </button>
                 </nav>
@@ -370,7 +404,7 @@
             </div>
         </div>
         
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-2xl transition-all origin-top transform">
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-2xl transition-all origin-top transform">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <button onclick="navigate('home')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</button>
                 <button onclick="navigate('about')" class="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">About Us</button>
@@ -389,29 +423,47 @@
             
             <!-- Hero Section -->
             <div class="relative bg-transparent overflow-hidden">
+                
+                <!-- Interactive Geostrategic Network Canvas -->
+                <canvas id="network-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20"></canvas>
+
                 <!-- Abstract decorative blobs -->
-                <div class="absolute top-0 left-1/4 w-72 h-72 bg-saffron rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob"></div>
-                <div class="absolute top-0 right-1/4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob animation-delay-2000"></div>
-                <div class="absolute -bottom-8 left-1/3 w-72 h-72 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-blob animation-delay-4000"></div>
+                <div class="absolute top-0 left-1/4 w-72 h-72 bg-saffron rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-15 animate-blob"></div>
+                <div class="absolute top-0 right-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-15 animate-blob animation-delay-2000"></div>
+                <div class="absolute -bottom-8 left-1/3 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-15 animate-blob animation-delay-4000"></div>
 
                 <div class="max-w-7xl mx-auto relative">
                     <div class="relative z-10 pb-16 sm:pb-24 md:pb-32 lg:pb-40 bg-transparent pt-16 sm:pt-24 lg:pt-32 px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
                         <main class="mx-auto max-w-4xl reveal">
                             <div class="text-center flex flex-col items-center">
-                                <div class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-saffron bg-orange-50/80 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 mb-8 shadow-sm backdrop-blur-sm animate-float">
+                                <div class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-saffron bg-white/80 dark:bg-slate-900/80 border border-orange-200 dark:border-orange-500/30 mb-8 shadow-sm backdrop-blur-md animate-float cursor-default">
                                     <span class="flex h-2 w-2 rounded-full bg-saffron mr-2 animate-pulse-slow"></span>
                                     DAILY EDITIONS AVAILABLE
                                 </div>
                                 <h1 class="text-5xl tracking-tight font-extrabold text-slate-900 dark:text-white sm:text-6xl md:text-7xl font-serif leading-[1.15]">
-                                    <span class="block">Regional & Global</span>
-                                    <span class="block text-gradient mt-2">Perspectives.</span>
+                                    <span class="block drop-shadow-sm">Regional & Global</span>
+                                    <span class="block text-gradient mt-2 drop-shadow-sm">Perspectives.</span>
                                 </h1>
                                 <p class="mt-6 text-base text-slate-600 dark:text-slate-400 sm:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
                                     Access comprehensive daily newspapers in English, Bengali, and Hindi. Stay informed with unparalleled geopolitical insights curated for professionals and scholars.
                                 </p>
                                 
-                                <!-- Professional Pricing Badge -->
-                                <div class="mt-8 flex flex-col items-center justify-center">
+                                <!-- Audio Briefing Teaser Element -->
+                                <div class="mt-8 flex items-center justify-center gap-3 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-full pl-2 pr-5 py-2 border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-200/20 dark:shadow-none mx-auto w-max cursor-pointer hover:bg-white dark:hover:bg-slate-800 hover:scale-105 transition-all group" onclick="showToast('Interactive Audio Briefings unlock with Premium Access.')">
+                                    <button class="w-10 h-10 rounded-full bg-saffron group-hover:bg-orange-500 text-white flex items-center justify-center shadow-md transition-colors">
+                                        <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+                                    </button>
+                                    <div class="flex items-end gap-1 h-5 ml-1">
+                                        <div class="w-1.5 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.0s; height: 60%;"></div>
+                                        <div class="w-1.5 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.2s; height: 100%;"></div>
+                                        <div class="w-1.5 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.4s; height: 40%;"></div>
+                                        <div class="w-1.5 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.6s; height: 80%;"></div>
+                                        <div class="w-1.5 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.8s; height: 30%;"></div>
+                                    </div>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 ml-3">Listen: Sept 15 Briefing (2:45)</span>
+                                </div>
+
+                                <div class="mt-10 flex flex-col items-center justify-center">
                                     <div class="inline-flex flex-wrap items-center justify-center gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 px-6 py-4 text-sm shadow-sm backdrop-blur-md hover:shadow-md transition-shadow">
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="shield-check" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
@@ -419,29 +471,29 @@
                                         </div>
                                         <div class="h-5 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
                                         <span class="text-slate-500 dark:text-slate-400 line-through decoration-slate-400/50 decoration-2 text-base">Standard: ₹30/mo</span>
-                                        <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base">
+                                        <span class="font-bold text-saffron bg-orange-50 dark:bg-orange-900/30 px-3 py-1.5 rounded-md border border-orange-100 dark:border-orange-800/50 flex items-center gap-1.5 relative overflow-hidden group text-base shadow-inner">
                                             <span class="absolute inset-0 bg-white/40 dark:bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
                                             <i data-lucide="tag" class="w-4 h-4 relative z-10"></i> 
                                             <span class="relative z-10">Special Offer: ₹10/mo</span>
                                         </span>
                                     </div>
                                     <!-- Return Policy Banner -->
-                                    <div class="mt-4 flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-4 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800/50 shadow-sm">
+                                    <div class="mt-4 flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50/90 dark:bg-emerald-900/30 px-4 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800/50 shadow-sm backdrop-blur-sm">
                                         <i data-lucide="badge-check" class="w-4 h-4"></i>
                                         Backed by our 7-Day 50% Refund Policy
                                     </div>
                                 </div>
 
-                                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-                                    <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto">
-                                        <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:scale-[1.02]">
-                                            <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
-                                            Read Today (Sept 14)
+                                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto relative z-20">
+                                    <div class="rounded-lg shadow-xl shadow-slate-900/10 dark:shadow-none w-full sm:w-auto group">
+                                        <button onclick="handleReadToday()" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 md:text-lg transition-all transform hover:-translate-y-1 hover:shadow-2xl">
+                                            <i data-lucide="book-open" class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform"></i>
+                                            Read Today (Sept 15)
                                         </button>
                                     </div>
                                     <div class="mt-3 sm:mt-0 w-full sm:w-auto">
-                                        <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-base font-medium rounded-lg text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 backdrop-blur-sm md:text-lg transition-all shadow-sm group">
-                                            <i data-lucide="layout-grid" class="w-5 h-5 mr-2 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors"></i>
+                                        <button onclick="document.getElementById('archive-section').scrollIntoView({behavior: 'smooth'})" class="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-base font-bold rounded-lg text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 backdrop-blur-sm md:text-lg transition-all shadow-sm transform hover:-translate-y-1 hover:shadow-lg group">
+                                            <i data-lucide="layout-grid" class="w-5 h-5 mr-2 text-slate-400 group-hover:text-saffron transition-colors"></i>
                                             Explore Archive
                                         </button>
                                     </div>
@@ -452,7 +504,7 @@
                 </div>
             </div>
 
-            <div class="border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm py-8 reveal">
+            <div class="border-y border-slate-200 dark:border-slate-800/50 bg-white/60 dark:bg-slate-900/40 backdrop-blur-md py-8 reveal">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-400 mb-6">Read by scholars and professionals at</p>
                     <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 dark:opacity-40 dark:hover:opacity-100">
@@ -466,14 +518,15 @@
 
             <!-- Tutorial Video Section -->
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 reveal">
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700">
-                    <div class="text-center mb-8">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent dark:from-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="text-center mb-8 relative z-10">
                         <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-blue-200 dark:border-blue-800/50 mb-4 inline-block shadow-sm">Help Guide</span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold font-serif text-slate-900 dark:text-white">How to Get a Newspaper</h2>
                         <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base max-w-xl mx-auto">Watch this quick video tutorial to learn how to access your daily editions and navigate the archives effectively.</p>
                     </div>
                     
-                    <div class="relative w-full pt-[56.25%] rounded-2xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
+                    <div class="relative w-full pt-[56.25%] rounded-2xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 z-10 group-hover:shadow-lg transition-shadow">
                         <iframe 
                             class="absolute top-0 left-0 w-full h-full" 
                             src="https://www.youtube.com/embed/1YMSyaVNIU8?si=VchnQbHKTsaPEz1R" 
@@ -501,54 +554,54 @@
                     </p>
                 </div>
 
-                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10 group">
-                    <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl shadow-slate-300/40 dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-slate-200 dark:border-slate-700 overflow-hidden relative z-10 group transition-all">
                     
                     <!-- Advanced Filters & Tabs -->
-                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                    <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
                         <div class="flex items-center space-x-3">
-                            <div class="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 group-hover:border-saffron/50 transition-colors">
+                            <div class="p-2.5 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 group-hover:border-saffron/50 transition-colors">
                                 <i data-lucide="calendar-days" class="w-5 h-5 text-saffron"></i>
                             </div>
                             <span class="font-bold text-slate-800 dark:text-slate-200 text-lg">Timeline</span>
                         </div>
                         
                         <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <!-- Advanced Language Filter with working interactive buttons -->
+                            <!-- Advanced Language Filter -->
                             <div class="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-1 shadow-sm w-full sm:w-auto">
-                                <span class="pl-2 pr-1 text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Filter:</span>
-                                <button id="filter-eng" onclick="toggleLanguage('eng')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-saffron"></span> Eng
+                                <span class="pl-3 pr-2 text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Filter:</span>
+                                <button id="filter-eng" onclick="toggleLanguage('eng')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5 hover:shadow-sm">
+                                    <span class="w-2 h-2 rounded-full bg-saffron shadow-[0_0_5px_rgba(255,153,51,0.5)]"></span> Eng
                                 </button>
-                                <button id="filter-hin" onclick="toggleLanguage('hin')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-indiaGreen"></span> Hin
+                                <button id="filter-hin" onclick="toggleLanguage('hin')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5 hover:shadow-sm">
+                                    <span class="w-2 h-2 rounded-full bg-indiaGreen shadow-[0_0_5px_rgba(19,136,8,0.5)]"></span> Hin
                                 </button>
-                                <button id="filter-ben" onclick="toggleLanguage('ben')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-blue-500"></span> Ben
+                                <button id="filter-ben" onclick="toggleLanguage('ben')" class="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5 hover:shadow-sm">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]"></span> Ben
                                 </button>
                             </div>
                             
                             <!-- Month Tabs -->
-                            <div class="flex items-center p-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar shadow-inner w-full sm:w-auto" id="month-tabs">
+                            <div class="flex items-center p-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl overflow-x-auto no-scrollbar shadow-inner w-full sm:w-auto border border-slate-200/50 dark:border-slate-700/50" id="month-tabs">
                                 <!-- Populated via JS -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Dates Grid -->
-                    <div class="p-6 sm:p-8 md:p-10 bg-white dark:bg-slate-900 min-h-[400px] relative z-10">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 border-b border-slate-100 dark:border-slate-800/60 pb-6 gap-4">
+                    <div class="p-6 sm:p-8 md:p-10 bg-white/50 dark:bg-slate-900/50 min-h-[400px] relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 border-b border-slate-200/80 dark:border-slate-800/80 pb-6 gap-4">
                             <div>
                                 <h3 id="current-month-title" class="text-2xl sm:text-3xl font-serif font-bold text-slate-800 dark:text-slate-100">September 2026</h3>
-                                <p class="text-sm text-slate-500 mt-1">Select a date to view available editions.</p>
+                                <p class="text-sm text-slate-500 mt-1 font-medium">Select a date to view available editions.</p>
                             </div>
-                            <div class="flex gap-3 items-center flex-wrap">
-                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-saffron mr-2 shadow-[0_0_5px_rgba(255,153,51,0.5)]"></span>Available</span>
-                                <span class="flex items-center text-xs font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 mr-2"></span>Archived</span>
-                                <span class="text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"><span id="doc-count" class="text-saffron">0</span> Total</span>
+                            <div class="flex gap-4 items-center flex-wrap bg-white dark:bg-slate-800 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                                <span class="flex items-center text-xs font-bold text-slate-600 dark:text-slate-400"><span class="w-2.5 h-2.5 rounded-full bg-saffron mr-2 shadow-[0_0_8px_rgba(255,153,51,0.6)]"></span>Available</span>
+                                <span class="flex items-center text-xs font-bold text-slate-600 dark:text-slate-400"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-600 mr-2 border border-slate-400 dark:border-slate-500"></span>Archived</span>
+                                <div class="w-px h-4 bg-slate-300 dark:bg-slate-700"></div>
+                                <span class="text-sm font-black text-slate-800 dark:text-slate-200"><span id="doc-count" class="text-saffron">0</span> Total</span>
                             </div>
                         </div>
-                        <div id="dates-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6">
+                        <div id="dates-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-5 sm:gap-6">
                             <!-- Populated via JS -->
                         </div>
                     </div>
@@ -559,19 +612,19 @@
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 
                 <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-                    <span class="bg-slate-800 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-700 mb-4 inline-block">Value Proposition</span>
+                    <span class="bg-slate-800 text-saffron text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest border border-slate-700 mb-4 inline-block shadow-lg">Value Proposition</span>
                     <h3 class="mt-2 text-3xl font-extrabold text-white font-serif sm:text-4xl">Why Subscribe to Indian Geostrat?</h3>
                     
                     <div class="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Feature 1 -->
                         <div class="relative group h-full">
-                            <div class="absolute inset-0 bg-gradient-to-r from-saffron to-orange-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-saffron to-orange-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-3 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
-                                    <i data-lucide="globe-2" class="w-8 h-8 text-saffron"></i>
+                                    <i data-lucide="globe-2" class="w-8 h-8 text-saffron drop-shadow-md"></i>
                                 </div>
                                 <h4 class="text-xl font-bold text-white mb-4 font-serif">Trilingual Coverage</h4>
-                                <p class="text-base text-slate-400 leading-relaxed">
+                                <p class="text-base text-slate-400 leading-relaxed font-medium">
                                     Extensive reporting in English, Bengali, and Hindi ensuring you receive nuanced regional and international perspectives without language barriers.
                                 </p>
                             </div>
@@ -579,13 +632,13 @@
 
                         <!-- Feature 2 -->
                         <div class="relative group h-full">
-                            <div class="absolute inset-0 bg-gradient-to-r from-indiaGreen to-emerald-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-indiaGreen to-emerald-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-3 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300">
-                                    <i data-lucide="file-check-2" class="w-8 h-8 text-indiaGreen"></i>
+                                    <i data-lucide="file-check-2" class="w-8 h-8 text-indiaGreen drop-shadow-md"></i>
                                 </div>
                                 <h4 class="text-xl font-bold text-white mb-4 font-serif">High-Quality PDFs</h4>
-                                <p class="text-base text-slate-400 leading-relaxed">
+                                <p class="text-base text-slate-400 leading-relaxed font-medium">
                                     Crisp, high-resolution digital copies of daily newspapers delivered securely via Google Drive infrastructure for seamless reading across devices.
                                 </p>
                             </div>
@@ -593,14 +646,14 @@
 
                         <!-- Feature 3 -->
                         <div class="relative group sm:col-span-2 lg:col-span-1 h-full">
-                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <div class="relative h-full bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-2 duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                            <div class="relative h-full bg-slate-800/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-700 dark:border-slate-800 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-slate-800 transition-colors z-10 transform group-hover:-translate-y-3 duration-300">
                                 <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl border border-slate-600 flex items-center justify-center mb-8 shadow-inner shadow-white/10 group-hover:scale-110 transition-transform duration-300 relative">
-                                    <i data-lucide="shield-check" class="w-8 h-8 text-blue-400"></i>
-                                    <div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">Risk-Free</div>
+                                    <i data-lucide="shield-check" class="w-8 h-8 text-blue-400 drop-shadow-md"></i>
+                                    <div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase shadow-lg">Risk-Free</div>
                                 </div>
                                 <h4 class="text-xl font-bold text-white mb-4 font-serif">Affordable & Secure</h4>
-                                <p class="text-base text-slate-400 leading-relaxed mb-4">
+                                <p class="text-base text-slate-400 leading-relaxed mb-4 font-medium">
                                     Subscribe for just ₹10/month via convenient UPI. If you are not satisfied, utilize our <strong class="text-white">7-Day 50% Refund Guarantee</strong>, no questions asked.
                                 </p>
                             </div>
@@ -611,20 +664,24 @@
 
             <div class="py-20 bg-white dark:bg-slate-900 relative overflow-hidden reveal">
                 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-700 shadow-xl text-center transform hover:scale-[1.01] transition-transform duration-500">
-                        <div class="w-16 h-16 mx-auto bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-md mb-6 border border-slate-100 dark:border-slate-700">
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-700 shadow-xl text-center transform hover:scale-[1.01] hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute -top-20 -right-20 w-48 h-48 bg-saffron/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -bottom-20 -left-20 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="w-16 h-16 mx-auto bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-md mb-6 border border-slate-100 dark:border-slate-700 relative z-10">
                             <i data-lucide="mail-open" class="w-8 h-8 text-saffron"></i>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mb-4">Get Weekly Geopolitical Insights</h3>
-                        <p class="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto">Join 10,000+ subscribers receiving our free weekly recap of major regional developments directly in their inbox.</p>
+                        <h3 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mb-4 relative z-10">Get Weekly Geopolitical Insights</h3>
+                        <p class="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto relative z-10 font-medium">Join 10,000+ subscribers receiving our free weekly recap of major regional developments directly in their inbox.</p>
                         
-                        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); showToast('Subscribed successfully to the newsletter!'); this.reset();">
-                            <input type="email" placeholder="Enter your email address" required class="flex-grow px-5 py-3.5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm">
-                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-orange-500/20 whitespace-nowrap active:scale-95">
-                                Subscribe
+                        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3 relative z-10" onsubmit="event.preventDefault(); showToast('Subscribed successfully to the newsletter!'); this.reset();">
+                            <input type="email" placeholder="Enter your email address" required class="flex-grow px-5 py-3.5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm font-medium">
+                            <button type="submit" class="bg-saffron hover:bg-orange-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md shadow-orange-500/20 whitespace-nowrap active:scale-95 flex items-center justify-center gap-2">
+                                <span>Subscribe</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                         </form>
-                        <p class="text-xs text-slate-400 mt-4">No spam. Unsubscribe anytime.</p>
+                        <p class="text-xs font-semibold text-slate-400 mt-5 relative z-10">No spam. Unsubscribe anytime.</p>
                     </div>
                 </div>
             </div>
@@ -639,7 +696,7 @@
             </div>
             
             <div class="prose prose-lg md:prose-xl dark:prose-invert mx-auto font-sans text-slate-600 dark:text-slate-300 leading-relaxed reveal">
-                <blockquote class="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-16 text-center italic border-none px-0 leading-tight">
+                <blockquote class="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-16 text-center italic border-none px-0 leading-tight bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700/50">
                     "Bridging the gap between regional developments and global geopolitical shifts."
                 </blockquote>
                 
@@ -653,16 +710,16 @@
                             By curating premium daily newspapers in English, Bengali, and Hindi, we provide our readers with a holistic view of regional, national, and international affairs, empowering informed decision-making.
                         </p>
                     </div>
-                    <div class="bg-slate-100 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-                        <i data-lucide="target" class="w-12 h-12 text-saffron mb-6"></i>
+                    <div class="bg-gradient-to-br from-slate-100 to-white dark:from-slate-800/80 dark:to-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow">
+                        <i data-lucide="target" class="w-12 h-12 text-saffron mb-6 drop-shadow-sm"></i>
                         <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Core Objective</h4>
-                        <p class="text-base">To provide uninterrupted, clutter-free access to daily printed knowledge, enabling deep research and comprehensive daily awareness for our subscribers.</p>
+                        <p class="text-base font-medium">To provide uninterrupted, clutter-free access to daily printed knowledge, enabling deep research and comprehensive daily awareness for our subscribers.</p>
                     </div>
                 </div>
 
                 <div class="my-16 border-t border-slate-200 dark:border-slate-800 pt-16 reveal">
                     <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-6 text-center">Editorial Standards</h3>
-                    <p class="mb-6 text-center max-w-3xl mx-auto">
+                    <p class="mb-6 text-center max-w-3xl mx-auto font-medium">
                         Our platform ensures that you receive uncompromised, high-fidelity digital replicas of daily editions. We maintain a strict focus on providing organized, easily accessible archives without the clutter of traditional news aggregators or distracting advertisements.
                     </p>
                 </div>
@@ -675,7 +732,7 @@
                         </div>
                         <div>
                             <h3 class="text-3xl font-bold font-serif text-slate-900 dark:text-white m-0">The Subscription Model</h3>
-                            <p class="text-slate-500 mt-2 text-base">Transparent pricing with absolute security.</p>
+                            <p class="text-slate-500 mt-2 text-base font-medium">Transparent pricing with absolute security.</p>
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 gap-8">
@@ -687,13 +744,13 @@
                                 This modest monthly contribution supports our daily curation operations while ensuring that vital geopolitical resources remain financially accessible to students, academic researchers, and professionals alike.
                             </p>
                         </div>
-                        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 border border-emerald-200 dark:border-emerald-800/50">
+                        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 border border-emerald-200 dark:border-emerald-800/50 shadow-inner">
                             <h4 class="text-lg font-bold text-emerald-800 dark:text-emerald-400 mb-3 flex items-center gap-2">
                                 <i data-lucide="shield-check" class="w-5 h-5"></i>
                                 Risk-Free Guarantee
                             </h4>
-                            <p class="text-base text-emerald-700 dark:text-emerald-500/90 mb-0">
-                                We stand by the quality of our curation. If you find the service unsatisfactory, we offer a comprehensive <strong class="text-emerald-900 dark:text-emerald-300">7-Day 50% Return Policy</strong>. Contact our support within the first week of your subscription to receive a hassle-free partial refund, guaranteeing a risk-free trial of our premium features.
+                            <p class="text-base text-emerald-700 dark:text-emerald-500/90 mb-0 font-medium">
+                                We stand by the quality of our curation. If you find the service unsatisfactory, we offer a comprehensive <strong class="text-emerald-900 dark:text-emerald-300">7-Day 50% Return Policy</strong>. Contact our support within the first week of your subscription to receive a hassle-free partial refund.
                             </p>
                         </div>
                     </div>
@@ -706,36 +763,36 @@
             <div class="text-center mb-16 reveal">
                 <span class="bg-orange-100 dark:bg-orange-900/30 text-saffron text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-orange-200 dark:border-orange-800/50 mb-4 inline-block shadow-sm">Get in Touch</span>
                 <h1 class="mt-4 text-4xl font-extrabold font-serif text-slate-900 dark:text-white sm:text-5xl">Contact Us</h1>
-                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription or refund policy.</p>
+                <p class="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium">We'd love to hear from you. Reach out with inquiries, feedback, or support requests regarding your subscription or refund policy.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-12 reveal">
                 <!-- Contact Info -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm hover:shadow-lg transition-shadow p-8 border border-slate-200 dark:border-slate-800 h-full relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -z-10"></div>
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-md hover:shadow-xl transition-shadow p-8 border border-slate-200 dark:border-slate-800 h-full relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
                         <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-8">Headquarters</h3>
                         <ul class="space-y-8">
-                            <li class="flex items-start group">
-                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all shadow-sm">
-                                    <i data-lucide="map-pin" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
+                            <li class="flex items-start group/item">
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover/item:border-saffron group-hover/item:bg-orange-50 dark:group-hover/item:bg-orange-900/20 transition-all shadow-sm">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover/item:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
                                     <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Address</h4>
-                                    <span class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                                    <span class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm font-medium">
                                         Street No. 18, DN Block, Sector V,<br>
                                         Salt Lake City, Calcutta,<br>
                                         West Bengal, 700091
                                     </span>
                                 </div>
                             </li>
-                            <li class="flex items-start group">
-                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover:border-saffron group-hover:bg-orange-50 dark:group-hover:bg-orange-900/20 transition-all shadow-sm">
-                                    <i data-lucide="mail" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-saffron transition-colors"></i>
+                            <li class="flex items-start group/item">
+                                <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl mr-5 flex-shrink-0 border border-slate-200 dark:border-slate-700 group-hover/item:border-saffron group-hover/item:bg-orange-50 dark:group-hover/item:bg-orange-900/20 transition-all shadow-sm">
+                                    <i data-lucide="mail" class="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover/item:text-saffron transition-colors"></i>
                                 </div>
                                 <div class="pt-1">
                                     <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Email</h4>
-                                    <a href="mailto:indiangeostrat@gmail.com" class="text-slate-600 dark:text-slate-400 hover:text-saffron transition-colors text-sm">
+                                    <a href="mailto:indiangeostrat@gmail.com" class="text-slate-600 dark:text-slate-400 hover:text-saffron transition-colors text-sm font-medium">
                                         indiangeostrat@gmail.com
                                     </a>
                                 </div>
@@ -746,40 +803,40 @@
 
                 <!-- Contact Form -->
                 <div class="lg:col-span-3">
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none p-8 sm:p-10 border border-slate-200 dark:border-slate-800">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] p-8 sm:p-10 border border-slate-200 dark:border-slate-800 relative overflow-hidden">
                         <h3 class="text-2xl font-bold font-serif text-slate-900 dark:text-white mb-2">Send a Message</h3>
-                        <p class="text-slate-500 dark:text-slate-400 mb-8 text-sm">Fill out the form below and our team will get back to you promptly.</p>
+                        <p class="text-slate-500 dark:text-slate-400 mb-8 text-sm font-medium">Fill out the form below and our team will get back to you promptly.</p>
                         
-                        <form id="contact-form" class="space-y-6" onsubmit="handleContactSubmit(event)">
+                        <form id="contact-form" class="space-y-6 relative z-10" onsubmit="handleContactSubmit(event)">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
-                                    <input type="text" required placeholder="John Doe" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                                    <input type="text" required placeholder="John Doe" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 font-medium">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
-                                    <input type="email" required placeholder="john@example.com" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                                    <input type="email" required placeholder="john@example.com" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 font-medium">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Subject</label>
-                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600">
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Subject</label>
+                                <input type="text" required placeholder="How can we help?" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 font-medium">
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Message</label>
-                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600"></textarea>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Message</label>
+                                <textarea rows="5" required placeholder="Write your message here..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none transition-all dark:text-white resize-none placeholder-slate-400 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 font-medium"></textarea>
                             </div>
                             <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3.5 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 mt-2 flex items-center justify-center gap-2">
                                 <span>Send Message</span>
                                 <i data-lucide="send" class="w-4 h-4"></i>
                             </button>
                         </form>
-                        <div id="contact-success" class="hidden mt-6 p-6 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-xl border border-green-200 dark:border-green-800/50 flex items-center">
-                            <div class="p-2 bg-green-100 dark:bg-green-800/50 rounded-full mr-4">
+                        <div id="contact-success" class="hidden mt-6 p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-xl border border-green-200 dark:border-green-800/50 flex items-center shadow-inner relative z-10">
+                            <div class="p-2 bg-green-100 dark:bg-green-800/50 rounded-full mr-4 border border-green-200 dark:border-green-700">
                                 <i data-lucide="check" class="w-6 h-6 flex-shrink-0"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg mb-1">Message Received!</h4>
+                                <h4 class="font-bold text-lg mb-0.5">Message Received!</h4>
                                 <span class="font-medium text-sm opacity-90">We will reply to your provided email address shortly.</span>
                             </div>
                         </div>
@@ -787,27 +844,27 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm reveal">
-                <div class="flex items-center space-x-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md hover:shadow-lg transition-shadow reveal">
+                <div class="flex items-center space-x-4 text-sm font-bold text-slate-700 dark:text-slate-300">
                     <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                         <i data-lucide="share-2" class="w-5 h-5 text-saffron"></i>
                     </div>
                     <span class="text-base">Connect with us on official platforms:</span>
                 </div>
                 <div class="flex flex-wrap justify-center items-center gap-3">
-                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
+                    <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                         <i data-lucide="youtube" class="fa-brands fa-youtube text-red-500 text-lg"></i>
                         <span>YouTube</span>
                     </a>
-                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
+                    <a href="https://x.com/IndianGeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                         <i data-lucide="twitter" class="fa-brands fa-x-twitter text-lg"></i>
                         <span>X</span>
                     </a>
-                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
+                    <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                         <i data-lucide="instagram" class="fa-brands fa-instagram text-pink-500 text-lg"></i>
                         <span>Instagram</span>
                     </a>
-                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md">
+                    <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                         <i data-lucide="linkedin" class="fa-brands fa-linkedin-in text-blue-500 text-lg"></i>
                         <span>LinkedIn</span>
                     </a>
@@ -816,8 +873,8 @@
         </section>
     </main>
 
-    <button id="scroll-to-top" class="fixed bottom-6 right-6 p-3 bg-saffron hover:bg-orange-500 text-white rounded-full shadow-2xl z-[60] translate-y-24 opacity-0 transition-all duration-300 hover:scale-110 active:scale-95" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to top">
-        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 p-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[60] translate-y-24 opacity-0 transition-all duration-500 hover:scale-110 active:scale-95 border border-slate-700 dark:border-slate-200 group" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to top">
+        <i data-lucide="arrow-up" class="w-5 h-5 group-hover:-translate-y-1 transition-transform"></i>
     </button>
 
     <footer class="bg-slate-900 dark:bg-[#050505] border-t border-slate-800 pt-16 pb-8 text-slate-300">
@@ -827,42 +884,42 @@
                 <!-- Branding & Subscription -->
                 <div class="md:col-span-5">
                     <div class="flex items-center mb-6 cursor-pointer group" onclick="navigate('home')">
-                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover group-hover:border-saffron transition-colors" onerror="this.src='https://placehold.co/100x100/FF9933/FFFFFF?text=IG'">
+                        <img src="Gemini_Generated_Image_.jpg" alt="Logo" class="h-12 w-12 rounded-lg mr-4 border border-slate-700 object-cover shadow-lg group-hover:border-saffron transition-colors" onerror="this.src='https://placehold.co/100x100/FF9933/FFFFFF?text=IG'">
                         <span class="font-serif font-black text-2xl tracking-tight text-white group-hover:text-saffron transition-colors">INDIAN GEOSTRAT</span>
                     </div>
-                    <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-sm">
+                    <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-sm font-medium">
                         Curating regional, national, and international newspapers daily. Premium geopolitical insights, made accessible to all. Stay informed with our trilingual coverage.
                     </p>
                     
-                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm shadow-inner relative overflow-hidden">
-                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-saffron/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="mb-8 rounded-2xl border border-slate-700/60 bg-slate-800/40 p-5 max-w-sm backdrop-blur-sm shadow-inner relative overflow-hidden group">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-saffron/10 rounded-full blur-xl pointer-events-none group-hover:bg-saffron/20 transition-colors"></div>
                         <div class="flex items-center justify-between mb-3 relative z-10">
                             <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Premium Access</p>
                             <span class="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]" title="7-Day Refund Policy Active"></span>
                         </div>
                         <div class="flex items-baseline gap-3 mb-2 relative z-10">
-                            <span class="text-sm text-slate-500 line-through decoration-slate-600">₹30/mo</span>
-                            <span class="text-2xl font-bold text-white">₹10<span class="text-sm text-slate-400 font-normal">/mo</span></span>
+                            <span class="text-sm text-slate-500 line-through decoration-slate-600 font-medium">₹30/mo</span>
+                            <span class="text-2xl font-black text-white">₹10<span class="text-sm text-slate-400 font-normal">/mo</span></span>
                         </div>
-                        <p class="text-[10px] text-emerald-400/80 mb-5 flex items-center relative z-10">
+                        <p class="text-[10px] font-bold text-emerald-400/90 mb-5 flex items-center relative z-10">
                             <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i> Includes 7-Day 50% Refund Guarantee
                         </p>
-                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-all shadow-lg shadow-orange-500/20 active:scale-95 relative z-10">Subscribe Now</button>
+                        <button onclick="openAuthModal('signup')" class="w-full rounded-xl bg-saffron px-4 py-3.5 text-sm font-bold text-white hover:bg-orange-500 transition-all shadow-lg shadow-orange-500/20 active:scale-95 relative z-10">Subscribe Now</button>
                     </div>
                 </div>
 
                 <!-- Contact & Links -->
                 <div class="md:col-span-3">
                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-6">Contact Us</h3>
-                    <ul class="space-y-5 text-sm text-slate-400">
+                    <ul class="space-y-5 text-sm text-slate-400 font-medium">
                         <li class="flex items-start group">
-                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 mt-0.5 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors">
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 mt-0.5 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors shadow-sm">
                                 <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0 group-hover:text-saffron transition-colors"></i>
                             </div>
                             <span class="leading-relaxed group-hover:text-slate-300 transition-colors">Street No. 18, DN Block, Sector V,<br>Salt Lake City, Calcutta,<br>West Bengal, 700091</span>
                         </li>
                         <li class="flex items-center group">
-                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors">
+                            <div class="p-1.5 bg-slate-800 rounded-md mr-3 border border-slate-700 group-hover:border-saffron group-hover:bg-slate-700 transition-colors shadow-sm">
                                 <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-300 flex-shrink-0 group-hover:text-saffron transition-colors"></i>
                             </div>
                             <a href="mailto:indiangeostrat@gmail.com" class="hover:text-saffron transition-colors">indiangeostrat@gmail.com</a>
@@ -871,16 +928,16 @@
 
                     <h3 class="text-sm font-bold text-white tracking-widest uppercase mt-10 mb-6">Follow Us</h3>
                     <div class="flex items-center gap-3">
-                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-500 transition-all border border-slate-700/60 hover:border-red-500/50">
+                        <a href="https://www.youtube.com/@IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-500 transition-all border border-slate-700/60 hover:border-red-500/50 shadow-sm">
                             <i class="fa-brands fa-youtube w-4 h-4"></i>
                         </a>
-                        <a href="https://x.com/IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500">
+                        <a href="https://x.com/IndianGeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700/60 hover:border-slate-500 shadow-sm">
                             <i class="fa-brands fa-x-twitter w-4 h-4"></i>
                         </a>
-                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-pink-500/20 text-slate-400 hover:text-pink-500 transition-all border border-slate-700/60 hover:border-pink-500/50">
+                        <a href="https://www.instagram.com/indiangeostrat" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-pink-500/20 text-slate-400 hover:text-pink-500 transition-all border border-slate-700/60 hover:border-pink-500/50 shadow-sm">
                             <i class="fa-brands fa-instagram w-4 h-4"></i>
                         </a>
-                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-blue-500/20 text-slate-400 hover:text-blue-500 transition-all border border-slate-700/60 hover:border-blue-500/50">
+                        <a href="https://linkedin.com/in/indian-geostrat-00918a245" target="_blank" class="p-2.5 rounded-xl bg-slate-800 hover:bg-blue-500/20 text-slate-400 hover:text-blue-500 transition-all border border-slate-700/60 hover:border-blue-500/50 shadow-sm">
                             <i class="fa-brands fa-linkedin-in w-4 h-4"></i>
                         </a>
                     </div>
@@ -890,13 +947,13 @@
                 <div class="md:col-span-4">
                      <h3 class="text-sm font-bold text-white tracking-widest uppercase mb-6">Location</h3>
                     <div class="rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-800 h-52 shadow-inner group relative">
-                        <div class="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors pointer-events-none z-10"></div>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="grayscale group-hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-transparent transition-colors pointer-events-none z-10 duration-500"></div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.732763863171!2d88.43051019999997!3d22.578551899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a5444fffff%3A0xd512774a4828aa7a!2sTCS%20Gitobitan!5e1!3m2!1sen!2sin!4v1787582888411!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"></iframe>
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+            <div class="border-t border-slate-800/80 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 font-medium">
                 <p>&copy; 2026 Indian Geostrat. All rights reserved.</p>
                 <div class="mt-4 md:mt-0 space-x-6">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
@@ -908,27 +965,27 @@
     </footer>
 
     <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-2xl shadow-slate-900/20 transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center w-full max-w-sm border border-slate-700 dark:border-slate-200">
-        <i data-lucide="info" class="w-5 h-5 mr-3 text-saffron flex-shrink-0"></i>
-        <span id="toast-message" class="font-medium text-sm leading-tight text-center w-full"></span>
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 dark:bg-white/95 backdrop-blur-md text-white dark:text-slate-900 px-6 py-4 rounded-xl shadow-[0_15px_30px_rgba(0,0,0,0.4)] dark:shadow-[0_15px_30px_rgba(255,255,255,0.2)] transform translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center w-full max-w-sm border border-slate-700/50 dark:border-slate-200/50">
+        <i data-lucide="info" class="w-5 h-5 mr-3 text-saffron flex-shrink-0 drop-shadow-sm"></i>
+        <span id="toast-message" class="font-bold text-sm leading-tight text-center w-full"></span>
     </div>
 
     <!-- Full-Screen Search Modal -->
-    <div id="search-modal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/60 search-overlay z-[80] hidden opacity-0 transition-opacity duration-300 flex items-start justify-center pt-24 px-4">
-        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform -translate-y-4 transition-transform duration-300 border border-slate-200 dark:border-slate-700" id="search-container">
+    <div id="search-modal" class="fixed inset-0 bg-slate-900/50 dark:bg-black/70 search-overlay z-[80] hidden opacity-0 transition-opacity duration-300 flex items-start justify-center pt-24 px-4">
+        <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform -translate-y-4 transition-transform duration-300 border border-slate-200/50 dark:border-slate-700/50" id="search-container">
             <div class="relative flex items-center p-4 border-b border-slate-100 dark:border-slate-800">
                 <i data-lucide="search" class="w-6 h-6 text-slate-400 absolute left-6"></i>
-                <input type="text" id="search-input" placeholder="Search archives by date or topic (e.g., September 14)..." class="w-full pl-12 pr-12 py-3 bg-transparent text-lg focus:outline-none dark:text-white placeholder-slate-400" autofocus>
-                <button onclick="toggleSearchModal()" class="absolute right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <input type="text" id="search-input" placeholder="Search archives by date or topic (e.g., September 15)..." class="w-full pl-14 pr-12 py-4 bg-transparent text-lg focus:outline-none dark:text-white placeholder-slate-400 font-medium" autofocus>
+                <button onclick="toggleSearchModal()" class="absolute right-4 p-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <div class="p-4 bg-slate-50 dark:bg-slate-900/50 max-h-[60vh] overflow-y-auto hidden" id="search-results">
+            <div class="p-4 bg-slate-50/50 dark:bg-slate-900/50 max-h-[60vh] overflow-y-auto hidden" id="search-results">
                 <!-- Search results injected here -->
-                <p class="text-sm text-slate-500 text-center py-8">Press Enter to search...</p>
+                <p class="text-sm font-medium text-slate-500 text-center py-8">Press Enter to search...</p>
             </div>
-            <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center text-xs text-slate-400">
-                <span class="flex items-center gap-1">Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-slate-500 dark:text-slate-400">ESC</kbd> to close</span>
+            <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center text-xs font-medium text-slate-400">
+                <span class="flex items-center gap-1.5">Press <kbd class="px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-slate-500 dark:text-slate-400 font-bold shadow-sm">ESC</kbd> to close</span>
             </div>
         </div>
     </div>
@@ -938,7 +995,7 @@
         
         <!-- Auth Modal -->
         <div id="modal-auth" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-4xl w-full transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative overflow-hidden max-h-[95vh] overflow-y-auto">
-            <button onclick="closeModals()" class="absolute top-4 right-4 z-20 p-2 bg-white/10 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors backdrop-blur-sm shadow-sm">
+            <button onclick="closeModals()" class="absolute top-4 right-4 z-20 p-2.5 bg-white/10 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors backdrop-blur-md shadow-sm border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <div class="grid md:grid-cols-[0.9fr_1.1fr] h-full">
@@ -946,8 +1003,8 @@
                 <div class="bg-slate-950 text-white p-8 sm:p-12 flex flex-col justify-between relative overflow-hidden h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-saffron/20 to-transparent opacity-30"></div>
                     <!-- decorative circles -->
-                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-saffron/10 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-saffron/15 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
                     
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-12">
@@ -957,30 +1014,30 @@
                                 <p class="font-serif text-xl font-bold">Premium Access</p>
                             </div>
                         </div>
-                        <h3 class="font-serif text-3xl sm:text-4xl font-bold leading-tight mb-5">Unlock geopolitical clarity.</h3>
+                        <h3 class="font-serif text-3xl sm:text-4xl font-extrabold leading-tight mb-5">Unlock geopolitical clarity.</h3>
                         <p class="text-sm leading-relaxed text-slate-300 font-medium">Create an account to manage your subscription, payments, and gain unlimited access to our entire trilingual PDF archive.</p>
                     </div>
                     
                     <div class="mt-12 space-y-4 relative z-10">
-                        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md shadow-inner">
                             <div class="flex justify-between items-center mb-3">
                                 <p class="text-xs font-bold uppercase tracking-widest text-saffron flex items-center"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Current Promotion</p>
                             </div>
                             <div class="flex items-baseline gap-3">
-                                <span class="text-sm text-slate-400 line-through">Standard ₹30/mo</span>
-                                <span class="text-2xl font-bold text-white">Offer ₹10/mo</span>
+                                <span class="text-sm text-slate-400 line-through font-medium">Standard ₹30/mo</span>
+                                <span class="text-2xl font-black text-white">Offer ₹10/mo</span>
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
-                                <p class="text-2xl font-bold text-saffron">3</p>
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors shadow-sm">
+                                <p class="text-2xl font-black text-saffron">3</p>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Languages</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors shadow-sm">
                                 <p class="text-2xl font-bold text-emerald-400 flex justify-center"><i data-lucide="shield-check" class="w-6 h-6"></i></p>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Guarantee</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                            <div class="rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors shadow-sm">
                                 <p class="text-2xl font-bold text-saffron flex justify-center"><i data-lucide="file-check-2" class="w-6 h-6"></i></p>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2">Archive</p>
                             </div>
@@ -992,16 +1049,16 @@
                 <div class="p-8 sm:p-12 bg-white dark:bg-slate-900 flex flex-col justify-center">
                     <div class="mb-8">
                         <p id="auth-eyebrow" class="text-xs font-bold uppercase tracking-widest text-saffron mb-2">Subscriber login</p>
-                        <h3 id="auth-title" class="text-3xl font-serif font-bold text-slate-900 dark:text-white">Welcome back</h3>
-                        <p id="auth-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-2">Sign in to manage your newspaper subscription.</p>
+                        <h3 id="auth-title" class="text-3xl font-serif font-extrabold text-slate-900 dark:text-white">Welcome back</h3>
+                        <p id="auth-subtitle" class="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2">Sign in to manage your newspaper subscription.</p>
                     </div>
 
-                    <div class="mb-8 grid grid-cols-2 rounded-xl bg-slate-100 dark:bg-slate-800 p-1.5 text-sm font-semibold border border-slate-200 dark:border-slate-700/50">
+                    <div class="mb-8 grid grid-cols-2 rounded-xl bg-slate-100 dark:bg-slate-800 p-1.5 text-sm font-bold border border-slate-200 dark:border-slate-700/50 shadow-inner">
                         <button id="auth-tab-login" type="button" onclick="setAuthMode('login')" class="auth-tab-active rounded-lg py-2.5 transition-all">Log in</button>
                         <button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')" class="rounded-lg py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Sign up</button>
                     </div>
 
-                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 font-semibold shadow-sm active:scale-[0.98]">
+                    <button onclick="mockLogin('google')" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 font-bold shadow-sm hover:shadow-md active:scale-[0.98]">
                         <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
                         <span id="google-auth-label">Continue with Google</span>
                     </button>
@@ -1014,37 +1071,37 @@
 
                     <form onsubmit="event.preventDefault(); mockLogin('email');" class="mt-4 space-y-5">
                         <div id="signup-name-field" class="hidden">
-                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-name">Full name</label>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-name">Full name</label>
                             <div class="relative">
                                 <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                                <input id="auth-name" type="text" autocomplete="name" placeholder="John Doe" class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
+                                <input id="auth-name" type="text" autocomplete="name" placeholder="John Doe" class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-email">Email address</label>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5" for="auth-email">Email address</label>
                             <div class="relative">
                                 <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                                <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
+                                <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
                             </div>
                         </div>
                         <div>
                             <div class="mb-1.5 flex items-center justify-between">
-                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300" for="auth-password">Password</label>
-                                <button id="forgot-password-link" type="button" class="text-xs font-semibold text-saffron hover:text-orange-500 transition-colors">Forgot password?</button>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300" for="auth-password">Password</label>
+                                <button id="forgot-password-link" type="button" class="text-xs font-bold text-saffron hover:text-orange-500 transition-colors">Forgot password?</button>
                             </div>
                             <div class="relative">
                                 <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                                <input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400">
+                                <input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-saffron focus:border-transparent outline-none dark:text-white transition-all placeholder-slate-400 font-medium">
                             </div>
                         </div>
                         <div class="flex items-start gap-3 pt-2">
-                            <input id="auth-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-saffron focus:ring-saffron bg-slate-50 dark:bg-slate-800 cursor-pointer">
-                            <label id="auth-consent-label" for="auth-consent" class="text-sm text-slate-500 dark:text-slate-400 cursor-pointer select-none">Keep me signed in on this device.</label>
+                            <input id="auth-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-saffron focus:ring-saffron bg-slate-50 dark:bg-slate-800 cursor-pointer transition-colors">
+                            <label id="auth-consent-label" for="auth-consent" class="text-sm font-medium text-slate-500 dark:text-slate-400 cursor-pointer select-none">Keep me signed in on this device.</label>
                         </div>
-                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg mt-2 text-base active:scale-[0.98]">
+                        <button id="auth-submit-label" type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl mt-2 text-base active:scale-[0.98]">
                             Log in
                         </button>
-                        <p class="text-center text-sm text-slate-500 dark:text-slate-400 pt-4">
+                        <p class="text-center text-sm font-medium text-slate-500 dark:text-slate-400 pt-4">
                             <span id="auth-switch-copy">New to Indian Geostrat?</span>
                             <button id="auth-switch-button" type="button" onclick="setAuthMode('signup')" class="font-bold text-saffron hover:text-orange-500 transition-colors ml-1">Create an account</button>
                         </p>
@@ -1053,26 +1110,26 @@
             </div>
         </div>
 
-        <!-- Payment Modal (Updated with max-h and overflow for mobile scrolling) -->
+        <!-- Payment Modal -->
         <div id="modal-payment" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300 hidden border border-slate-200 dark:border-slate-800 relative max-h-[95vh] overflow-y-auto">
-            <button onclick="closeModals()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 bg-slate-100 dark:bg-slate-800 rounded-full transition-colors">
+            <button onclick="closeModals()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 bg-slate-100 dark:bg-slate-800 rounded-full transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             
             <div class="text-center mb-6 mt-2">
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-900/30 text-saffron mb-5 border border-orange-100 dark:border-orange-800/50 shadow-inner">
-                    <i data-lucide="unlock" class="w-8 h-8"></i>
+                    <i data-lucide="unlock" class="w-8 h-8 drop-shadow-sm"></i>
                 </div>
-                <h3 class="text-2xl font-serif font-bold text-slate-900 dark:text-white">Activate Premium</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 px-4 leading-relaxed">Secure full access to our curated archive. Pay via UPI below.</p>
+                <h3 class="text-2xl font-serif font-extrabold text-slate-900 dark:text-white">Activate Premium</h3>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 px-4 leading-relaxed">Secure full access to our curated archive. Pay via UPI below.</p>
             </div>
 
             <!-- Refund Policy Notice inside Payment Modal -->
-            <div class="mb-5 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-3 flex items-start gap-3">
+            <div class="mb-5 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-3.5 flex items-start gap-3 shadow-inner">
                 <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"></i>
                 <div>
                     <h4 class="text-sm font-bold text-emerald-800 dark:text-emerald-400">7-Day 50% Refund Guarantee</h4>
-                    <p class="text-xs text-emerald-700 dark:text-emerald-500/90 mt-0.5 leading-snug">Risk-free subscription. Contact us within 7 days if unsatisfied.</p>
+                    <p class="text-xs font-medium text-emerald-700 dark:text-emerald-500/90 mt-1 leading-snug">Risk-free subscription. Contact us within 7 days if unsatisfied.</p>
                 </div>
             </div>
 
@@ -1080,20 +1137,20 @@
                 <div class="absolute top-0 right-0 p-2 opacity-10"><i data-lucide="zap" class="w-12 h-12 text-saffron"></i></div>
                 <p class="text-xs font-bold uppercase tracking-widest text-orange-600 dark:text-orange-400 relative z-10">Limited Offer</p>
                 <div class="mt-3 flex items-baseline justify-center gap-3 relative z-10">
-                    <span class="text-sm text-slate-400 line-through decoration-slate-400/50 font-medium">₹30/mo</span>
+                    <span class="text-sm text-slate-400 line-through decoration-slate-400/50 font-bold">₹30/mo</span>
                     <span class="text-4xl font-black text-slate-900 dark:text-white">₹10<span class="text-lg font-bold text-slate-500 dark:text-slate-400">/mo</span></span>
                 </div>
             </div>
 
             <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 mb-8 text-center flex flex-col items-center shadow-inner">
-                <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm mb-5">
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm mb-5 hover:scale-105 transition-transform">
                     <img src="image_ca9d6d.jpg" alt="UPI QR Code" class="w-40 h-40 rounded-lg" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'">
                 </div>
-                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Scan to pay via any UPI app</p>
-                <div class="flex items-center bg-white dark:bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-saffron hover:ring-1 hover:ring-saffron transition-all group shadow-sm w-full justify-between" onclick="copyUPI()">
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Scan to pay via any UPI app</p>
+                <div class="flex items-center bg-white dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-saffron hover:ring-1 hover:ring-saffron transition-all group shadow-sm w-full justify-between" onclick="copyUPI()">
                     <div class="flex items-center gap-3">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="UPI" class="h-4 object-contain">
-                        <span id="upi-id" class="text-sm font-mono text-slate-800 dark:text-slate-200 font-bold">indiangeostrat@okicici</span>
+                        <span id="upi-id" class="text-sm font-mono text-slate-800 dark:text-slate-200 font-bold tracking-wide">indiangeostrat@okicici</span>
                     </div>
                     <i data-lucide="copy" class="w-4 h-4 text-slate-400 group-hover:text-saffron transition-colors"></i>
                 </div>
@@ -1104,7 +1161,7 @@
                     <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                     <span>I have completed payment</span>
                 </button>
-                <p class="text-xs text-center text-slate-500 dark:text-slate-400">
+                <p class="text-xs font-medium text-center text-slate-500 dark:text-slate-400">
                     Click above after the transaction is successful to instantly activate access.
                 </p>
             </div>
@@ -1116,7 +1173,7 @@
         // CONFIGURATION & STATE
         // ==========================================
         
-        // Setup Date Links - Updated with new September 14, 2026 link
+        // Setup Date Links - Updated to September 15, 2026
         const SPECIFIC_DATE_LINKS = {
             'August': {
                 31: "https://drive.google.com/drive/folders/10Y4z7LsfM3Kbsb7BKORcACVYRZPHq87I?usp=drive_link",
@@ -1131,12 +1188,13 @@
                 2: "https://drive.google.com/drive/folders/1VhyTjS_IKcoOmd9p-Il2wNz7WR8tED_i?usp=drive_link",
                 12: "https://drive.google.com/drive/folders/115K7eZCwSWNImqOKfY5xFTvMC3qmAX0A?usp=drive_link", 
                 13: "https://drive.google.com/drive/folders/16Xcv5uf5ihGSAa1eHoraVBBtKNxmUBmi?usp=drive_link",
-                14: "https://drive.google.com/drive/folders/194xa1RjfoWh9G3dqpGii6vp2oXjn701u" // Today's Newspaper Link (Sept 14, 2026)
+                14: "https://drive.google.com/drive/folders/194xa1RjfoWh9G3dqpGii6vp2oXjn701u",
+                15: "https://drive.google.com/drive/folders/1cFvqwMuoXKoRnsEpgjaGbiIJNYyDEB_I?usp=drive_link" // Today's Link (Sept 15)
             }
         };
 
         const CONFIG = {
-            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][14], 
+            TODAYS_NEWSPAPER_LINK: SPECIFIC_DATE_LINKS['September'][15], 
             ARCHIVE_FALLBACK_LINK: "https://drive.google.com/drive/folders/1U1QpLOE2BYQ7E00MIEyGSkva1Z5CxGCc?usp=drive_link",
             UPI_ID: "indiangeostrat@okicici"
         };
@@ -1148,8 +1206,136 @@
             pendingLink: null,
             authMode: 'login',
             isSearchOpen: false,
-            activeLanguages: ['eng', 'hin', 'ben'] // State for interactive language filters
+            activeLanguages: ['eng', 'hin', 'ben'] 
         };
+
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false };
+            const clockEl = document.getElementById('ist-clock');
+            if (clockEl) {
+                clockEl.innerText = now.toLocaleTimeString('en-GB', options) + ' IST';
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+
+        // Interactive Canvas Network Setup
+        function initNetworkCanvas() {
+            const canvas = document.getElementById('network-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            
+            const mouse = { x: null, y: null, radius: 100 };
+            
+            function resize() {
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
+            }
+            
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Track mouse movement over the section
+            canvas.parentElement.addEventListener('mousemove', (e) => {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+            canvas.parentElement.addEventListener('mouseleave', () => {
+                mouse.x = null; mouse.y = null;
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.baseX = this.x;
+                    this.baseY = this.y;
+                    this.density = (Math.random() * 30) + 1;
+                    this.color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.3)' : 'rgba(15,23,42,0.15)';
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                update() {
+                    // Update color based on theme occasionally
+                    this.color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(255,153,51,0.5)';
+                    
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let forceDirectionX = dx / distance;
+                    let forceDirectionY = dy / distance;
+                    let maxDistance = mouse.radius;
+                    let force = (maxDistance - distance) / maxDistance;
+                    let directionX = forceDirectionX * force * this.density;
+                    let directionY = forceDirectionY * force * this.density;
+
+                    if (distance < mouse.radius) {
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    } else {
+                        if (this.x !== this.baseX) {
+                            let dx = this.x - this.baseX;
+                            this.x -= dx / 20;
+                        }
+                        if (this.y !== this.baseY) {
+                            let dy = this.y - this.baseY;
+                            this.y -= dy / 20;
+                        }
+                    }
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                let numberOfParticles = (width * height) / 9000; // Adjusted for professional subtlety
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function connect() {
+                let opacityValue = 1;
+                for (let a = 0; a < particles.length; a++) {
+                    for (let b = a; b < particles.length; b++) {
+                        let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + 
+                                       ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                        if (distance < (width/10) * (height/10)) {
+                            opacityValue = 1 - (distance / 10000);
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark') ? 
+                                `rgba(255,255,255,${opacityValue * 0.15})` : 
+                                `rgba(255,153,51,${opacityValue * 0.2})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                connect();
+            }
+
+            initParticles();
+            animate();
+        }
 
         // UI Initialization
         function refreshIcons() {
@@ -1170,7 +1356,7 @@
             return "Good evening";
         }
 
-        // Handle Global Scroll Events (Header, Progress Bar, Back-To-Top, Reveals)
+        // Handle Global Scroll Events (Header, Progress Bar, Back-To-Top)
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1261,7 +1447,6 @@
             }
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0, 0);
-            // Re-trigger scroll reveals for the new page
             setTimeout(setupScrollReveals, 100);
         }
 
@@ -1271,6 +1456,7 @@
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            // Re-init canvas for correct colors if needed, but the update loop handles color dynamically
         }
         themeToggles.forEach(btn => btn.addEventListener('click', toggleTheme));
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -1308,7 +1494,6 @@
             }
         }
         
-        // Escape key closes search modal
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && state.isSearchOpen) {
                 toggleSearchModal();
@@ -1346,7 +1531,7 @@
             return CONFIG.ARCHIVE_FALLBACK_LINK;
         }
 
-        // New Logic to Handle the interactive Language Filters
+        // Language Filters
         function toggleLanguage(lang) {
             if (state.activeLanguages.includes(lang)) {
                 if (state.activeLanguages.length > 1) {
@@ -1359,26 +1544,26 @@
                 state.activeLanguages.push(lang);
             }
             updateLanguageFilterUI();
-            renderArchive(); // Re-render the archive dots to reflect selection
+            renderArchive(); 
         }
 
         function updateLanguageFilterUI() {
             const langs = [
-                { id: 'eng', color: 'bg-saffron', label: 'Eng' },
-                { id: 'hin', color: 'bg-indiaGreen', label: 'Hin' },
-                { id: 'ben', color: 'bg-blue-500', label: 'Ben' }
+                { id: 'eng', color: 'bg-saffron shadow-[0_0_5px_rgba(255,153,51,0.5)]', label: 'Eng' },
+                { id: 'hin', color: 'bg-indiaGreen shadow-[0_0_5px_rgba(19,136,8,0.5)]', label: 'Hin' },
+                { id: 'ben', color: 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]', label: 'Ben' }
             ];
             
             langs.forEach(l => {
                 const btn = document.getElementById(`filter-${l.id}`);
                 if (!btn) return;
                 
-                const dot = `<span class="w-2 h-2 rounded-full ${l.color}"></span>`;
+                const dot = `<span class="w-2.5 h-2.5 rounded-full ${l.color}"></span>`;
                 
                 if (state.activeLanguages.includes(l.id)) {
-                    btn.className = "px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-colors flex items-center gap-1.5";
+                    btn.className = "px-3 py-1.5 text-xs font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg transition-all flex items-center gap-1.5 border border-slate-200 dark:border-slate-700 shadow-sm";
                 } else {
-                    btn.className = "px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-lg transition-colors flex items-center gap-1.5 opacity-60";
+                    btn.className = "px-3 py-1.5 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-500 rounded-lg transition-all flex items-center gap-1.5 opacity-60 border border-transparent";
                 }
                 btn.innerHTML = `${dot} ${l.label}`;
             });
@@ -1392,7 +1577,7 @@
             Object.keys(archiveData).forEach(month => {
                 const isActive = month === state.currentMonth;
                 const btn = document.createElement('button');
-                btn.className = `px-4 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-700 text-saffron shadow-sm' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50'}`;
+                btn.className = `px-4 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap transition-all ${isActive ? 'bg-white dark:bg-slate-700 text-saffron shadow-sm border border-slate-200 dark:border-slate-600' : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-transparent'}`;
                 btn.innerText = month;
                 btn.onclick = () => {
                     state.currentMonth = month;
@@ -1407,7 +1592,6 @@
             const monthInfo = archiveData[state.currentMonth];
             let count = 0;
             
-            // Check active states for dynamic dots rendering
             const engActive = state.activeLanguages.includes('eng');
             const hinActive = state.activeLanguages.includes('hin');
             const benActive = state.activeLanguages.includes('ben');
@@ -1415,31 +1599,32 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                // Flag September 14 as the current "Today" indicator
-                const isToday = state.currentMonth === 'September' && i === 14; 
+                // Flag September 15 as the current "Today" indicator
+                const isToday = state.currentMonth === 'September' && i === 15; 
                 
                 const card = document.createElement('div');
-                card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
+                card.className = `newspaper-card rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/30 shadow-md active-date' : 'bg-slate-50/80 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
                 
                 card.onclick = () => attemptAccess(getArchiveLink(state.currentMonth, i));
                 
                 card.innerHTML = `
-                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg z-10 uppercase shadow-sm flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>Today</div>` : ''}
-                    <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'}">
-                        <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300"></i>
-                        <div class="absolute bottom-2 left-2 flex space-x-1.5">
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && engActive ? 'bg-saffron' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
-                                <span class="tooltip">English</span>
+                    ${isToday ? `<div class="absolute top-0 right-0 bg-saffron text-white text-[9px] font-bold px-2.5 py-1 rounded-bl-xl z-10 uppercase shadow-md flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>Today</div>` : ''}
+                    <div class="h-28 flex items-center justify-center relative overflow-hidden transition-colors border-b ${isAvailable ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30' : 'bg-slate-100/50 dark:bg-slate-900/30 border-slate-100 dark:border-slate-700/30'} group-hover:bg-orange-100/30 dark:group-hover:bg-orange-900/20">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0"></div>
+                        <i data-lucide="${isAvailable ? 'file-text' : 'archive'}" class="w-10 h-10 ${isAvailable ? 'text-saffron drop-shadow-sm' : 'text-slate-300 dark:text-slate-600'} group-hover:scale-110 transition-transform duration-300 relative z-10"></i>
+                        <div class="absolute bottom-2.5 left-2.5 flex space-x-1.5 z-10">
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && engActive ? 'bg-saffron shadow-sm' : 'bg-slate-300 dark:bg-slate-700/50'} transition-colors duration-300">
+                                <span class="tooltip">English Edition</span>
                             </span>
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && hinActive ? 'bg-indiaGreen' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
-                                <span class="tooltip">Hindi</span>
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && hinActive ? 'bg-indiaGreen shadow-sm' : 'bg-slate-300 dark:bg-slate-700/50'} transition-colors duration-300">
+                                <span class="tooltip">Hindi Edition</span>
                             </span>
-                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && benActive ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-700/50'} shadow-sm transition-colors duration-300">
-                                <span class="tooltip">Bengali</span>
+                            <span class="has-tooltip block w-2 h-2 rounded-full ${isAvailable && benActive ? 'bg-blue-500 shadow-sm' : 'bg-slate-300 dark:bg-slate-700/50'} transition-colors duration-300">
+                                <span class="tooltip">Bengali Edition</span>
                             </span>
                         </div>
                     </div>
-                    <div class="p-4 text-center ${isAvailable ? 'bg-white dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-800/50'}">
+                    <div class="p-4 text-center ${isAvailable ? 'bg-white dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-800/50'} relative z-10">
                         <span class="block text-2xl font-bold font-serif ${isAvailable ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'} group-hover:text-saffron transition-colors">${i}</span>
                         <span class="block text-[10px] font-bold uppercase tracking-widest ${isAvailable ? 'text-slate-500' : 'text-slate-400'} mt-1">${state.currentMonth.substring(0,3)}</span>
                     </div>
@@ -1450,7 +1635,6 @@
             refreshIcons();
         }
 
-        // Authentication & Modals logic
         function openAuthModal(mode) {
             setAuthMode(mode);
             const overlay = document.getElementById('modal-overlay');
@@ -1609,6 +1793,7 @@
             renderArchive();
             refreshIcons();
             setupScrollReveals();
+            initNetworkCanvas();
         });
     </script>
 </body>
