@@ -444,7 +444,7 @@
                                 <div>
                                     <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Listen Now</span>
                                     <div class="flex items-center gap-3">
-                                        <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Sept 19 Briefing</span>
+                                        <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Sept 20 Briefing</span>
                                         <div class="flex items-end gap-1 h-4 ml-1">
                                             <div class="w-1 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.0s; height: 60%;"></div>
                                             <div class="w-1 bg-saffron rounded-full animate-audio-bar" style="animation-delay: 0.2s; height: 100%;"></div>
@@ -1521,7 +1521,7 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                const isToday = state.currentMonth === 'September' && i === 19; // Updated to 19th Sep
+                const isToday = state.currentMonth === 'September' && i === 20; // Updated to 20th Sep
                 
                 const card = document.createElement('div');
                 card.className = `stagger-item newspaper-card hover-target rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/40 shadow-lg active-date' : 'bg-slate-50/80 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
