@@ -1527,7 +1527,7 @@
             for (let i = monthInfo.startDay; i <= monthInfo.days; i++) {
                 count++;
                 const isAvailable = hasSpecificLink(state.currentMonth, i);
-                const isToday = state.currentMonth === 'September' && i === 23; // Updated to 23th Sep
+                const isToday = state.currentMonth === 'September' && i === 26; // Updated to 26th Sep
                 
                 const card = document.createElement('div');
                 card.className = `stagger-item newspaper-card hover-target rounded-2xl border overflow-hidden cursor-pointer flex flex-col group relative ${isAvailable ? 'bg-white dark:bg-slate-800 border-saffron/40 shadow-lg active-date' : 'bg-slate-50/80 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/50 opacity-80'}`;
